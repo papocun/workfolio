@@ -1,26 +1,269 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:where(.dark, .dark *));
 
+/* ============================================================
+   WORKFOLIO DESIGN SYSTEM — globals.css
+   Tailwind CSS v4 · @theme inline tokens & Dark Mode
+   ============================================================ */
+
+/* ─── Theme Token Definitions ──────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* ── Font Family (Strictly Urbanist Only) ── */
+  --font-sans: var(--font-sans), "Urbanist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-sans), "Urbanist", ui-sans-serif, system-ui, sans-serif;
+
+  /* ── Color Palette: Slate ── */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+
+  /* ── Color Palette: Blue Accent ── */
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+
+  /* ── Layout Constraints ── */
+  --container: 680px;
+  --container-wide: 960px;
+  --container-max: var(--container);
+  --container-padding: 1.5rem;
+  --page-top: 3rem;
+
+  /* ── Border Radius Tokens ── */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-pill: 999px;
+
+  /* ── Transition Durations ── */
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── CSS Custom Properties ────────────────────────────────── */
+:root {
+  --c-bg: #ffffff;
+  --c-scrollbar: #d1d5db;
+  --c-scrollbar-hover: #9CA3AF;
+  --color-heading: #0f172a;
+  --focus-ring: 0 0 0 2px #fff, 0 0 0 4px var(--color-heading);
+  --grid-color: rgba(15, 23, 42, 0.045);
+  --grid-dot-color: rgba(15, 23, 42, 0.08);
+  --grid-size: 24px;
+  --border-subtle: rgba(15, 23, 42, 0.08);
+}
+
+.dark {
+  --c-bg: #090d16;
+  --c-scrollbar: #334155;
+  --c-scrollbar-hover: #475569;
+  --color-heading: #f8fafc;
+  --focus-ring: 0 0 0 2px #090d16, 0 0 0 4px var(--color-heading);
+  --grid-color: rgba(255, 255, 255, 0.035);
+  --grid-dot-color: rgba(255, 255, 255, 0.07);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+}
+
+/* ─── Base Reset & Defaults ────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-slate-600);
+  background-color: var(--c-bg);
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+.dark body {
+  color: var(--color-slate-400);
+  background-color: var(--c-bg);
+}
+
+/* ─── Selection Styling ────────────────────────────────────── */
+::selection {
+  background-color: var(--color-slate-900);
+  color: #ffffff;
+}
+
+.dark ::selection {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+/* ─── Focus Visible Ring ───────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-heading);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--focus-ring);
+}
+
+/* ============================================================
+   LAYOUT CONTAINER UTILITIES
+   ============================================================ */
+.page-container {
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  padding-top: var(--page-top);
+  padding-bottom: 4rem;
+}
+
+.page-container-wide {
+  max-width: var(--container-wide);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+/* ============================================================
+   BACKGROUND GRID PATTERN
+   24px × 24px coordinate grid with intersection dots
+   ============================================================ */
+.bg-grid-pattern {
+  background-image:
+    radial-gradient(var(--grid-dot-color) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+  background-size:
+    var(--grid-size) var(--grid-size),
+    var(--grid-size) var(--grid-size),
+    var(--grid-size) var(--grid-size);
+  background-position: 0 0, 0 0, 0 0;
+}
+
+/* ============================================================
+   COMPONENT TOKEN CLASSES
+   ============================================================ */
+
+/* ── Status Badge ── */
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background-color: rgba(255, 49, 49, 0.08);
+  border: 1px solid rgba(255, 49, 49, 0.25);
+  color: #ff3131;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.dark .badge-status {
+  background-color: rgba(255, 49, 49, 0.12);
+  border-color: rgba(255, 49, 49, 0.25);
+  color: #ff4d4d;
+}
+
+.badge-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background-color: #ff3131;
+  animation: pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ── Tech Stack Pill ── */
+.pill-tech {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-slate-100);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  color: var(--color-slate-700);
+}
+
+.dark .pill-tech {
+  background-color: #1e293b;
+  color: #cbd5e1;
+}
+
+/* ── Card Surface ── */
+.card-surface {
+  background-color: #ffffff;
+  border: 1px solid var(--color-slate-200);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  transition: border-color 200ms ease, background-color 200ms ease;
+}
+
+.dark .card-surface {
+  background-color: #0f1422;
+  border-color: #1e293b;
+}
+
+.card-surface:hover {
+  border-color: var(--color-slate-400);
+}
+
+.dark .card-surface:hover {
+  border-color: #334155;
+}
+
+/* ============================================================
+   SCROLLBAR STYLING
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--c-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--c-scrollbar);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--c-scrollbar-hover);
 }

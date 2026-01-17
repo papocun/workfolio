@@ -1,0 +1,36 @@
+import type { Metadata } from 'next';
+import { portfolioData } from '@/data/portfolioData';
+import AnimatedProjectsList from '@/components/AnimatedProjectsList';
+import OtherProjectsList from '@/components/OtherProjectsList';
+
+export const metadata: Metadata = {
+  title: 'Projects — Divyanshu Tiwari',
+  description:
+    'Production-grade machine learning systems, predictive pipelines, and containerized cloud APIs built and deployed by Divyanshu Tiwari.',
+};
+
+export default function ProjectsPage() {
+  return (
+    <main className="max-w-[680px] mx-auto px-6 pt-8 sm:pt-10 pb-20 transition-colors duration-200">
+      {/* Section Header */}
+      <div className="mb-8">
+        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800/80 text-[11.5px] font-mono text-slate-600 dark:text-slate-400 mb-3 border border-slate-200/60 dark:border-slate-700/60">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#ff3131] animate-pulse" />
+          <span>the work</span>
+        </div>
+        <h1 className="text-[26px] sm:text-[30px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2.5">
+          Projects
+        </h1>
+        <p className="text-[13.5px] sm:text-[14.5px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-[620px]">
+          A few things I’ve built, explored, and brought to life.
+        </p>
+      </div>
+
+      {/* Featured Projects with Scroll Reveal & Stagger Animation */}
+      <AnimatedProjectsList projects={portfolioData.projects} />
+
+      {/* Secondary Other Projects List */}
+      <OtherProjectsList />
+    </main>
+  );
+}

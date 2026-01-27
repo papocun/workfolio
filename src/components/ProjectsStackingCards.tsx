@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
+import { getAssetPath } from '@/lib/assetPath';
 
 export interface ProjectItem {
   id: string;
@@ -62,7 +63,7 @@ function ProjectStackCard({
           {project.imageSrc ? (
             <div className="relative w-full h-full bg-slate-100 dark:bg-slate-900">
               <Image
-                src={project.imageSrc}
+                src={getAssetPath(project.imageSrc)}
                 alt={project.title}
                 fill
                 sizes="(max-width: 680px) 100vw, 680px"

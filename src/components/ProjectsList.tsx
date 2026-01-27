@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { InView } from '@/components/core/in-view';
+import { getAssetPath } from '@/lib/assetPath';
 
 export interface Project {
   id: string;
@@ -59,7 +60,7 @@ export default function ProjectsList({ projects }: ProjectsListProps) {
             >
               {project.imageSrc ? (
                 <Image
-                  src={project.imageSrc}
+                  src={getAssetPath(project.imageSrc)}
                   alt={project.title}
                   fill
                   sizes="(max-width: 680px) 100vw, 680px"

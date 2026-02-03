@@ -71,8 +71,8 @@ function LiveTimeDisplay() {
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#090d16] text-slate-600 dark:text-slate-400 mt-20 transition-colors duration-200">
-      <div className="max-w-[680px] mx-auto px-6 pt-12 sm:pt-14 pb-10 sm:pb-12">
+    <footer className="w-full border-t border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#000000] text-slate-600 dark:text-slate-400 mt-16 sm:mt-20 transition-colors duration-200">
+      <div className="max-w-[680px] mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-8 sm:pb-12">
         {/* Main Footer Multi-Column Structure */}
         <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 sm:gap-6">
           {/* Left Column: Personal / Identity Area */}
@@ -91,8 +91,8 @@ export default function Footer() {
               {/* Status Callout */}
               <div className="mt-4 flex items-center gap-2 font-mono text-[11.5px] text-slate-500 dark:text-slate-400">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff3131] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff3131]" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00BA7C] opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00BA7C]" />
                 </span>
                 <span>Open to ML & Data Science roles</span>
               </div>
@@ -100,7 +100,7 @@ export default function Footer() {
           </div>
 
           {/* Right Columns: Connect & Profiles */}
-          <div className="sm:col-span-6 flex sm:justify-end gap-12 sm:gap-16">
+          <div className="sm:col-span-6 flex justify-between sm:justify-end gap-8 sm:gap-16">
             {/* Column 1: Connect */}
             <div>
               <h3 className="font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 select-none">
@@ -152,7 +152,7 @@ export default function Footer() {
         </div>
 
         {/* Subtle Bottom Row with Real-Time Clock */}
-        <div className="border-t border-slate-100 dark:border-slate-800/80 pt-6 mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11.5px] font-mono text-slate-400 dark:text-slate-500">
+        <div className="border-t border-slate-100 dark:border-slate-800/80 pt-6 mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11.5px] font-mono text-slate-400 dark:text-slate-500 text-center sm:text-left">
           <div className="flex items-center gap-2">
             <span>&copy; 2026 {portfolioData.name}</span>
             <span>·</span>

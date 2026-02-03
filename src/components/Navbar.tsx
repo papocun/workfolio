@@ -23,27 +23,27 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/90 dark:bg-[#090d16]/90 backdrop-blur-sm border-b border-slate-200/50 dark:border-slate-800/60 transition-colors duration-200">
-      <div className="max-w-[680px] mx-auto px-6 py-3.5 flex items-center justify-between">
+    <header className="sticky top-0 z-50 w-full bg-white/90 dark:bg-[#000000]/90 backdrop-blur-sm border-b border-slate-200/50 dark:border-slate-800/60 transition-colors duration-200">
+      <div className="max-w-[680px] mx-auto px-4 sm:px-6 py-3 sm:py-3.5 flex items-center justify-between gap-2">
         {/* Left Branding */}
         <Link
-          className="text-[13.5px] sm:text-[14.5px] font-semibold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-75 transition-opacity"
+          className="text-[13px] sm:text-[14.5px] font-semibold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-75 transition-opacity shrink-0"
           href="/"
         >
           divyanshu tiwari
         </Link>
 
         {/* Right Navigation & Profile Avatar */}
-        <div className="flex items-center gap-3 sm:gap-4">
-          <nav className="flex items-center gap-2 sm:gap-2.5 text-[12.5px]">
+        <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+          <nav className="flex items-center gap-1.5 sm:gap-2.5 text-[11.5px] sm:text-[12.5px]">
             {NAV_ITEMS.map((item, index) => {
               const isActive = pathname === item.href;
 
               return (
-                <div key={item.href} className="flex items-center gap-2 sm:gap-2.5">
+                <div key={item.href} className="flex items-center gap-1.5 sm:gap-2.5">
                   <Link
                     href={item.href}
-                    className={`group relative inline-flex items-center gap-1 py-0.5 text-slate-500 dark:text-slate-400 transition-colors duration-150 ${
+                    className={`group relative inline-flex items-center gap-0.5 sm:gap-1 py-1 px-0.5 text-slate-500 dark:text-slate-400 transition-colors duration-150 ${
                       isActive
                         ? 'font-semibold text-slate-900 dark:text-slate-100'
                         : 'hover:text-slate-900 dark:hover:text-slate-100'
@@ -65,7 +65,7 @@ export default function Navbar() {
                     />
                   </Link>
                   {index < NAV_ITEMS.length - 1 && (
-                    <span className="text-slate-300 dark:text-slate-700 select-none" aria-hidden="true">
+                    <span className="text-slate-300 dark:text-slate-700 select-none text-[10px] sm:text-xs" aria-hidden="true">
                       ·
                     </span>
                   )}
@@ -75,18 +75,24 @@ export default function Navbar() {
           </nav>
 
           {/* Vertical Divider */}
-          <span className="h-4 w-[1px] bg-slate-200 dark:bg-slate-800" aria-hidden="true" />
+          <span className="h-3.5 sm:h-4 w-[1px] bg-slate-200 dark:bg-slate-800" aria-hidden="true" />
 
-          {/* User Profile Avatar (Non-redirecting) */}
-          <Avatar className="h-7 w-7 sm:h-7.5 sm:w-7.5 ring-2 ring-slate-200/90 dark:ring-slate-700 select-none">
-            <AvatarImage
-              src="https://github.com/papocun.png"
-              alt={portfolioData.name}
-            />
-            <AvatarFallback className="text-[10.5px] font-mono font-semibold">
-              {getInitials(portfolioData.name)}
-            </AvatarFallback>
-          </Avatar>
+          {/* User Profile Avatar (Redirects to homepage on click) */}
+          <Link
+            href="/"
+            aria-label="Go to homepage"
+            className="group/avatar inline-flex items-center rounded-full transition-transform hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] shrink-0"
+          >
+            <Avatar className="h-6.5 w-6.5 sm:h-7.5 sm:w-7.5 ring-2 ring-slate-200/90 dark:ring-slate-700 select-none cursor-pointer">
+              <AvatarImage
+                src="https://github.com/papocun.png"
+                alt={portfolioData.name}
+              />
+              <AvatarFallback className="text-[10px] sm:text-[10.5px] font-mono font-semibold">
+                {getInitials(portfolioData.name)}
+              </AvatarFallback>
+            </Avatar>
+          </Link>
         </div>
       </div>
 

@@ -59,7 +59,7 @@ export default function ExperienceTransitionPanel({
   };
 
   return (
-    <div className="w-full rounded-xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#0f1422] p-5 sm:p-7 shadow-sm dark:shadow-xl transition-colors duration-200">
+    <div className="w-full rounded-xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#16181C] p-5 sm:p-7 shadow-sm dark:shadow-xl transition-colors duration-200">
       {/* Platform / Company Tabs Header */}
       <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/80 pb-4 mb-6">
         <div className="flex items-center gap-2">
@@ -80,7 +80,7 @@ export default function ExperienceTransitionPanel({
                   0{index + 1} / {exp.company}
                 </span>
                 {isActive && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff3131] animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#1D9BF0] animate-pulse" />
                 )}
               </button>
             );

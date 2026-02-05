@@ -77,7 +77,7 @@ export default function ExperienceMorphingList() {
       {EXPERIENCES.map((exp) => (
         <MorphingDialog key={exp.id}>
           {/* Card Trigger */}
-          <MorphingDialogTrigger className="group rounded-xl border border-slate-200/90 dark:border-slate-800/80 bg-white dark:bg-[#0f1422] p-4 sm:p-5 transition-all duration-200 hover:border-slate-400 dark:hover:border-slate-600 hover:shadow-xs text-left">
+          <MorphingDialogTrigger className="group rounded-xl border border-slate-200/90 dark:border-slate-800/80 bg-white dark:bg-[#16181C] p-4 sm:p-5 transition-all duration-200 hover:border-slate-400 dark:hover:border-slate-600 hover:shadow-xs text-left">
             <div className="flex items-center justify-between font-mono text-[11px] text-slate-400 dark:text-slate-500 mb-1.5">
               <span>
                 {exp.index} / {exp.company.toUpperCase()}
@@ -140,7 +140,7 @@ export default function ExperienceMorphingList() {
 
           {/* Morphing Compact Dialog Container */}
           <MorphingDialogContainer>
-            <MorphingDialogContent className="p-4 sm:p-5 max-h-[58vh] overflow-y-auto bg-white dark:bg-[#0f1422] border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100">
+            <MorphingDialogContent className="p-4 sm:p-5 max-h-[58vh] overflow-y-auto bg-white dark:bg-[#16181C] border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100">
               <MorphingDialogClose className="top-3 right-3 dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800" />
 
               {/* Index & Period Header */}
@@ -166,7 +166,7 @@ export default function ExperienceMorphingList() {
                 <span className="text-slate-300 dark:text-slate-700 select-none" aria-hidden="true">
                   ·
                 </span>
-                <span className="text-[#ff3131] dark:text-[#ff4d4d] bg-[#ff3131]/10 border border-[#ff3131]/30 px-1.5 py-0.2 rounded-full text-[10px] font-mono">
+                <span className="text-[#00BA7C] dark:text-[#00BA7C] bg-[#00BA7C]/10 border border-[#00BA7C]/30 px-1.5 py-0.2 rounded-full text-[10px] font-mono">
                   Verified
                 </span>
               </MorphingDialogSubtitle>

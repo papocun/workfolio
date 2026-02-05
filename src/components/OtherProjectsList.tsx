@@ -51,7 +51,7 @@ export default function OtherProjectsList() {
       {/* Section Header */}
       <div className="mb-8 sm:mb-10">
         <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800/80 text-[11.5px] font-mono text-slate-600 dark:text-slate-400 mb-3 border border-slate-200/60 dark:border-slate-700/60">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#ff3131] animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#1D9BF0] animate-pulse" />
           <span>more projects</span>
         </div>
         <h2 className="text-[22px] sm:text-[25px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2">

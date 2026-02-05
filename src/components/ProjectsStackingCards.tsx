@@ -54,7 +54,7 @@ function ProjectStackCard({
           scale,
           top: `calc(${index * 14}px)`,
         }}
-        className="w-full max-w-[680px] rounded-xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#0f1422] p-4 sm:p-5 shadow-sm dark:shadow-xl transition-colors duration-200 origin-top flex flex-col group"
+        className="w-full max-w-[680px] rounded-xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#16181C] p-4 sm:p-5 shadow-sm dark:shadow-xl transition-colors duration-200 origin-top flex flex-col group"
       >
         {/* Compact Visual Media Frame */}
         <div
@@ -139,7 +139,7 @@ function ProjectStackCard({
                 href={project.liveDemoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/link relative inline-flex items-center gap-1 text-[#ff3131] dark:text-[#ff4d4d] hover:text-[#e02828] dark:hover:text-[#ff6666] transition-colors py-0.5"
+                className="group/link relative inline-flex items-center gap-1 text-[#1D9BF0] hover:text-[#1a8cd8] transition-colors py-0.5"
               >
                 <span>Live Demo</span>
                 <svg
@@ -152,7 +152,7 @@ function ProjectStackCard({
                 >
                   <path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z" />
                 </svg>
-                <span className="absolute bottom-0 left-0 h-[1px] w-full bg-[#ff3131] dark:bg-[#ff4d4d] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" />
+                <span className="absolute bottom-0 left-0 h-[1px] w-full bg-[#1D9BF0] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" />
               </a>
             )}
           </div>

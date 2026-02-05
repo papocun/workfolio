@@ -11,22 +11,22 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <article className="group rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#0f1422] p-5 sm:p-7 shadow-xs dark:shadow-md transition-all duration-200 hover:border-slate-400 dark:hover:border-slate-700">
+    <article className="group rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#16181C] p-4 sm:p-7 shadow-xs dark:shadow-md transition-all duration-200 hover:border-slate-400 dark:hover:border-slate-700">
       {/* 1. Wide Project Image/Banner (~2000x500 cinematic ratio) */}
       {project.imageSrc && (
-        <div className="relative aspect-[16/5.5] sm:aspect-[4/1] w-full mb-5 sm:mb-6 overflow-hidden rounded-xl border border-slate-200/70 dark:border-slate-800/80 bg-slate-950 flex items-center justify-center select-none">
+        <div className="relative aspect-[16/6] sm:aspect-[4/1] w-full mb-4 sm:mb-6 overflow-hidden rounded-xl border border-slate-200/70 dark:border-slate-800/80 bg-slate-950 flex items-center justify-center select-none">
           <Image
             src={getAssetPath(project.imageSrc)}
             alt={project.title}
             fill
-            sizes="(max-width: 768px) 100vw, 720px"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 680px"
             className="object-cover object-center transition-transform duration-300 group-hover:scale-[1.01]"
           />
         </div>
       )}
 
       {/* 2. Project Name */}
-      <h2 className="text-[19px] sm:text-[22px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-snug mb-2.5">
+      <h2 className="text-[18px] sm:text-[22px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-snug mb-2 sm:mb-2.5">
         {project.title}
       </h2>
 
@@ -51,7 +51,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               className="flex items-start gap-2.5 text-[13px] sm:text-[13.5px] text-slate-600 dark:text-slate-400 leading-[1.6]"
             >
               <span
-                className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#ff3131]"
+                className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#1D9BF0]"
                 aria-hidden="true"
               />
               <span>{point}</span>
@@ -87,7 +87,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/link relative inline-flex items-center gap-1 text-[#ff3131] dark:text-[#ff4d4d] hover:text-[#e02828] dark:hover:text-[#ff6666] transition-colors py-0.5"
+            className="group/link relative inline-flex items-center gap-1 text-[#1D9BF0] hover:text-[#1a8cd8] transition-colors py-0.5"
           >
             <span>Live Demo</span>
             <svg
@@ -100,7 +100,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             >
               <path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z" />
             </svg>
-            <span className="absolute bottom-0 left-0 h-[1px] w-full bg-[#ff3131] dark:bg-[#ff4d4d] origin-left scale-x-0 group-hover/link:scale-x-100 transition-transform duration-200 ease-out" />
+            <span className="absolute bottom-0 left-0 h-[1px] w-full bg-[#1D9BF0] origin-left scale-x-0 group-hover/link:scale-x-100 transition-transform duration-200 ease-out" />
           </a>
         )}
       </div>

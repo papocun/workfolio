@@ -137,7 +137,7 @@ export function MorphingDialogContent({
       layoutId={`dialog-${uniqueId}`}
       role="dialog"
       aria-modal="true"
-      className={`relative z-10 w-full max-w-[560px] bg-white dark:bg-[#0f1422] rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden ${className}`}
+      className={`relative z-10 w-full max-w-[560px] bg-white dark:bg-[#16181C] rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden ${className}`}
       style={style}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       onClick={(e) => e.stopPropagation()}

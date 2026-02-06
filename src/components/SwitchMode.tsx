@@ -21,11 +21,11 @@ export interface SwitchModeProps {
 export function SwitchMode({
   width = 46,
   height = 24,
-  darkColor = '#0f172a',
+  darkColor = '#16181C',
   lightColor = '#f1f5f9',
-  knobDarkColor = '#1e293b',
+  knobDarkColor = '#1E2732',
   knobLightColor = '#ffffff',
-  borderDarkColor = '#334155',
+  borderDarkColor = '#2F3336',
   borderLightColor = '#cbd5e1',
   className = '',
   checked,
@@ -86,7 +86,7 @@ export function SwitchMode({
           fill="currentColor"
           viewBox="0 0 256 256"
           className={`transition-opacity duration-200 ${
-            active ? 'opacity-90 text-blue-300' : 'opacity-25'
+            active ? 'opacity-90 text-[#1D9BF0]' : 'opacity-25'
           }`}
         >
           <path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23Z" />
@@ -117,7 +117,7 @@ export function SwitchMode({
             initial={{ rotate: -45, scale: 0.8 }}
             animate={{ rotate: 0, scale: 1 }}
             transition={{ duration: 0.2 }}
-            className="text-blue-200"
+            className="text-[#1D9BF0]"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -52,11 +52,11 @@ function BlogStackCard({
           scale,
           top: `calc(${index * 14}px)`,
         }}
-        className="w-full max-w-[680px] rounded-xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#0f1422] p-4 sm:p-5 shadow-sm dark:shadow-xl transition-colors duration-200 origin-top flex flex-col group"
+        className="w-full max-w-[680px] rounded-xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#16181C] p-4 sm:p-5 shadow-sm dark:shadow-xl transition-colors duration-200 origin-top flex flex-col group"
       >
         {/* Compact Visual Banner Box */}
         <Link className="block mb-3" href={`/blog/${post.slug}`}>
-          <div className="w-full rounded-lg border border-slate-200/80 dark:border-slate-800 bg-[#FBFBFA] dark:bg-[#151c2e] p-4 sm:p-5 relative overflow-hidden transition-all duration-200 hover:border-slate-300 dark:hover:border-slate-700">
+          <div className="w-full rounded-lg border border-slate-200/80 dark:border-slate-800 bg-[#FBFBFA] dark:bg-[#16181C] p-4 sm:p-5 relative overflow-hidden transition-all duration-200 hover:border-slate-300 dark:hover:border-slate-700">
             <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 block font-semibold">
               {post.categoryTagline}
             </span>
@@ -67,7 +67,7 @@ function BlogStackCard({
               </h2>
 
               {/* Minimalist Graphic Badge */}
-              <div className="hidden sm:flex w-9 h-9 rounded-full border border-slate-200/90 dark:border-slate-700 items-center justify-center shrink-0 bg-white dark:bg-[#0f1422] shadow-xs">
+              <div className="hidden sm:flex w-9 h-9 rounded-full border border-slate-200/90 dark:border-slate-700 items-center justify-center shrink-0 bg-white dark:bg-[#16181C] shadow-xs">
                 <div className="w-2 h-2 rounded-full bg-slate-900 dark:bg-slate-100" />
               </div>
             </div>

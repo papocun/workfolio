@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'light' | 'dark';
+type Theme = 'dark';
 
 interface ThemeContextType {
   theme: Theme;
@@ -14,40 +14,26 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('light');
-  const [mounted, setMounted] = useState(false);
+  const [theme] = useState<Theme>('dark');
 
   useEffect(() => {
-    setMounted(true);
-    const stored = localStorage.getItem('workfolio-theme') as Theme | null;
-    if (stored === 'dark' || stored === 'light') {
-      setThemeState(stored);
-      document.documentElement.classList.toggle('dark', stored === 'dark');
-    } else if (
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    ) {
-      setThemeState('dark');
-      document.documentElement.classList.add('dark');
-    }
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('workfolio-theme', 'dark');
   }, []);
 
-  const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme);
-    localStorage.setItem('workfolio-theme', newTheme);
-    document.documentElement.classList.toggle('dark', newTheme === 'dark');
+  const setTheme = () => {
+    document.documentElement.classList.add('dark');
   };
 
   const toggleTheme = () => {
-    const next = theme === 'dark' ? 'light' : 'dark';
-    setTheme(next);
+    document.documentElement.classList.add('dark');
   };
 
   return (
     <ThemeContext.Provider
       value={{
-        theme,
-        isDark: theme === 'dark',
+        theme: 'dark',
+        isDark: true,
         setTheme,
         toggleTheme,
       }}

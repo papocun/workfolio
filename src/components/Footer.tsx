@@ -71,7 +71,7 @@ function LiveTimeDisplay() {
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#000000] text-slate-600 dark:text-slate-400 mt-16 sm:mt-20 transition-colors duration-200">
+    <footer className="w-full border-t border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#000000] text-slate-600 dark:text-slate-400 mt-16 sm:mt-20 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]">
       <div className="max-w-[680px] mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-8 sm:pb-12">
         {/* Main Footer Multi-Column Structure */}
         <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 sm:gap-6">
@@ -80,7 +80,7 @@ export default function Footer() {
             <div>
               <Link
                 href="/"
-                className="text-[15px] sm:text-[16px] font-bold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-85 transition-opacity"
+                className="text-[15px] sm:text-[16px] font-bold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-85 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]"
               >
                 {portfolioData.name.toLowerCase()}
               </Link>
@@ -115,9 +115,9 @@ export default function Footer() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group relative inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors py-0.5"
+                        className="group relative inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-0.5"
                       >
-                        <Icon size={15} weight="regular" className="shrink-0 opacity-80 group-hover:opacity-100" />
+                        <Icon size={15} weight="regular" className="shrink-0 opacity-80 group-hover:opacity-100 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]" />
                         <span>{item.label}</span>
                         <span className="absolute -bottom-0.5 left-0 h-[1px] w-full bg-slate-900 dark:bg-slate-100 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" />
                       </a>
@@ -139,7 +139,7 @@ export default function Footer() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative inline-flex items-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors py-0.5"
+                      className="group relative inline-flex items-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-0.5"
                     >
                       <span>{item.label}</span>
                       <span className="absolute -bottom-0.5 left-0 h-[1px] w-full bg-slate-900 dark:bg-slate-100 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" />

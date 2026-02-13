@@ -108,9 +108,8 @@ export function MorphingDialogContainer({ children }: { children: ReactNode }) {
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
+            animate={{ opacity: 1, transition: { duration: 0.2, ease: 'easeOut' } }}
+            exit={{ opacity: 0, transition: { duration: 0.15, ease: 'easeIn' } }}
             onClick={() => setIsOpen(false)}
             className="fixed inset-0 bg-slate-950/40 dark:bg-black/60 backdrop-blur-xs"
           />
@@ -195,7 +194,7 @@ export function MorphingDialogClose({
       type="button"
       onClick={() => setIsOpen(false)}
       aria-label="Close dialog"
-      className={`absolute top-3.5 right-3.5 p-1.5 rounded-full text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer ${className}`}
+      className={`absolute top-3.5 right-3.5 p-1.5 rounded-full text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] cursor-pointer ${className}`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -52,11 +52,11 @@ function BlogStackCard({
           scale,
           top: `calc(${index * 14}px)`,
         }}
-        className="w-full max-w-[680px] rounded-xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#16181C] p-4 sm:p-5 shadow-sm dark:shadow-xl transition-colors duration-200 origin-top flex flex-col group"
+        className="w-full max-w-[680px] rounded-xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#16181C] p-4 sm:p-5 shadow-sm dark:shadow-xl transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] origin-top flex flex-col group"
       >
         {/* Compact Visual Banner Box */}
         <Link className="block mb-3" href={`/blog/${post.slug}`}>
-          <div className="w-full rounded-lg border border-slate-200/80 dark:border-slate-800 bg-[#FBFBFA] dark:bg-[#16181C] p-4 sm:p-5 relative overflow-hidden transition-all duration-200 hover:border-slate-300 dark:hover:border-slate-700">
+          <div className="w-full rounded-lg border border-slate-200/80 dark:border-slate-800 bg-[#FBFBFA] dark:bg-[#16181C] p-4 sm:p-5 relative overflow-hidden transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-300 dark:hover:border-slate-700">
             <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 block font-semibold">
               {post.categoryTagline}
             </span>

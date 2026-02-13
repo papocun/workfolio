@@ -53,7 +53,7 @@ export function SwitchMode({
       aria-checked={active}
       aria-label="Toggle theme mode"
       onClick={handleToggle}
-      className={`relative inline-flex items-center rounded-full transition-colors cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:focus-visible:ring-slate-500 ${className}`}
+      className={`relative inline-flex items-center rounded-full transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:focus-visible:ring-slate-500 ${className}`}
       style={{
         width: `${width}px`,
         height: `${height}px`,
@@ -72,7 +72,7 @@ export function SwitchMode({
           viewBox="0 0 24 24"
           stroke="currentColor"
           strokeWidth="2.2"
-          className={`transition-opacity duration-200 ${
+          className={`transition-opacity duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] ${
             active ? 'opacity-30' : 'opacity-80 text-amber-500'
           }`}
         >
@@ -85,7 +85,7 @@ export function SwitchMode({
           height={Math.max(9, Math.round(height * 0.4))}
           fill="currentColor"
           viewBox="0 0 256 256"
-          className={`transition-opacity duration-200 ${
+          className={`transition-opacity duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] ${
             active ? 'opacity-90 text-[#1D9BF0]' : 'opacity-25'
           }`}
         >
@@ -116,7 +116,7 @@ export function SwitchMode({
           <motion.div
             initial={{ rotate: -45, scale: 0.8 }}
             animate={{ rotate: 0, scale: 1 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
             className="text-[#1D9BF0]"
           >
             <svg
@@ -133,7 +133,7 @@ export function SwitchMode({
           <motion.div
             initial={{ rotate: 45, scale: 0.8 }}
             animate={{ rotate: 0, scale: 1 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
             className="text-amber-500"
           >
             <svg

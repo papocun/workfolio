@@ -40,13 +40,13 @@ export default function ExperienceTimeline({
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.35, ease: 'easeOut' }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
               className="relative flex items-start gap-3.5 sm:gap-7"
             >
               {/* Large Circular Timeline Node Anchor */}
               <div className="relative z-10 shrink-0 flex items-center justify-center">
                 <div
-                  className={`w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-200 bg-white dark:bg-[#16181C] ${
+                  className={`w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] bg-white dark:bg-[#16181C] ${
                     isLatest
                       ? 'border-2 border-slate-900 dark:border-slate-100 shadow-md ring-3 sm:ring-4 ring-slate-100 dark:ring-slate-800/60'
                       : 'border-2 border-slate-300 dark:border-slate-700/80 shadow-xs'

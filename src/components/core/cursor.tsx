@@ -28,7 +28,7 @@ export function Cursor({
   children,
   className = '',
   springConfig = { stiffness: 450, damping: 32, mass: 0.5 },
-  transition = { duration: 0.15, ease: 'easeInOut' },
+  transition = { duration: 0.15, ease: 'easeOut' },
   variants,
   onPositionChange,
 }: CursorProps) {

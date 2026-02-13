@@ -5,7 +5,7 @@ import { portfolioData } from "@/data/portfolioData";
 
 export default function HomePage() {
   return (
-    <main className="max-w-[680px] mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 sm:pb-20 transition-colors duration-200">
+    <main className="max-w-[680px] mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 sm:pb-20 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]">
       {/* Main Notice Banner */}
       <AlertBanner
         title="Notice: Some pages are still being built"
@@ -66,7 +66,7 @@ export default function HomePage() {
           href="https://mail.google.com/mail/?view=cm&fs=1&to=divyanshutiwari281@gmail.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative py-0.5 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 break-all sm:break-normal"
+          className="group relative py-0.5 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] break-all sm:break-normal"
         >
           <span>divyanshutiwari281@gmail.com</span>
           <span className="absolute -bottom-0.5 left-0 h-[1.5px] w-full bg-slate-900 dark:bg-slate-100 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" />

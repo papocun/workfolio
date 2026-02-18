@@ -18,6 +18,11 @@ export const metadata: Metadata = {
   title: "Divyanshu Tiwari — Data Scientist & Applied ML Systems Builder",
   description:
     "Data Scientist & Applied ML Engineer engineering and deploying production-grade predictive systems, fraud-scoring models, and real-time APIs.",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -28,6 +33,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${urbanist.variable} dark h-full antialiased`}
     >
       <head>
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
         <script
           dangerouslySetInnerHTML={{
             __html: `

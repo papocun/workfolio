@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/base-ui/avatar';
 import { ScrollProgress } from '@/components/core/scroll-progress';
+import { getAssetPath } from '@/lib/assetPath';
 import { portfolioData } from '@/data/portfolioData';
 
 const NAV_ITEMS = [
@@ -85,7 +86,7 @@ export default function Navbar() {
           >
             <Avatar className="h-6.5 w-6.5 sm:h-7.5 sm:w-7.5 ring-2 ring-slate-200/90 dark:ring-slate-700 select-none cursor-pointer">
               <AvatarImage
-                src="https://github.com/papocun.png"
+                src={getAssetPath('/images/projects/NUmercaiq.gif')}
                 alt={portfolioData.name}
               />
               <AvatarFallback className="text-[10px] sm:text-[10.5px] font-mono font-semibold">

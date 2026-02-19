@@ -10,7 +10,7 @@ import { portfolioData } from '@/data/portfolioData';
 const NAV_ITEMS = [
   { label: 'projects', href: '/projects', isUnderConstruction: false },
   { label: 'experience', href: '/experience', isUnderConstruction: false },
-  { label: 'code', href: '/code', isUnderConstruction: true },
+  { label: 'code', href: '/code', isUnderConstruction: false },
   { label: 'blog', href: '/blog', isUnderConstruction: true },
 ];
 

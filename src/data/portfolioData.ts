@@ -18,6 +18,7 @@ export const portfolioData: PersonalProfile = {
     twitter: "https://x.com/21dvy_t",
     leetcode: "https://leetcode.com/u/21_dvynshx/",
     dailysql: "https://dailysql.in/u/divyanshutiwari281",
+    stratascratch: "https://platform.stratascratch.com/user/papocun",
     resumeUrl:
       "https://drive.google.com/file/d/1rMIwhj9_4t2hHll5uDJYt8TARGDxbY4A/view?usp=sharing",
   },

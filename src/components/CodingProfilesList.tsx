@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { getAssetPath } from '@/lib/assetPath';
 
 export interface CodingProfileItem {
-  id: 'leetcode' | 'dailysql';
+  id: 'leetcode' | 'dailysql' | 'stratascratch';
   platform: string;
   username: string;
   solvedCount: string;
@@ -32,6 +32,15 @@ export const CODING_PROFILES: CodingProfileItem[] = [
     url: 'https://dailysql.in/u/divyanshutiwari281',
     imageSrc: '/images/code/dailysql.png',
     imageAlt: 'DailySQL Profile',
+  },
+  {
+    id: 'stratascratch',
+    platform: 'StrataScratch',
+    username: 'papocun',
+    solvedCount: '50+ problems solved',
+    url: 'https://platform.stratascratch.com/user/papocun',
+    imageSrc: '/images/code/stratascratch.png',
+    imageAlt: 'StrataScratch Profile',
   },
 ];
 

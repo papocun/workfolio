@@ -10,6 +10,7 @@ export interface SocialLinks {
   twitter?: string;
   leetcode?: string;
   dailysql?: string;
+  stratascratch?: string;
   resumeUrl: string;
 }
 

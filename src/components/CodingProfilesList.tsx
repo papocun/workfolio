@@ -21,8 +21,8 @@ export const CODING_PROFILES: CodingProfileItem[] = [
     username: '21_dvynshx',
     solvedCount: '300+ problems solved',
     url: 'https://leetcode.com/u/21_dvynshx/',
-    imageSrc: '/images/projects/pfp.jpg',
-    imageAlt: 'Divyanshu Tiwari - LeetCode Profile',
+    imageSrc: '/images/code/leetcode.png',
+    imageAlt: 'LeetCode Avatar - 21_dvynshx',
   },
   {
     id: 'dailysql',
@@ -30,8 +30,8 @@ export const CODING_PROFILES: CodingProfileItem[] = [
     username: 'divyanshutiwari281',
     solvedCount: '50+ queries solved',
     url: 'https://dailysql.in/u/divyanshutiwari281',
-    imageSrc: '/images/projects/pfp.jpg',
-    imageAlt: 'Divyanshu Tiwari - DailySQL Profile',
+    imageSrc: '/images/code/dailysql.jpg',
+    imageAlt: 'DailySQL Avatar - divyanshutiwari281',
   },
   {
     id: 'stratascratch',
@@ -39,8 +39,8 @@ export const CODING_PROFILES: CodingProfileItem[] = [
     username: 'papocun',
     solvedCount: '50+ problems solved',
     url: 'https://platform.stratascratch.com/user/papocun',
-    imageSrc: '/images/projects/pfp.jpg',
-    imageAlt: 'Divyanshu Tiwari - StrataScratch Profile',
+    imageSrc: '/images/code/stratascratch.jpg',
+    imageAlt: 'StrataScratch Avatar - papocun',
   },
 ];
 

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { trackGithubClicked } from '@/lib/posthog';
 
 export interface OtherProjectItem {
   id: string;
@@ -70,6 +71,13 @@ export default function OtherProjectsList() {
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() =>
+              trackGithubClicked({
+                project_name: project.title,
+                location: 'other_projects_list',
+                url: project.githubUrl,
+              })
+            }
             className="group block py-4 sm:py-5 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] -mx-2 px-2 rounded-lg hover:bg-slate-50/80 dark:hover:bg-slate-900/50 cursor-pointer"
           >
             <div className="flex items-start justify-between gap-3 sm:gap-4">

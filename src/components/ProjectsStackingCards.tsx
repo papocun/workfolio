@@ -1,9 +1,14 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
 import { getAssetPath } from '@/lib/assetPath';
+import {
+  trackProjectViewed,
+  trackGithubClicked,
+  trackProjectDemoClicked,
+} from '@/lib/posthog';
 
 export interface ProjectItem {
   id: string;
@@ -40,6 +45,34 @@ function ProjectStackCard({
   targetScale,
 }: StackingCardProps) {
   const cardContainerRef = useRef<HTMLDivElement>(null);
+  const hasTrackedViewRef = useRef(false);
+
+  useEffect(() => {
+    if (hasTrackedViewRef.current) return;
+    const el = cardContainerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting && !hasTrackedViewRef.current) {
+          hasTrackedViewRef.current = true;
+          trackProjectViewed(project.title, {
+            project_id: project.id,
+            slug: project.slug,
+          });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(el);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [project.title, project.id, project.slug]);
 
   // Transform scale as scroll progresses
   const scale = useTransform(progress, range, [1, targetScale]);
@@ -118,6 +151,13 @@ function ProjectStackCard({
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                trackGithubClicked({
+                  project_name: project.title,
+                  location: 'project_stack_card',
+                  url: project.githubUrl,
+                })
+              }
               className="group/link relative inline-flex items-center gap-1 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-0.5"
             >
               <span>GitHub</span>
@@ -139,6 +179,9 @@ function ProjectStackCard({
                 href={project.liveDemoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() =>
+                  trackProjectDemoClicked(project.title, project.liveDemoUrl)
+                }
                 className="group/link relative inline-flex items-center gap-1 text-[#1D9BF0] hover:text-[#1a8cd8] transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-0.5"
               >
                 <span>Live Demo</span>

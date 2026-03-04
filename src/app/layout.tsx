@@ -6,7 +6,6 @@ import GridBackground from "@/components/GridBackground";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import CustomCursor from "@/components/CustomCursor";
 import { PostHogProvider } from "@/components/PostHogProvider";
-import DesktopPet from "@/components/DesktopPet";
 import "./globals.css";
 
 const urbanist = Urbanist({
@@ -57,7 +56,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Navbar />
             <main className="flex-1 w-full relative z-10">{children}</main>
             <Footer />
-            <DesktopPet />
           </ThemeProvider>
         </PostHogProvider>
       </body>

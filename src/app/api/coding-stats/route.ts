@@ -1,4 +1,8 @@
 import { NextResponse } from 'next/server';
+import {
+  CODING_PROFILE_CONFIGS,
+  formatSolvedCount,
+} from '@/data/codingProfiles';
 
 export const revalidate = 3600; // Cache for 1 hour
 
@@ -6,16 +10,16 @@ export interface CodingStatsResponse {
   leetcode: {
     solvedCount: number;
     formatted: string;
-    easy: number;
-    medium: number;
-    hard: number;
+    easy?: number;
+    medium?: number;
+    hard?: number;
   };
   dailysql: {
     solvedCount: number;
     formatted: string;
-    easy: number;
-    medium: number;
-    advanced: number;
+    easy?: number;
+    medium?: number;
+    advanced?: number;
   };
   stratascratch: {
     solvedCount: number;
@@ -24,20 +28,23 @@ export interface CodingStatsResponse {
 }
 
 export async function GET() {
-  // Verified baseline counts
-  let leetcodeSolved = 122;
+  const leetcodeConfig = CODING_PROFILE_CONFIGS.leetcode;
+  const dailysqlConfig = CODING_PROFILE_CONFIGS.dailysql;
+  const stratascratchConfig = CODING_PROFILE_CONFIGS.stratascratch;
+
+  let leetcodeSolved = leetcodeConfig.baselineSolvedCount;
   let leetcodeEasy = 83;
   let leetcodeMedium = 37;
   let leetcodeHard = 2;
 
-  const dailysqlSolved = 104;
-  const dailysqlEasy = 55;
-  const dailysqlMedium = 37;
-  const dailysqlAdvanced = 12;
+  let dailysqlSolved = dailysqlConfig.baselineSolvedCount;
+  let dailysqlEasy = 55;
+  let dailysqlMedium = 38;
+  let dailysqlAdvanced = 12;
 
-  const stratascratchSolved = 52;
+  let stratascratchSolved = stratascratchConfig.baselineSolvedCount;
 
-  // Attempt live LeetCode GraphQL fetch
+  // 1. Fetch live LeetCode stats
   try {
     const leetcodeQuery = {
       query: `
@@ -53,7 +60,7 @@ export async function GET() {
         }
       `,
       variables: {
-        username: '21_dvynshx',
+        username: leetcodeConfig.username,
       },
     };
 
@@ -84,29 +91,79 @@ export async function GET() {
           if (hard) leetcodeHard = hard.count;
         }
       }
+    } else {
+      // Fallback to public proxy if GraphQL is blocked
+      const proxyRes = await fetch(
+        `https://alfa-leetcode-api.onrender.com/userProfile/${leetcodeConfig.username}`,
+        { next: { revalidate: 3600 } }
+      );
+      if (proxyRes.ok) {
+        const proxyData = await proxyRes.json();
+        if (typeof proxyData.totalSolved === 'number' && proxyData.totalSolved > 0) {
+          leetcodeSolved = proxyData.totalSolved;
+          if (proxyData.easySolved) leetcodeEasy = proxyData.easySolved;
+          if (proxyData.mediumSolved) leetcodeMedium = proxyData.mediumSolved;
+          if (proxyData.hardSolved) leetcodeHard = proxyData.hardSolved;
+        }
+      }
     }
   } catch (error) {
     console.error('Error fetching live LeetCode stats:', error);
   }
 
+  // 2. Fetch live DailySQL stats
+  try {
+    const res = await fetch(`https://dailysql.in/u/${dailysqlConfig.username}`, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      },
+      next: { revalidate: 3600 },
+    });
+
+    if (res.ok) {
+      const html = await res.text();
+      const jsonMatch =
+        html.match(/\\"total_solved\\":\s*(\d+)/) ||
+        html.match(/"total_solved":\s*(\d+)/);
+      const metaMatch = html.match(/(\d+)\s*(?:Problems|Queries)\s*Solved/i);
+
+      if (jsonMatch && jsonMatch[1]) {
+        dailysqlSolved = parseInt(jsonMatch[1], 10);
+      } else if (metaMatch && metaMatch[1]) {
+        dailysqlSolved = parseInt(metaMatch[1], 10);
+      }
+
+      // Check for breakdown stats
+      const easyMatch = html.match(/\\"easy\\":\{\\"solved\\":\s*(\d+)/);
+      const medMatch = html.match(/\\"medium\\":\{\\"solved\\":\s*(\d+)/);
+      const advMatch = html.match(/\\"advanced\\":\{\\"solved\\":\s*(\d+)/);
+      if (easyMatch) dailysqlEasy = parseInt(easyMatch[1], 10);
+      if (medMatch) dailysqlMedium = parseInt(medMatch[1], 10);
+      if (advMatch) dailysqlAdvanced = parseInt(advMatch[1], 10);
+    }
+  } catch (error) {
+    console.error('Error fetching live DailySQL stats:', error);
+  }
+
   const responseData: CodingStatsResponse = {
     leetcode: {
       solvedCount: leetcodeSolved,
-      formatted: `${leetcodeSolved} problems solved`,
+      formatted: formatSolvedCount(leetcodeSolved, leetcodeConfig.unit),
       easy: leetcodeEasy,
       medium: leetcodeMedium,
       hard: leetcodeHard,
     },
     dailysql: {
       solvedCount: dailysqlSolved,
-      formatted: `${dailysqlSolved} queries solved`,
+      formatted: formatSolvedCount(dailysqlSolved, dailysqlConfig.unit),
       easy: dailysqlEasy,
       medium: dailysqlMedium,
       advanced: dailysqlAdvanced,
     },
     stratascratch: {
       solvedCount: stratascratchSolved,
-      formatted: `${stratascratchSolved} problems solved`,
+      formatted: formatSolvedCount(stratascratchSolved, stratascratchConfig.unit),
     },
   };
 

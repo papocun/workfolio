@@ -10,6 +10,8 @@ export interface CodingProfileConfig {
   platform: string;
   username: string;
   baselineSolvedCount: number;
+  baselineStreak?: number;
+  baselineRating?: number;
   unit: 'problems' | 'queries';
   url: string;
   imageSrc: string;
@@ -22,6 +24,7 @@ export const CODING_PROFILE_CONFIGS: Record<CodingPlatformId, CodingProfileConfi
     platform: 'LeetCode',
     username: '21_dvynshx',
     baselineSolvedCount: 122,
+    baselineStreak: 12,
     unit: 'problems',
     url: 'https://leetcode.com/u/21_dvynshx/',
     imageSrc: '/images/code/leetcode.png',
@@ -32,6 +35,7 @@ export const CODING_PROFILE_CONFIGS: Record<CodingPlatformId, CodingProfileConfi
     platform: 'DailySQL',
     username: 'divyanshutiwari281',
     baselineSolvedCount: 105,
+    baselineStreak: 13,
     unit: 'queries',
     url: 'https://dailysql.in/u/divyanshutiwari281',
     imageSrc: '/images/code/dailysql.jpg',
@@ -54,6 +58,8 @@ export interface CodingProfileItem {
   platform: string;
   username: string;
   solvedCount: string;
+  streak?: number;
+  rating?: number;
   url: string;
   imageSrc: string;
   imageAlt: string;
@@ -72,6 +78,8 @@ export const INITIAL_CODING_PROFILES: CodingProfileItem[] = [
       CODING_PROFILE_CONFIGS.leetcode.baselineSolvedCount,
       CODING_PROFILE_CONFIGS.leetcode.unit
     ),
+    streak: CODING_PROFILE_CONFIGS.leetcode.baselineStreak,
+    rating: CODING_PROFILE_CONFIGS.leetcode.baselineRating,
     url: CODING_PROFILE_CONFIGS.leetcode.url,
     imageSrc: CODING_PROFILE_CONFIGS.leetcode.imageSrc,
     imageAlt: CODING_PROFILE_CONFIGS.leetcode.imageAlt,
@@ -84,6 +92,7 @@ export const INITIAL_CODING_PROFILES: CodingProfileItem[] = [
       CODING_PROFILE_CONFIGS.dailysql.baselineSolvedCount,
       CODING_PROFILE_CONFIGS.dailysql.unit
     ),
+    streak: CODING_PROFILE_CONFIGS.dailysql.baselineStreak,
     url: CODING_PROFILE_CONFIGS.dailysql.url,
     imageSrc: CODING_PROFILE_CONFIGS.dailysql.imageSrc,
     imageAlt: CODING_PROFILE_CONFIGS.dailysql.imageAlt,
@@ -96,6 +105,7 @@ export const INITIAL_CODING_PROFILES: CodingProfileItem[] = [
       CODING_PROFILE_CONFIGS.stratascratch.baselineSolvedCount,
       CODING_PROFILE_CONFIGS.stratascratch.unit
     ),
+    streak: CODING_PROFILE_CONFIGS.stratascratch.baselineStreak,
     url: CODING_PROFILE_CONFIGS.stratascratch.url,
     imageSrc: CODING_PROFILE_CONFIGS.stratascratch.imageSrc,
     imageAlt: CODING_PROFILE_CONFIGS.stratascratch.imageAlt,

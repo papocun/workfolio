@@ -13,6 +13,8 @@ export interface CodingStatsResponse {
     easy?: number;
     medium?: number;
     hard?: number;
+    streak?: number;
+    rating?: number;
   };
   dailysql: {
     solvedCount: number;
@@ -20,10 +22,12 @@ export interface CodingStatsResponse {
     easy?: number;
     medium?: number;
     advanced?: number;
+    streak?: number;
   };
   stratascratch: {
     solvedCount: number;
     formatted: string;
+    streak?: number;
   };
 }
 
@@ -36,20 +40,30 @@ export async function GET() {
   let leetcodeEasy = 83;
   let leetcodeMedium = 37;
   let leetcodeHard = 2;
+  let leetcodeStreak: number | undefined = leetcodeConfig.baselineStreak;
+  let leetcodeRating: number | undefined = leetcodeConfig.baselineRating;
 
   let dailysqlSolved = dailysqlConfig.baselineSolvedCount;
   let dailysqlEasy = 55;
   let dailysqlMedium = 38;
   let dailysqlAdvanced = 12;
+  let dailysqlStreak: number | undefined = dailysqlConfig.baselineStreak;
 
   let stratascratchSolved = stratascratchConfig.baselineSolvedCount;
+  let stratascratchStreak: number | undefined = stratascratchConfig.baselineStreak;
 
-  // 1. Fetch live LeetCode stats
+  // 1. Fetch live LeetCode stats, streak, and contest rating
   try {
     const leetcodeQuery = {
       query: `
-        query userProblemsSolved($username: String!) {
+        query getUserProfile($username: String!) {
+          userContestRanking(username: $username) {
+            rating
+          }
           matchedUser(username: $username) {
+            userCalendar {
+              streak
+            }
             submitStatsGlobal {
               acSubmissionNum {
                 difficulty
@@ -91,6 +105,22 @@ export async function GET() {
           if (hard) leetcodeHard = hard.count;
         }
       }
+
+      // Check live streak
+      const liveStreak = data?.data?.matchedUser?.userCalendar?.streak;
+      if (typeof liveStreak === 'number' && liveStreak > 0) {
+        leetcodeStreak = liveStreak;
+      } else if (liveStreak === 0) {
+        leetcodeStreak = undefined;
+      }
+
+      // Check live rating
+      const liveRating = data?.data?.userContestRanking?.rating;
+      if (typeof liveRating === 'number' && liveRating > 0) {
+        leetcodeRating = Math.round(liveRating);
+      } else {
+        leetcodeRating = undefined;
+      }
     } else {
       // Fallback to public proxy if GraphQL is blocked
       const proxyRes = await fetch(
@@ -111,7 +141,7 @@ export async function GET() {
     console.error('Error fetching live LeetCode stats:', error);
   }
 
-  // 2. Fetch live DailySQL stats
+  // 2. Fetch live DailySQL stats and streak
   try {
     const res = await fetch(`https://dailysql.in/u/${dailysqlConfig.username}`, {
       headers: {
@@ -134,6 +164,21 @@ export async function GET() {
         dailysqlSolved = parseInt(metaMatch[1], 10);
       }
 
+      // Check for live streak
+      const metaStreakMatch = html.match(/(\d+)\s*Day\s*Streak/i);
+      const jsonStreakMatch =
+        html.match(/\\"current_streak\\":\s*(\d+)/) ||
+        html.match(/"current_streak":\s*(\d+)/) ||
+        html.match(/\\"streak\\":\s*(\d+)/);
+
+      if (metaStreakMatch && metaStreakMatch[1]) {
+        const parsedStreak = parseInt(metaStreakMatch[1], 10);
+        dailysqlStreak = parsedStreak > 0 ? parsedStreak : undefined;
+      } else if (jsonStreakMatch && jsonStreakMatch[1]) {
+        const parsedStreak = parseInt(jsonStreakMatch[1], 10);
+        dailysqlStreak = parsedStreak > 0 ? parsedStreak : undefined;
+      }
+
       // Check for breakdown stats
       const easyMatch = html.match(/\\"easy\\":\{\\"solved\\":\s*(\d+)/);
       const medMatch = html.match(/\\"medium\\":\{\\"solved\\":\s*(\d+)/);
@@ -153,6 +198,8 @@ export async function GET() {
       easy: leetcodeEasy,
       medium: leetcodeMedium,
       hard: leetcodeHard,
+      streak: leetcodeStreak,
+      rating: leetcodeRating,
     },
     dailysql: {
       solvedCount: dailysqlSolved,
@@ -160,10 +207,12 @@ export async function GET() {
       easy: dailysqlEasy,
       medium: dailysqlMedium,
       advanced: dailysqlAdvanced,
+      streak: dailysqlStreak,
     },
     stratascratch: {
       solvedCount: stratascratchSolved,
       formatted: formatSolvedCount(stratascratchSolved, stratascratchConfig.unit),
+      streak: stratascratchStreak,
     },
   };
 

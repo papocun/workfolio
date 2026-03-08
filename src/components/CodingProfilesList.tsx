@@ -2,14 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { motion, useReducedMotion } from 'framer-motion';
 import { getAssetPath } from '@/lib/assetPath';
 import { trackLeetcodeClicked, trackStratascratchClicked } from '@/lib/posthog';
 import {
   INITIAL_CODING_PROFILES,
   CODING_PROFILE_CONFIGS,
   formatSolvedCount,
+  sortCodingProfilesByStreak,
   type CodingProfileItem,
 } from '@/data/codingProfiles';
+import { calculateLeetCodeActiveStreak } from '@/lib/streakUtils';
 
 export type { CodingProfileItem } from '@/data/codingProfiles';
 export const CODING_PROFILES: CodingProfileItem[] = INITIAL_CODING_PROFILES;
@@ -32,7 +35,10 @@ interface CodingProfilesListProps {
 export default function CodingProfilesList({
   profiles = INITIAL_CODING_PROFILES,
 }: CodingProfilesListProps) {
-  const [items, setItems] = useState<CodingProfileItem[]>(profiles);
+  const [items, setItems] = useState<CodingProfileItem[]>(() =>
+    sortCodingProfilesByStreak(profiles)
+  );
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     let isMounted = true;
@@ -44,16 +50,18 @@ export default function CodingProfilesList({
       if (cachedStatsMap && now - lastFetchTimestamp < CACHE_TTL_MS) {
         if (isMounted) {
           setItems((prev) =>
-            prev.map((item) => {
-              const cached = cachedStatsMap?.[item.id];
-              if (!cached) return item;
-              return {
-                ...item,
-                solvedCount: cached.formatted || item.solvedCount,
-                streak: cached.streak !== undefined ? cached.streak : item.streak,
-                rating: cached.rating !== undefined ? cached.rating : item.rating,
-              };
-            })
+            sortCodingProfilesByStreak(
+              prev.map((item) => {
+                const cached = cachedStatsMap?.[item.id];
+                if (!cached) return item;
+                return {
+                  ...item,
+                  solvedCount: cached.formatted || item.solvedCount,
+                  streak: cached.streak,
+                  rating: cached.rating,
+                };
+              })
+            )
           );
         }
         return;
@@ -96,16 +104,18 @@ export default function CodingProfilesList({
 
           if (isMounted) {
             setItems((prev) =>
-              prev.map((item) => {
-                const updated = newMap[item.id];
-                if (!updated) return item;
-                return {
-                  ...item,
-                  solvedCount: updated.formatted || item.solvedCount,
-                  streak: updated.streak !== undefined ? updated.streak : item.streak,
-                  rating: updated.rating !== undefined ? updated.rating : item.rating,
-                };
-              })
+              sortCodingProfilesByStreak(
+                prev.map((item) => {
+                  const updated = newMap[item.id];
+                  if (!updated) return item;
+                  return {
+                    ...item,
+                    solvedCount: updated.formatted || item.solvedCount,
+                    streak: updated.streak,
+                    rating: updated.rating,
+                  };
+                })
+              )
             );
           }
         }
@@ -117,29 +127,54 @@ export default function CodingProfilesList({
       if (!updatedViaApi) {
         try {
           const lcUsername = CODING_PROFILE_CONFIGS.leetcode.username;
-          const lcRes = await fetch(
-            `https://alfa-leetcode-api.onrender.com/userProfile/${lcUsername}`
-          ).catch(() => null);
+          const [lcRes, calRes] = await Promise.all([
+            fetch(`https://alfa-leetcode-api.onrender.com/userProfile/${lcUsername}`).catch(() => null),
+            fetch(`https://alfa-leetcode-api.onrender.com/userProfileCalendar/${lcUsername}`).catch(() => null),
+          ]);
 
-          if (lcRes && lcRes.ok && isMounted) {
+          let lcFormatted: string | undefined;
+          let lcStreak: number | undefined;
+
+          if (lcRes && lcRes.ok) {
             const lcData = await lcRes.json();
             if (typeof lcData.totalSolved === 'number' && lcData.totalSolved > 0) {
-              const formatted = formatSolvedCount(
+              lcFormatted = formatSolvedCount(
                 lcData.totalSolved,
                 CODING_PROFILE_CONFIGS.leetcode.unit
               );
-              cachedStatsMap = {
-                ...cachedStatsMap,
-                leetcode: {
-                  ...cachedStatsMap?.leetcode,
-                  formatted,
-                },
-              };
-              lastFetchTimestamp = Date.now();
+            }
+          }
 
+          if (calRes && calRes.ok) {
+            const calData = await calRes.json();
+            const activeStreak = calculateLeetCodeActiveStreak(calData.submissionCalendar);
+            lcStreak = activeStreak > 0 ? activeStreak : undefined;
+          }
+
+          if (lcFormatted || lcStreak !== undefined) {
+            cachedStatsMap = {
+              ...cachedStatsMap,
+              leetcode: {
+                ...cachedStatsMap?.leetcode,
+                formatted: lcFormatted || cachedStatsMap?.leetcode?.formatted,
+                streak: lcStreak,
+              },
+            };
+            lastFetchTimestamp = Date.now();
+
+            if (isMounted) {
               setItems((prev) =>
-                prev.map((item) =>
-                  item.id === 'leetcode' ? { ...item, solvedCount: formatted } : item
+                sortCodingProfilesByStreak(
+                  prev.map((item) => {
+                    if (item.id === 'leetcode') {
+                      return {
+                        ...item,
+                        solvedCount: lcFormatted || item.solvedCount,
+                        streak: lcStreak,
+                      };
+                    }
+                    return item;
+                  })
                 )
               );
             }
@@ -160,7 +195,18 @@ export default function CodingProfilesList({
   return (
     <div className="flex w-full flex-col gap-4 sm:gap-5">
       {items.map((profile) => (
-        <CodingProfileCard key={profile.id} profile={profile} />
+        <motion.div
+          key={profile.id}
+          layout={!shouldReduceMotion}
+          transition={{
+            type: 'spring',
+            stiffness: 350,
+            damping: 30,
+          }}
+          className="w-full"
+        >
+          <CodingProfileCard profile={profile} />
+        </motion.div>
       ))}
     </div>
   );

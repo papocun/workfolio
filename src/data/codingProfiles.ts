@@ -24,7 +24,7 @@ export const CODING_PROFILE_CONFIGS: Record<CodingPlatformId, CodingProfileConfi
     platform: 'LeetCode',
     username: '21_dvynshx',
     baselineSolvedCount: 122,
-    baselineStreak: 12,
+    baselineStreak: undefined, // Only displayed when there is a live active running streak
     unit: 'problems',
     url: 'https://leetcode.com/u/21_dvynshx/',
     imageSrc: '/images/code/leetcode.png',
@@ -34,8 +34,8 @@ export const CODING_PROFILE_CONFIGS: Record<CodingPlatformId, CodingProfileConfi
     id: 'dailysql',
     platform: 'DailySQL',
     username: 'divyanshutiwari281',
-    baselineSolvedCount: 105,
-    baselineStreak: 13,
+    baselineSolvedCount: 106,
+    baselineStreak: 13, // Active verified running streak
     unit: 'queries',
     url: 'https://dailysql.in/u/divyanshutiwari281',
     imageSrc: '/images/code/dailysql.jpg',
@@ -46,11 +46,18 @@ export const CODING_PROFILE_CONFIGS: Record<CodingPlatformId, CodingProfileConfi
     platform: 'StrataScratch',
     username: 'papocun',
     baselineSolvedCount: 52,
+    baselineStreak: undefined,
     unit: 'problems',
     url: 'https://platform.stratascratch.com/user/papocun',
     imageSrc: '/images/code/stratascratch.jpg',
     imageAlt: 'StrataScratch Avatar - papocun',
   },
+};
+
+export const DEFAULT_PLATFORM_ORDER: Record<CodingPlatformId, number> = {
+  leetcode: 0,
+  dailysql: 1,
+  stratascratch: 2,
 };
 
 export interface CodingProfileItem {
@@ -69,7 +76,24 @@ export function formatSolvedCount(count: number, unit: 'problems' | 'queries'): 
   return `${count} ${unit} solved`;
 }
 
-export const INITIAL_CODING_PROFILES: CodingProfileItem[] = [
+/**
+ * Sorts coding profiles by current active streak descending.
+ * Ties are broken by the predefined stable default platform order.
+ */
+export function sortCodingProfilesByStreak(profiles: CodingProfileItem[]): CodingProfileItem[] {
+  return [...profiles].sort((a, b) => {
+    const streakA = typeof a.streak === 'number' && a.streak > 0 ? a.streak : 0;
+    const streakB = typeof b.streak === 'number' && b.streak > 0 ? b.streak : 0;
+
+    if (streakB !== streakA) {
+      return streakB - streakA;
+    }
+
+    return (DEFAULT_PLATFORM_ORDER[a.id] ?? 0) - (DEFAULT_PLATFORM_ORDER[b.id] ?? 0);
+  });
+}
+
+const rawProfiles: CodingProfileItem[] = [
   {
     id: 'leetcode',
     platform: CODING_PROFILE_CONFIGS.leetcode.platform,
@@ -111,3 +135,5 @@ export const INITIAL_CODING_PROFILES: CodingProfileItem[] = [
     imageAlt: CODING_PROFILE_CONFIGS.stratascratch.imageAlt,
   },
 ];
+
+export const INITIAL_CODING_PROFILES: CodingProfileItem[] = sortCodingProfilesByStreak(rawProfiles);

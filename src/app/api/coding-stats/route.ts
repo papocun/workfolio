@@ -3,6 +3,10 @@ import {
   CODING_PROFILE_CONFIGS,
   formatSolvedCount,
 } from '@/data/codingProfiles';
+import {
+  calculateLeetCodeActiveStreak,
+  calculateCurrentActiveStreak,
+} from '@/lib/streakUtils';
 
 export const revalidate = 3600; // Cache for 1 hour
 
@@ -46,13 +50,13 @@ export async function GET() {
   let dailysqlSolved = dailysqlConfig.baselineSolvedCount;
   let dailysqlEasy = 55;
   let dailysqlMedium = 38;
-  let dailysqlAdvanced = 12;
+  let dailysqlAdvanced = 13;
   let dailysqlStreak: number | undefined = dailysqlConfig.baselineStreak;
 
   let stratascratchSolved = stratascratchConfig.baselineSolvedCount;
   let stratascratchStreak: number | undefined = stratascratchConfig.baselineStreak;
 
-  // 1. Fetch live LeetCode stats, streak, and contest rating
+  // 1. Fetch live LeetCode stats, current active streak, and contest rating
   try {
     const leetcodeQuery = {
       query: `
@@ -62,7 +66,7 @@ export async function GET() {
           }
           matchedUser(username: $username) {
             userCalendar {
-              streak
+              submissionCalendar
             }
             submitStatsGlobal {
               acSubmissionNum {
@@ -106,13 +110,10 @@ export async function GET() {
         }
       }
 
-      // Check live streak
-      const liveStreak = data?.data?.matchedUser?.userCalendar?.streak;
-      if (typeof liveStreak === 'number' && liveStreak > 0) {
-        leetcodeStreak = liveStreak;
-      } else if (liveStreak === 0) {
-        leetcodeStreak = undefined;
-      }
+      // Calculate the actual current active streak from the submission calendar
+      const submissionCalendar = data?.data?.matchedUser?.userCalendar?.submissionCalendar;
+      const activeStreak = calculateLeetCodeActiveStreak(submissionCalendar);
+      leetcodeStreak = activeStreak > 0 ? activeStreak : undefined;
 
       // Check live rating
       const liveRating = data?.data?.userContestRanking?.rating;
@@ -136,12 +137,22 @@ export async function GET() {
           if (proxyData.hardSolved) leetcodeHard = proxyData.hardSolved;
         }
       }
+
+      const calRes = await fetch(
+        `https://alfa-leetcode-api.onrender.com/userProfileCalendar/${leetcodeConfig.username}`,
+        { next: { revalidate: 3600 } }
+      );
+      if (calRes.ok) {
+        const calData = await calRes.json();
+        const activeStreak = calculateLeetCodeActiveStreak(calData.submissionCalendar);
+        leetcodeStreak = activeStreak > 0 ? activeStreak : undefined;
+      }
     }
   } catch (error) {
     console.error('Error fetching live LeetCode stats:', error);
   }
 
-  // 2. Fetch live DailySQL stats and streak
+  // 2. Fetch live DailySQL stats and active streak
   try {
     const res = await fetch(`https://dailysql.in/u/${dailysqlConfig.username}`, {
       headers: {
@@ -164,19 +175,40 @@ export async function GET() {
         dailysqlSolved = parseInt(metaMatch[1], 10);
       }
 
-      // Check for live streak
-      const metaStreakMatch = html.match(/(\d+)\s*Day\s*Streak/i);
+      // Check current_streak from profile payload
       const jsonStreakMatch =
         html.match(/\\"current_streak\\":\s*(\d+)/) ||
-        html.match(/"current_streak":\s*(\d+)/) ||
-        html.match(/\\"streak\\":\s*(\d+)/);
+        html.match(/"current_streak":\s*(\d+)/);
+      const metaStreakMatch = html.match(/(\d+)\s*Day\s*Streak/i);
 
-      if (metaStreakMatch && metaStreakMatch[1]) {
-        const parsedStreak = parseInt(metaStreakMatch[1], 10);
-        dailysqlStreak = parsedStreak > 0 ? parsedStreak : undefined;
-      } else if (jsonStreakMatch && jsonStreakMatch[1]) {
-        const parsedStreak = parseInt(jsonStreakMatch[1], 10);
-        dailysqlStreak = parsedStreak > 0 ? parsedStreak : undefined;
+      let parsedStreak = 0;
+      if (jsonStreakMatch && jsonStreakMatch[1]) {
+        parsedStreak = parseInt(jsonStreakMatch[1], 10);
+      } else if (metaStreakMatch && metaStreakMatch[1]) {
+        parsedStreak = parseInt(metaStreakMatch[1], 10);
+      }
+
+      // Verify active streak against recent submission timestamps in HTML
+      const submissionDateMatches = Array.from(
+        html.matchAll(/"created_at":\s*\\"([^\\"]+)\\"/g)
+      ).concat(Array.from(html.matchAll(/"created_at":\s*"([^"]+)"/g)));
+
+      if (submissionDateMatches.length > 0) {
+        const submissionDates = submissionDateMatches
+          .map((m) => m[1].split('T')[0])
+          .filter(Boolean);
+
+        const activeSubStreak = calculateCurrentActiveStreak(submissionDates);
+        if (activeSubStreak > 0) {
+          dailysqlStreak = Math.max(parsedStreak, activeSubStreak);
+        } else {
+          // Streak broken based on submissions
+          dailysqlStreak = undefined;
+        }
+      } else if (parsedStreak > 0) {
+        dailysqlStreak = parsedStreak;
+      } else {
+        dailysqlStreak = undefined;
       }
 
       // Check for breakdown stats

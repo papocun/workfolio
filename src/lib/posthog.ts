@@ -164,4 +164,18 @@ export function trackContactClicked(properties?: {
   });
 }
 
+/**
+ * Track when Twitter/X follow alert is shown
+ */
+export function trackTwitterFollowAlertShown(): void {
+  trackEvent('twitter_follow_alert_shown');
+}
+
+/**
+ * Track when Twitter/X follow alert is clicked
+ */
+export function trackTwitterFollowClicked(): void {
+  trackEvent('twitter_follow_clicked');
+}
+
 export default posthog;

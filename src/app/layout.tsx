@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import GridBackground from "@/components/GridBackground";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import CustomCursor from "@/components/CustomCursor";
+import TwitterFollowAlert from "@/components/TwitterFollowAlert";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import "./globals.css";
 
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <CustomCursor />
             <Navbar />
             <main className="flex-1 w-full relative z-10">{children}</main>
+            <TwitterFollowAlert />
             <Footer />
           </ThemeProvider>
         </PostHogProvider>

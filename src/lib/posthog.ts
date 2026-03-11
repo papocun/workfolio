@@ -178,4 +178,11 @@ export function trackTwitterFollowClicked(): void {
   trackEvent('twitter_follow_clicked');
 }
 
+/**
+ * Track when Twitter/X follow alert is closed or dismissed
+ */
+export function trackTwitterFollowAlertClosed(): void {
+  trackEvent('twitter_follow_alert_closed');
+}
+
 export default posthog;

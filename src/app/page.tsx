@@ -20,7 +20,7 @@ export default function HomePage() {
       />
 
       {/* Greeting */}
-      <p className="text-[14px] sm:text-[16px] text-slate-500 dark:text-slate-400 font-medium mb-2 sm:mb-3.5 leading-snug">
+      <p className="text-[14px] sm:text-[16px] text-slate-500 dark:text-slate-400 font-medium mb-1 sm:mb-2 leading-snug">
         Hi, I&apos;m{" "}
         <TextScramble
           text="Divyanshu"
@@ -30,36 +30,36 @@ export default function HomePage() {
       </p>
 
       {/* Headline */}
-      <h1 className="text-[22px] sm:text-[28px] font-bold text-slate-900 dark:text-slate-100 leading-[1.2] tracking-tight mb-4 sm:mb-6">
-        Data Scientist. Applied ML Systems Builder.
+      <h1 className="text-[22px] sm:text-[28px] font-bold text-slate-900 dark:text-slate-100 leading-[1.2] tracking-tight mb-3 sm:mb-4">
+        Data Scientist. ML Systems Builder.
       </h1>
 
-      {/* Narrative Bio — Only ZeitstoneAI is bold */}
+      {/* Narrative Bio */}
       <div className="space-y-3.5 sm:space-y-4.5 text-[13.5px] sm:text-[14.5px] text-slate-600 dark:text-slate-300 leading-[1.65]">
         <p>
-          I&apos;m a Data Scientist building production-grade ML systems across
-          fraud scoring, forecasting, segmentation, and real-time APIs.
-          Currently at{" "}
-          <strong className="font-semibold text-slate-900 dark:text-slate-100">ZeitstoneAI</strong>
-          , where I work on weighted fraud-risk scoring pipelines and take models
-          from data and experimentation toward real-world deployment.
+          I work at the intersection of data, machine learning, and software,
+          building systems that solve problems beyond a notebook. I&apos;ve
+          worked with startups and small teams on problems ranging from fraud
+          scoring and forecasting to automation and real-time APIs, where the
+          interesting part is usually turning an idea into something reliable
+          enough to use.
         </p>
         <p>
-          My work spans supervised and unsupervised ML, statistical
-          experimentation, and ML engineering, with hands-on experience across
-          CatBoost, XGBoost, KMeans, FastAPI, Docker, AWS, and MLflow.
+          My work moves between experimentation and engineering. I enjoy
+          understanding the problem first, testing what actually works, and then
+          building the pieces around it. Sometimes that means an ML model,
+          sometimes a data pipeline or API, and sometimes figuring out why the
+          numbers don&apos;t make sense in the first place.
         </p>
         <p>
-          Beyond traditional ML, I also build with LLMs, RAG, fine-tuning, and AI
-          applications, exploring how intelligent systems can be made useful,
-          reliable, and practical.
+          These days, I&apos;m also exploring LLMs, RAG, and AI
+          applications&mdash;mostly with the same question in mind: can this be
+          made genuinely useful, or is it just another demo?
         </p>
         <p>
-          I freelance on the side, working on automation and analytics projects
-          that turn repetitive workflows and messy data into systems people can
-          actually use. Outside of all that, I&apos;m a chess player, reader,
-          and builder who enjoys side projects, experiments, and occasionally
-          going far too deep into something just because it caught my curiosity.
+          Outside of work, I build side projects, play chess, read, and follow
+          whatever happens to catch my curiosity. I like learning by building,
+          breaking things, and going deep enough to understand how they work.
         </p>
       </div>
 

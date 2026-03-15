@@ -221,6 +221,46 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
 
   return (
     <article className="group relative flex flex-col-reverse sm:flex-row items-stretch justify-between gap-4 sm:gap-6 overflow-hidden rounded-2xl border border-slate-200/90 dark:border-[#2F3336] bg-white dark:bg-[#16181C] p-4 sm:p-6 shadow-xs dark:shadow-md transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-400 dark:hover:border-slate-700">
+
+      {/* Geometric background pattern — dark mode only, sits beneath all content */}
+      <div className="pointer-events-none absolute inset-0 hidden dark:block opacity-70" aria-hidden="true">
+        <svg
+          width="100%"
+          height="100%"
+          xmlns="http://www.w3.org/2000/svg"
+          className="absolute inset-0"
+        >
+          <defs>
+            {/* Diagonal grid lines */}
+            <pattern id={`geo-${profile.id}`} x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+              {/* Diagonal lines — NW to SE */}
+              <line x1="0" y1="40" x2="40" y2="0" stroke="#ffffff" strokeWidth="0.5" strokeOpacity="0.04" />
+              {/* Diagonal lines — NE to SW */}
+              <line x1="0" y1="0" x2="40" y2="40" stroke="#ffffff" strokeWidth="0.5" strokeOpacity="0.025" />
+              {/* Diamond at intersection */}
+              <rect x="18" y="18" width="4" height="4" rx="0.5" transform="rotate(45 20 20)" fill="#ffffff" fillOpacity="0.035" />
+            </pattern>
+
+            {/* Radial fade mask so pattern is strongest at edges and fades toward center */}
+            <radialGradient id={`fade-${profile.id}`} cx="50%" cy="50%" r="70%">
+              <stop offset="0%" stopColor="black" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="black" stopOpacity="0" />
+            </radialGradient>
+            <mask id={`mask-${profile.id}`}>
+              <rect width="100%" height="100%" fill="white" />
+              <rect width="100%" height="100%" fill={`url(#fade-${profile.id})`} />
+            </mask>
+          </defs>
+
+          {/* Pattern fill with mask applied */}
+          <rect width="100%" height="100%" fill={`url(#geo-${profile.id})`} mask={`url(#mask-${profile.id})`} />
+
+          {/* Single subtle angled accent band across the card */}
+          <line x1="-10%" y1="85%" x2="110%" y2="30%" stroke="#ffffff" strokeWidth="1" strokeOpacity="0.03" />
+          <line x1="-10%" y1="90%" x2="110%" y2="35%" stroke="#ffffff" strokeWidth="0.5" strokeOpacity="0.02" />
+        </svg>
+      </div>
+
       {/* Left Column: Info & CTA */}
       <div className="flex flex-1 flex-row items-end justify-between gap-3 sm:flex-col sm:items-start sm:justify-between">
         <div className="flex-1 min-w-0">

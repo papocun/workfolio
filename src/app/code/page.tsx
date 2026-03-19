@@ -2,9 +2,15 @@ import type { Metadata } from 'next';
 import CodingProfilesList from '@/components/CodingProfilesList';
 
 export const metadata: Metadata = {
-  title: 'Code — Divyanshu Tiwari',
+  title: 'Code',
   description:
-    'Competitive programming, algorithms, and database query optimization profiles on LeetCode and DailySQL.',
+    'Competitive programming, algorithms, and database query optimization profiles on LeetCode and DailySQL by Divyanshu Tiwari.',
+  alternates: {
+    canonical: 'https://datafolio.me/code/',
+    types: {
+      'text/markdown': 'https://datafolio.me/code.md',
+    },
+  },
 };
 
 export default function CodePage() {

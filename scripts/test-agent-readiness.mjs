@@ -112,7 +112,7 @@ function prefersMarkdown(acceptHeader) {
 }
 
 async function runStaticOutputTests() {
-  console.log('\n\x1b[1m=== 1. Testing Server-Rendered HTML & Static Build Artifacts ===\x1b[0m');
+  console.log('\n\x1b[1m=== 1. Testing Server-Rendered HTML & Technical SEO Artifacts ===\x1b[0m');
 
   const outDir = path.join(projectRoot, 'out');
   assert(fs.existsSync(outDir), 'out/ directory exists');
@@ -146,8 +146,14 @@ async function runStaticOutputTests() {
     }
   }
 
-  // Alternate markdown discovery link in HTML
+  // Canonical and alternate markdown discovery link in HTML
+  assert(indexHtml.includes('rel="canonical"') && indexHtml.includes('href="https://datafolio.me/"'), 'Homepage raw HTML contains canonical https://datafolio.me/');
   assert(indexHtml.includes('rel="alternate"') && indexHtml.includes('type="text/markdown"'), 'Homepage raw HTML contains <link rel="alternate" type="text/markdown">');
+
+  // Open Graph & Twitter meta tags
+  assert(indexHtml.includes('property="og:title"'), 'Homepage contains og:title');
+  assert(indexHtml.includes('property="og:description"'), 'Homepage contains og:description');
+  assert(indexHtml.includes('name="twitter:card"'), 'Homepage contains twitter:card');
 
   // 2. Check 404 Recovery page in out/404.html
   const notFoundPath = path.join(outDir, '404.html');
@@ -158,7 +164,39 @@ async function runStaticOutputTests() {
   assert(notFoundHtml.includes('/sitemap.xml'), '404 page contains recovery link to /sitemap.xml');
   assert(notFoundHtml.includes('/llms.txt'), '404 page contains recovery link to /llms.txt');
 
-  // 3. Check out/llms.txt
+  // 3. Check out/projects/index.html
+  const projectsHtmlPath = path.join(outDir, 'projects', 'index.html');
+  if (fs.existsSync(projectsHtmlPath)) {
+    const projectsHtml = fs.readFileSync(projectsHtmlPath, 'utf-8');
+    assert(projectsHtml.includes('BreadcrumbList'), 'Projects page contains BreadcrumbList structured data');
+    assert(projectsHtml.includes('<h1') && projectsHtml.includes('Projects</h1>'), 'Projects page contains semantic <h1>Projects</h1>');
+  }
+
+  // 4. Check out/experience/index.html
+  const expHtmlPath = path.join(outDir, 'experience', 'index.html');
+  if (fs.existsSync(expHtmlPath)) {
+    const expHtml = fs.readFileSync(expHtmlPath, 'utf-8');
+    assert(expHtml.includes('BreadcrumbList'), 'Experience page contains BreadcrumbList structured data');
+    assert(expHtml.includes('<h1') && expHtml.includes('Experience</h1>'), 'Experience page contains semantic <h1>Experience</h1>');
+  }
+
+  // 5. Check out/code/index.html
+  const codeHtmlPath = path.join(outDir, 'code', 'index.html');
+  if (fs.existsSync(codeHtmlPath)) {
+    const codeHtml = fs.readFileSync(codeHtmlPath, 'utf-8');
+    assert(codeHtml.includes('BreadcrumbList'), 'Code page contains BreadcrumbList structured data');
+    assert(codeHtml.includes('<h1') && codeHtml.includes('Code</h1>'), 'Code page contains semantic <h1>Code</h1>');
+  }
+
+  // 6. Check out/blog/index.html
+  const blogHtmlPath = path.join(outDir, 'blog', 'index.html');
+  if (fs.existsSync(blogHtmlPath)) {
+    const blogHtml = fs.readFileSync(blogHtmlPath, 'utf-8');
+    assert(blogHtml.includes('BreadcrumbList'), 'Blog page contains BreadcrumbList structured data');
+    assert(blogHtml.includes('<h1') && blogHtml.includes('Blog</h1>'), 'Blog page contains semantic <h1>Blog</h1>');
+  }
+
+  // 7. Check out/llms.txt
   const llmsTxtPath = path.join(outDir, 'llms.txt');
   const publicLlmsTxtPath = path.join(projectRoot, 'public', 'llms.txt');
   const hasLlms = fs.existsSync(llmsTxtPath) || fs.existsSync(publicLlmsTxtPath);
@@ -169,7 +207,7 @@ async function runStaticOutputTests() {
   assert(llmsContent.includes('## Experience'), 'llms.txt contains Experience section');
   assert(llmsContent.includes('## Code'), 'llms.txt contains Code section');
 
-  // 4. Check out/sitemap.xml
+  // 8. Check out/sitemap.xml
   const sitemapPath = path.join(outDir, 'sitemap.xml');
   const publicSitemapPath = path.join(projectRoot, 'public', 'sitemap.xml');
   const hasSitemap = fs.existsSync(sitemapPath) || fs.existsSync(publicSitemapPath);
@@ -181,7 +219,7 @@ async function runStaticOutputTests() {
   assert(sitemapContent.includes('https://datafolio.me/code'), 'sitemap.xml contains code page');
   assert(sitemapContent.includes('https://datafolio.me/blog'), 'sitemap.xml contains blog page');
 
-  // 5. Check out/robots.txt
+  // 9. Check out/robots.txt
   const robotsPath = path.join(outDir, 'robots.txt');
   const publicRobotsPath = path.join(projectRoot, 'public', 'robots.txt');
   const hasRobots = fs.existsSync(robotsPath) || fs.existsSync(publicRobotsPath);
@@ -227,7 +265,7 @@ function runAcceptParserUnitTests() {
 }
 
 async function main() {
-  console.log('Running Agent-Readiness Test Suite...\n');
+  console.log('Running Technical SEO & Agent-Readiness Test Suite...\n');
   runAcceptParserUnitTests();
   await runStaticOutputTests();
 

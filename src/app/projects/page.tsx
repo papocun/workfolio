@@ -6,18 +6,58 @@ import OtherProjectsList from '@/components/OtherProjectsList';
 export const metadata: Metadata = {
   title: 'Projects',
   description:
-    'Production-grade machine learning systems, predictive pipelines, and containerized cloud APIs built and deployed by Divyanshu Tiwari.',
+    'Production-grade machine learning systems, time-series forecasting pipelines, and containerized cloud APIs built and deployed by Divyanshu Tiwari.',
   alternates: {
     canonical: 'https://datafolio.me/projects/',
     types: {
       'text/markdown': 'https://datafolio.me/projects.md',
     },
   },
+  openGraph: {
+    title: 'Projects | Divyanshu Tiwari',
+    description:
+      'Production-grade machine learning systems, time-series forecasting pipelines, and containerized cloud APIs built and deployed by Divyanshu Tiwari.',
+    url: 'https://datafolio.me/projects/',
+    siteName: 'Divyanshu Tiwari',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Projects | Divyanshu Tiwari',
+    description:
+      'Production-grade machine learning systems, time-series forecasting pipelines, and containerized cloud APIs built and deployed by Divyanshu Tiwari.',
+    creator: '@21dvy_t',
+  },
+};
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: 'https://datafolio.me/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Projects',
+      item: 'https://datafolio.me/projects/',
+    },
+  ],
 };
 
 export default function ProjectsPage() {
   return (
     <main className="max-w-[680px] mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 sm:pb-20 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       {/* Section Header */}
       <div className="mb-6 sm:mb-8">
         <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800/80 text-[11.5px] font-mono text-slate-600 dark:text-slate-400 mb-3 border border-slate-200/60 dark:border-slate-700/60">

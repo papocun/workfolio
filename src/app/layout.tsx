@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GridBackground from "@/components/GridBackground";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { SoundProvider } from "@/components/SoundProvider";
 import CustomCursor from "@/components/CustomCursor";
 import TwitterFollowAlert from "@/components/TwitterFollowAlert";
 import { PostHogProvider } from "@/components/PostHogProvider";
@@ -142,22 +143,31 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `
               (function() {
                 try {
+                  var saved = localStorage.getItem('workfolio-theme');
+                  if (saved === 'light') {
+                    document.documentElement.classList.remove('dark');
+                  } else {
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch (e) {
                   document.documentElement.classList.add('dark');
-                } catch (e) {}
+                }
               })();
             `,
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col font-sans bg-[#000000] text-slate-100 selection:bg-[#1E2732] selection:text-[#E7E9EA] transition-colors duration-200">
+      <body className="min-h-full flex flex-col font-sans bg-[#FAF9F6] dark:bg-[#000000] text-slate-800 dark:text-slate-100 selection:bg-sky-100 dark:selection:bg-[#1E2732] selection:text-sky-900 dark:selection:text-[#E7E9EA] transition-colors duration-200">
         <PostHogProvider>
           <ThemeProvider>
-            <GridBackground />
-            <CustomCursor />
-            <Navbar />
-            <main className="flex-1 w-full relative z-10">{children}</main>
-            <TwitterFollowAlert />
-            <Footer />
+            <SoundProvider>
+              <GridBackground />
+              <CustomCursor />
+              <Navbar />
+              <main className="flex-1 w-full relative z-10">{children}</main>
+              <TwitterFollowAlert />
+              <Footer />
+            </SoundProvider>
           </ThemeProvider>
         </PostHogProvider>
       </body>

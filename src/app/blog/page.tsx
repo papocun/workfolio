@@ -42,6 +42,9 @@ export default function BlogPage() {
           <LockKey size={22} weight="regular" />
         </div>
 
+        {/* Semantic page heading */}
+        <h1 className="sr-only">Blog</h1>
+
         {/* TextShimmer animation directly underneath */}
         <TextShimmer className="font-mono text-sm" duration={1}>
           Work in progress...
@@ -115,6 +118,3 @@ function InitialNoticeBanner() {
     </AnimatePresence>
   );
 }
-
-
-

@@ -24,7 +24,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/90 dark:bg-[#000000]/90 backdrop-blur-sm border-b border-slate-200/50 dark:border-slate-800/60 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]">
+    <header className="sticky top-0 z-50 w-full bg-[#FAF9F6]/85 dark:bg-[#000000]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/60 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]">
       <div className="max-w-[680px] mx-auto px-4 sm:px-6 py-3 sm:py-3.5 flex items-center justify-between gap-2">
         {/* Left Branding */}
         <Link

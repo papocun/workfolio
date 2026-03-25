@@ -58,12 +58,13 @@ const EXPERIENCES: TimelineExperienceItem[] = [
     period: 'Aug 2026 – Present',
     location: 'Remote',
     isCurrent: true,
+    summary:
+      'Building an e-commerce financial decision system with 9 scoring models, automated testing, and multi-source data integration.',
     narrative: [
-      'Owned end-to-end development of an e-commerce financial decision system, translating business requirements into 9 scoring models, validating them through 119 automated tests, and collaborating across business, backend, data, and database layers to design a multi-source data model connecting Shopify, payment, shipping, returns, and cost data into actionable scoring and dashboard outputs.',
-      'Currently integrating and refining the scoring pipeline, working across multiple business data sources to ensure consistent inputs, transformations, and reliable decision outputs.',
-      'Building and validating the underlying data model and data flows, with ongoing work around scoring logic, relationships between data sources, and edge-case handling.',
-      'Working closely with business, backend, data, and database teams to translate business requirements into technical requirements, scoring logic, and implementable system behaviour.',
-      'Continuously testing, debugging, and refining the decision models, expanding validation coverage and handling edge cases as the system evolves.',
+      'Owned end-to-end development of an e-commerce financial decision system, translating business requirements into 9 scoring models validated through 119 automated tests.',
+      'Collaborated across business, backend, data, and database layers to design a multi-source data model connecting Shopify, payment, shipping, returns, and cost data into actionable scoring and dashboard outputs.',
+      'Integrated and refined scoring pipelines, ensuring consistent transformations, reliable decision outputs, and robust edge-case handling.',
+      'Continuously tested, debugged, and refined decision models, expanding validation coverage and handling edge cases as the system evolves.',
     ],
     technologies: [
       'Python',
@@ -81,9 +82,11 @@ const EXPERIENCES: TimelineExperienceItem[] = [
     period: 'Mar 2026 – May 2026',
     location: 'Remote',
     isCurrent: false,
+    summary:
+      'Automated end-to-end Python reporting pipelines and performed SQL cohort analysis to support retention decisions.',
     narrative: [
       'Automated the Excel reporting pipeline end-to-end in Python, reducing dashboard generation time from 3+ hours to under 5 minutes for recurring reports.',
-      'Performed SQL-based cohort analysis on transactional data, identifying a 15% decline in repeat purchases over a 90-day window and presenting the findings to support retention decisions.',
+      'Performed SQL-based cohort analysis on transactional data, identifying a 15% decline in repeat purchases over a 90-day window and presenting findings to support retention decisions.',
       'Maintained recurring business dashboards and reporting workflows, ensuring data accuracy and consistency for operational decision-making.',
     ],
     technologies: [
@@ -118,7 +121,7 @@ export default function ExperiencePage() {
         </p>
       </div>
 
-      {/* Timeline with Large Circular Nodes */}
+      {/* Flat Editorial Expandable Experience List */}
       <ExperienceTimeline experiences={EXPERIENCES} />
     </main>
   );

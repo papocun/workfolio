@@ -122,9 +122,9 @@ async function runStaticOutputTests() {
   assert(fs.existsSync(indexPath), 'out/index.html exists');
   const indexHtml = fs.readFileSync(indexPath, 'utf-8');
 
-  assert(indexHtml.includes('Data Scientist. ML Systems Builder.'), 'Homepage raw HTML contains <h1>Data Scientist. ML Systems Builder.</h1> without JavaScript');
-  assert(indexHtml.includes('I work at the intersection of data, machine learning, and software'), 'Homepage raw HTML contains first bio paragraph');
-  assert(indexHtml.includes('can this be made genuinely useful, or is it just another demo?'), 'Homepage raw HTML contains LLM/RAG paragraph');
+  assert(indexHtml.includes("Divyanshu Tiwari"), "Homepage raw HTML contains <h1>Hi, I'm Divyanshu Tiwari</h1> without JavaScript");
+  assert(indexHtml.includes('Working in') && (indexHtml.includes('Data &amp; AI') || indexHtml.includes('Data & AI')), 'Homepage raw HTML contains first bio paragraph');
+  assert(indexHtml.includes('LLMs, RAG, and inference engineering'), 'Homepage raw HTML contains LLM/RAG paragraph');
   
   // Character count check of meaningful text
   const rawTextWithoutTags = indexHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');

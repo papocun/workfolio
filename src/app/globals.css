@@ -4,7 +4,7 @@
 
 /* ============================================================
    WORKFOLIO DESIGN SYSTEM — globals.css
-   Tailwind CSS v4 · Pure Dark Mode Design System
+   Tailwind CSS v4 · Premium Light & Dark Design System
    ============================================================ */
 
 /* ─── Theme Token Definitions ──────────────────────────────── */
@@ -12,41 +12,6 @@
   /* ── Font Family (Strictly Urbanist Only) ── */
   --font-sans: var(--font-sans), "Urbanist", ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-sans), "Urbanist", ui-sans-serif, system-ui, sans-serif;
-
-  /* ── Color Palette: Design System Neutral & Slate Scale ── */
-  --color-slate-50: #FFFFFF;
-  --color-slate-100: #E7E9EA;
-  --color-slate-200: #E7E9EA;
-  --color-slate-300: #E7E9EA;
-  --color-slate-400: #71767B;
-  --color-slate-500: #71767B;
-  --color-slate-600: #71767B;
-  --color-slate-700: #2F3336;
-  --color-slate-800: #2F3336;
-  --color-slate-900: #16181C;
-  --color-slate-950: #000000;
-
-  /* ── Semantic Design Tokens ── */
-  --color-background: #000000;
-  --color-surface-elevated: #16181C;
-  --color-surface-hover: #1E2732;
-  --color-border-divider: #2F3336;
-  --color-text-primary: #E7E9EA;
-  --color-text-secondary: #71767B;
-  --color-accent-blue: #1D9BF0;
-  --color-like-heart: #F91880;
-  --color-retweet-success: #00BA7C;
-  --color-error-warning: #F4212E;
-  --color-inverse-white: #FFFFFF;
-
-  /* ── Color Palette: Accent Blue ── */
-  --color-blue-50: #0a1726;
-  --color-blue-100: #102a45;
-  --color-blue-200: #1a416d;
-  --color-blue-500: #1D9BF0;
-  --color-blue-600: #1D9BF0;
-  --color-blue-700: #1a8cd8;
-  --color-blue-800: #1a8cd8;
 
   /* ── Layout Constraints ── */
   --container: 680px;
@@ -68,8 +33,32 @@
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ─── CSS Custom Properties (Permanent Dark Mode) ─────────── */
-:root,
+/* ─── CSS Custom Properties: Premium Editorial Light Mode ──── */
+:root {
+  --c-bg: #FAF9F6;
+  --c-surface: #FFFFFF;
+  --c-surface-elevated: #F8F9FA;
+  --c-surface-hover: #F3F4F6;
+  --c-border: #E5E7EB;
+  --c-text-primary: #111827;
+  --c-text-secondary: #4B5563;
+  --c-accent: #1D9BF0;
+  --c-heart: #F91880;
+  --c-success: #00BA7C;
+  --c-error: #F4212E;
+  --c-white: #FFFFFF;
+  --c-scrollbar: #D1D5DB;
+  --c-scrollbar-hover: #9CA3AF;
+  --color-heading: #111827;
+  --focus-ring: 0 0 0 2px #FAF9F6, 0 0 0 4px var(--c-accent);
+  --grid-color: rgba(15, 23, 42, 0.045);
+  --grid-dot-color: rgba(15, 23, 42, 0.08);
+  --grid-size: 24px;
+  --border-subtle: #E5E7EB;
+  color-scheme: light;
+}
+
+/* ─── CSS Custom Properties: Untouched Dark Mode ───────────── */
 .dark {
   --c-bg: #000000;
   --c-surface: #16181C;
@@ -91,6 +80,7 @@
   --grid-dot-color: rgba(255, 255, 255, 0.091);
   --grid-size: 24px;
   --border-subtle: #2F3336;
+  color-scheme: dark;
 }
 
 /* ─── Base Reset & Defaults ────────────────────────────────── */
@@ -105,8 +95,6 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
-  color-scheme: dark;
-  background-color: #000000;
   overflow-x: clip;
 }
 
@@ -116,14 +104,17 @@ body {
   font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.6;
-  color: var(--c-text-secondary);
-  background-color: #000000;
   overflow-x: clip;
   transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1), color 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ─── Selection Styling ────────────────────────────────────── */
 ::selection {
+  background-color: #E0F2FE;
+  color: #0369A1;
+}
+
+.dark ::selection {
   background-color: #1E2732;
   color: #E7E9EA;
 }
@@ -159,7 +150,6 @@ body {
 
 /* ============================================================
    BACKGROUND GRID PATTERN
-   24px × 24px coordinate grid with intersection dots
    ============================================================ */
 .bg-grid-pattern {
   background-image:
@@ -216,28 +206,28 @@ body {
   align-items: center;
   padding: 4px 8px;
   border-radius: var(--radius-sm);
-  background-color: #16181C;
-  border: 1px solid #2F3336;
+  background-color: var(--c-surface);
+  border: 1px solid var(--c-border);
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: 0.02em;
-  color: #71767B;
+  color: var(--c-text-secondary);
 }
 
 /* ── Card Surface ── */
 .card-surface {
-  background-color: #16181C;
-  border: 1px solid #2F3336;
+  background-color: var(--c-surface);
+  border: 1px solid var(--c-border);
   border-radius: var(--radius-md);
   padding: 24px;
   transition: border-color 200ms cubic-bezier(0.4, 0, 0.2, 1), background-color 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-surface:hover {
-  border-color: #2F3336;
-  background-color: #1E2732;
+  border-color: var(--c-border);
+  background-color: var(--c-surface-hover);
 }
 
 /* ============================================================

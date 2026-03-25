@@ -1,16 +1,17 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { CaretDown, CaretUp, ArrowRight } from '@phosphor-icons/react';
 
 export interface TimelineExperienceItem {
   id: string;
   company: string;
   role: string;
   period: string;
-  location: string;
+  location?: string;
   isCurrent?: boolean;
-  tagline?: string;
+  summary: string;
   narrative: string[];
   technologies: string[];
 }
@@ -22,113 +23,129 @@ interface ExperienceTimelineProps {
 export default function ExperienceTimeline({
   experiences,
 }: ExperienceTimelineProps) {
-  return (
-    <div className="relative w-full">
-      {/* Vertical Timeline Track Line */}
-      <div
-        className="absolute left-[17px] sm:left-[21px] top-4 sm:top-5 bottom-6 sm:bottom-8 w-[2px] bg-slate-200/90 dark:bg-slate-800/90 -translate-x-1/2"
-        aria-hidden="true"
-      />
+  // All experiences are collapsed by default until user clicks the expand button
+  const [expandedIds, setExpandedIds] = useState<Record<string, boolean>>({});
 
-      <div className="space-y-10 sm:space-y-16">
+  const toggleExpand = (id: string) => {
+    setExpandedIds((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  return (
+    <section aria-label="Experience List" className="w-full">
+      <div className="divide-y divide-slate-200/80 dark:divide-[#2F3336]/40 space-y-4 sm:space-y-5">
         {experiences.map((exp, index) => {
-          const isLatest = exp.isCurrent ?? index === 0;
+          const isExpanded = !!expandedIds[exp.id];
+          const contentId = `exp-details-${exp.id}`;
 
           return (
-            <motion.div
+            <article
               key={exp.id}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="relative flex items-start gap-3.5 sm:gap-7"
+              className={index === 0 ? '' : 'pt-4 sm:pt-5'}
             >
-              {/* Large Circular Timeline Node Anchor */}
-              <div className="relative z-10 shrink-0 flex items-center justify-center">
-                <div
-                  className={`w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] bg-white dark:bg-[#16181C] ${
-                    isLatest
-                      ? 'border-2 border-slate-900 dark:border-slate-100 shadow-md ring-3 sm:ring-4 ring-slate-100 dark:ring-slate-800/60'
-                      : 'border-2 border-slate-300 dark:border-slate-700/80 shadow-xs'
-                  }`}
-                >
-                  {isLatest ? (
-                    <span
-                      className="relative flex items-center justify-center h-3.5 w-3.5 sm:h-4 sm:w-4"
-                      aria-label="Currently working here"
-                    >
-                      {/* Subtle ambient pulse ring */}
-                      <span className="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00BA7C] opacity-40" />
-                      {/* Gentle secondary halo */}
-                      <span className="motion-safe:animate-pulse absolute inline-flex h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#00BA7C]/25" />
-                      {/* Living solid center dot with soft glow */}
-                      <span className="relative inline-flex rounded-full h-2 w-2 sm:h-2.5 sm:w-2.5 bg-[#00BA7C] shadow-[0_0_6px_rgba(0,186,124,0.65)]" />
-                    </span>
-                  ) : (
-                    <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-slate-400 dark:bg-slate-500" />
-                  )}
-                </div>
-              </div>
-
-              {/* Experience Story & Details */}
-              <div className="flex-1 pt-0.5 min-w-0">
-                {/* Header Row: Company & Metadata */}
-                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h2 className="text-[18px] sm:text-[22px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-snug">
-                      {exp.company}
-                    </h2>
-                    {isLatest && (
-                      <span className="inline-flex items-center gap-1 font-mono text-[10px] sm:text-[10.5px] px-2 py-0.5 rounded-full bg-[#00BA7C]/10 text-[#00BA7C] dark:text-[#00BA7C] border border-[#00BA7C]/30 font-medium">
-                        Present
-                      </span>
-                    )}
-                  </div>
-
-                  <span className="text-[12px] font-mono text-slate-400 dark:text-slate-500">
-                    {exp.period}
+              {/* Top Row: Clickable Header Button */}
+              <button
+                type="button"
+                onClick={() => toggleExpand(exp.id)}
+                aria-expanded={isExpanded}
+                aria-controls={contentId}
+                className="w-full text-left group flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] rounded-sm transition-colors py-0.5 cursor-pointer"
+              >
+                {/* Left: Company · Role */}
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <span className="text-[15px] sm:text-[16px] font-semibold text-slate-900 dark:text-slate-100 group-hover:text-black dark:group-hover:text-white transition-colors">
+                    {exp.company}
                   </span>
-                </div>
-
-                {/* Role & Location Subtitle */}
-                <div className="text-[13px] sm:text-[13.5px] text-slate-600 dark:text-slate-400 mb-3.5 flex items-center gap-1.5 font-medium">
-                  <span className="text-slate-900 dark:text-slate-200 font-semibold">{exp.role}</span>
-                  <span className="text-slate-300 dark:text-slate-700 select-none" aria-hidden="true">
+                  <span
+                    className="text-slate-400 dark:text-slate-600 select-none text-[13px]"
+                    aria-hidden="true"
+                  >
                     ·
                   </span>
-                  <span>{exp.location}</span>
+                  <span className="text-[13.5px] sm:text-[14.5px] text-slate-600 dark:text-slate-400 font-normal">
+                    {exp.role}
+                  </span>
                 </div>
 
-                {/* What I did — Story-driven Narrative */}
-                <div className="mb-4">
-                  <h3 className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2.5">
-                    What I did
-                  </h3>
-                  <div className="space-y-3 text-[13.5px] sm:text-[14.5px] text-slate-600 dark:text-slate-300 leading-[1.65]">
-                    {exp.narrative.map((paragraph, pIdx) => (
-                      <p key={pIdx}>{paragraph}</p>
-                    ))}
-                  </div>
+                {/* Right: Date Range & Arrow Indicator */}
+                <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto mt-0.5 sm:mt-0">
+                  <span className="text-[12px] sm:text-[13px] font-mono text-slate-500 dark:text-slate-500 tabular-nums">
+                    {exp.period}
+                  </span>
+                  <span
+                    className={`inline-flex items-center justify-center transition-colors ${
+                      isExpanded
+                        ? 'text-[#1D9BF0]'
+                        : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-700 dark:group-hover:text-slate-300'
+                    }`}
+                    aria-hidden="true"
+                  >
+                    {isExpanded ? (
+                      <CaretUp size={14} weight="bold" />
+                    ) : (
+                      <CaretDown size={14} weight="bold" />
+                    )}
+                  </span>
                 </div>
+              </button>
 
-                {/* Technologies Used Badges */}
-                {exp.technologies.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {exp.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 px-2.5 py-0.5 text-[11px] font-mono font-medium text-slate-700 dark:text-slate-300"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+              {/* Short One-Line Summary */}
+              <p className="text-[13px] sm:text-[13.5px] text-slate-600 dark:text-slate-400 leading-relaxed mt-1 sm:mt-1.5">
+                {exp.summary}
+              </p>
+
+              {/* Collapsible Expanded Details */}
+              <AnimatePresence initial={false}>
+                {isExpanded && (
+                  <motion.div
+                    id={contentId}
+                    key="expanded-content"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="border-l border-slate-300 dark:border-[#2F3336] pl-4 sm:pl-5 ml-2.5 sm:ml-3 my-2.5 sm:my-3 space-y-2">
+                      {/* Detailed Bullet Points */}
+                      {exp.narrative.map((bullet, bIdx) => (
+                        <div
+                          key={bIdx}
+                          className="flex items-start gap-2 text-[13px] sm:text-[13.5px] text-slate-700 dark:text-slate-300 leading-[1.6]"
+                        >
+                          <ArrowRight
+                            size={12}
+                            weight="bold"
+                            className="text-[#1D9BF0] shrink-0 mt-1"
+                            aria-hidden="true"
+                          />
+                          <span>{bullet}</span>
+                        </div>
+                      ))}
+
+                      {/* Technologies Used */}
+                      {exp.technologies.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pt-1.5">
+                          {exp.technologies.map((tech) => (
+                            <span
+                              key={tech}
+                              className="rounded bg-slate-100 dark:bg-[#16181C] border border-slate-200/80 dark:border-[#2F3336] px-2 py-0.5 text-[11px] font-mono text-slate-700 dark:text-slate-400 font-medium"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
                 )}
-              </div>
-            </motion.div>
+              </AnimatePresence>
+            </article>
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }

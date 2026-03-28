@@ -30,22 +30,22 @@ export default function LocationTag({
 
   return (
     <div
-      className={`flex items-center gap-3 sm:gap-3.5 text-[13px] sm:text-[13.5px] text-slate-500 dark:text-slate-400 font-medium flex-wrap ${className}`}
+      className={`flex items-center gap-3 sm:gap-3.5 text-[13px] sm:text-[13.5px] text-slate-500 dark:text-[#71767B] font-medium flex-wrap ${className}`}
     >
       {/* Location with Phosphor MapPin */}
       <div className="flex items-center gap-1.5">
         <MapPin
           size={15}
           weight="bold"
-          className="text-slate-400 dark:text-slate-500 shrink-0"
+          className="text-slate-400 dark:text-[#71767B] shrink-0"
           aria-hidden="true"
         />
-        <span>{location}</span>
+        <span className="text-slate-700 dark:text-[#E7E9EA] font-medium">{location}</span>
       </div>
 
       {/* Vertical Pipe Divider */}
       <span
-        className="text-slate-300 dark:text-slate-700 select-none text-[12px] font-light"
+        className="text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-light"
         aria-hidden="true"
       >
         |
@@ -65,7 +65,7 @@ export default function LocationTag({
             })
           }
           aria-label="GitHub Profile"
-          className="text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 transition-colors duration-150 inline-flex items-center justify-center p-0.5 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
+          className="text-slate-400 dark:text-[#71767B] hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-0.5 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
         >
           <GithubLogo size={15} weight="regular" className="shrink-0" />
         </a>
@@ -83,7 +83,7 @@ export default function LocationTag({
             })
           }
           aria-label="LinkedIn Profile"
-          className="text-slate-400 dark:text-slate-500 hover:text-[#0A66C2] dark:hover:text-[#0A66C2] transition-colors duration-150 inline-flex items-center justify-center p-0.5 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
+          className="text-slate-400 dark:text-[#71767B] hover:text-[#0A66C2] dark:hover:text-[#0A66C2] transition-colors duration-150 inline-flex items-center justify-center p-0.5 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
         >
           <LinkedinLogo size={15} weight="regular" className="shrink-0" />
         </a>
@@ -101,7 +101,7 @@ export default function LocationTag({
             })
           }
           aria-label="X (Twitter) Profile"
-          className="text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 transition-colors duration-150 inline-flex items-center justify-center p-0.5 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
+          className="text-slate-400 dark:text-[#71767B] hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-0.5 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
         >
           <XLogo size={15} weight="regular" className="shrink-0" />
         </a>
@@ -109,7 +109,7 @@ export default function LocationTag({
 
       {/* Vertical Pipe Divider */}
       <span
-        className="text-slate-300 dark:text-slate-700 select-none text-[12px] font-light"
+        className="text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-light"
         aria-hidden="true"
       >
         |
@@ -130,7 +130,7 @@ export default function LocationTag({
           className={`p-0.5 rounded transition-colors duration-150 inline-flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] ${
             isSoundOn
               ? 'text-[#1D9BF0] hover:text-[#1a8cd8]'
-              : 'text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-200'
+              : 'text-slate-400 dark:text-[#71767B] hover:text-slate-900 dark:hover:text-[#E7E9EA]'
           }`}
         >
           {isSoundOn ? (
@@ -148,7 +148,7 @@ export default function LocationTag({
             isDark ? 'Switch to light mode' : 'Switch to dark mode'
           }
           title={isDark ? 'Theme: Dark' : 'Theme: Light'}
-          className="text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 transition-colors duration-150 inline-flex items-center justify-center p-0.5 rounded cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
+          className="text-slate-400 dark:text-[#71767B] hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-0.5 rounded cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
         >
           {isDark ? (
             <Sun size={15} weight="regular" className="shrink-0" />

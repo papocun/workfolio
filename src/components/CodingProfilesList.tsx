@@ -274,8 +274,8 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
                 </span>
               )}
               {hasRating && (
-                <span className="inline-flex items-center gap-1 rounded-full border border-slate-200/90 dark:border-[#2F3336] bg-slate-100/90 dark:bg-[#1E2732] px-2.5 py-0.5 font-mono text-[11px] font-medium text-slate-700 dark:text-[#E7E9EA]">
-                  <span>{profile.rating} rating</span>
+                <span className="inline-flex items-center gap-1 rounded-full border border-sky-500/25 dark:border-sky-500/35 bg-sky-500/10 dark:bg-sky-500/15 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-sky-700 dark:text-[#1D9BF0]">
+                  <span>★ {profile.rating} • 8 Contests</span>
                 </span>
               )}
             </div>

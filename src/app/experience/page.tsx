@@ -108,7 +108,7 @@ export default function ExperiencePage() {
       />
 
       {/* Section Header */}
-      <div className="mb-8 sm:mb-12">
+      <div className="mb-6 sm:mb-8">
         <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800/80 text-[11.5px] font-mono text-slate-600 dark:text-slate-400 mb-3 border border-slate-200/60 dark:border-slate-700/60">
           <span className="w-1.5 h-1.5 rounded-full bg-[#1D9BF0] animate-pulse" />
           <span>experience</span>

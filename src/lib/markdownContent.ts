@@ -32,10 +32,10 @@ Data Scientist and ML systems builder working across machine learning, data, AI 
 
 ## Experience
 
-- [ZeitstoneAI](https://datafolio.me/experience) (Aug 2026 – Present) — Data Scientist Intern
-  - Owned development of an e-commerce financial decision system with 9 scoring models validated through 119 automated tests.
-  - Multi-source data models connecting Shopify, payment, shipping, returns, and cost data.
-  - Stack: Python, Data Modeling, Automated Testing, Scoring Systems, FastAPI, Docker.
+- [Zeitster](https://datafolio.me/experience) (Aug 2026 – Present) — AI Data Engineer Intern
+  - Designed end-to-end data infrastructure for ingesting Shopify and external merchant data covering GraphQL Bulk Operations, Webhooks, S3, Lambda, SQS, Redshift, Aurora PostgreSQL and DynamoDB.
+  - Ingestion architecture for historical backfills and incremental data with retries, DLQs, idempotency and reconciliation.
+  - Stack: AWS (S3, Lambda, SQS, Redshift), Aurora PostgreSQL, DynamoDB, Python, SQL, Shopify GraphQL, Data Modeling, Data Pipelines.
 
 - [ChatSpark](https://datafolio.me/experience) (Mar 2026 – May 2026) — Data Analyst Intern
   - Automated Python Excel reporting pipeline end-to-end (cut generation time from 3+ hours to <5 mins).
@@ -88,7 +88,7 @@ Outside of work, I build side projects, play chess, read, and follow whatever ha
 
 ## Experience
 
-- [ZeitstoneAI](https://datafolio.me/experience) (Data Scientist Intern, Aug 2026 – Present): Financial decision system with 9 scoring models and 119 automated tests.
+- [Zeitster](https://datafolio.me/experience) (AI Data Engineer Intern, Aug 2026 – Present): End-to-end data infrastructure and ingestion pipelines for Shopify and external merchant data across AWS, Redshift, and PostgreSQL.
 - [ChatSpark](https://datafolio.me/experience) (Data Analyst Intern, Mar 2026 – May 2026): Python Excel pipeline automation and SQL cohort analysis.
 
 ## Code
@@ -164,15 +164,20 @@ Professional track record in machine learning engineering, predictive scoring, a
 
 ## Work History
 
-### Data Scientist Intern — ZeitstoneAI
+### AI Data Engineer Intern — Zeitster
 - **Period**: Aug 2026 – Present
 - **Location**: Remote
 - **Summary**:
-  - Owned end-to-end development of an e-commerce financial decision system with 9 scoring models.
-  - Validated models through 119 automated tests.
-  - Collaborated across business, backend, data, and database layers to design multi-source data models connecting Shopify, payment, shipping, returns, and cost data.
-  - Integrated and refined scoring pipelines for real-time reliable decision outputs.
-- **Technologies**: Python, Data Modeling, Automated Testing, Scoring Systems, FastAPI, Docker
+  - Designed end-to-end data infrastructure for ingesting Shopify and external merchant data covering GraphQL Bulk Operations, Webhooks, S3, Lambda, SQS, Redshift, Aurora PostgreSQL and DynamoDB.
+  - Designed ingestion architecture for historical backfills and incremental data with retries, DLQs, idempotency and reconciliation.
+  - Defined data pipeline architecture from raw ingestion → validation → normalization → canonical warehouse → formula-ready data → scoring.
+  - Designed canonical data models and data contracts to standardize Shopify, payment, 3PL and merchant sources.
+  - Defined 20+ business-health formulas with source-to-target data mappings, transformations, fallback rules and boundary conditions.
+  - Designed Formula Dependency Registry for dependency-aware recalculation.
+  - Designed formula testing strategy using synthetic merchant scenarios.
+  - Evaluated AWS infrastructure trade-offs and created workload-based cost estimates scaling from 10 to 10K merchants.
+  - Defined data-quality and observability requirements covering freshness, validation failures, and scoring correctness.
+- **Technologies**: AWS (S3, Lambda, SQS, Redshift), Aurora PostgreSQL, DynamoDB, Python, SQL, Shopify GraphQL, Data Modeling, Data Pipelines
 
 ### Data Analyst Intern — ChatSpark
 - **Period**: Mar 2026 – May 2026

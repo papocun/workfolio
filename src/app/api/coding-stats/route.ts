@@ -8,7 +8,7 @@ import {
   calculateCurrentActiveStreak,
 } from '@/lib/streakUtils';
 
-export const revalidate = 3600; // Cache for 1 hour
+export const revalidate = 60; // Cache for 1 minute so stats update with time
 
 export interface CodingStatsResponse {
   leetcode: {
@@ -90,7 +90,7 @@ export async function GET() {
           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       },
       body: JSON.stringify(leetcodeQuery),
-      next: { revalidate: 3600 },
+      next: { revalidate: 60 },
     });
 
     if (res.ok) {
@@ -125,10 +125,11 @@ export async function GET() {
     } else {
       // Fallback to public proxy if GraphQL is blocked
       const proxyRes = await fetch(
-        `https://alfa-leetcode-api.onrender.com/userProfile/${leetcodeConfig.username}`,
-        { next: { revalidate: 3600 } }
-      );
-      if (proxyRes.ok) {
+        `https://leetcode-api-faisalshohag.vercel.app/${encodeURIComponent(leetcodeConfig.username)}`,
+        { next: { revalidate: 60 } }
+      ).catch(() => null);
+
+      if (proxyRes && proxyRes.ok) {
         const proxyData = await proxyRes.json();
         if (typeof proxyData.totalSolved === 'number' && proxyData.totalSolved > 0) {
           leetcodeSolved = proxyData.totalSolved;
@@ -136,16 +137,10 @@ export async function GET() {
           if (proxyData.mediumSolved) leetcodeMedium = proxyData.mediumSolved;
           if (proxyData.hardSolved) leetcodeHard = proxyData.hardSolved;
         }
-      }
-
-      const calRes = await fetch(
-        `https://alfa-leetcode-api.onrender.com/userProfileCalendar/${leetcodeConfig.username}`,
-        { next: { revalidate: 3600 } }
-      );
-      if (calRes.ok) {
-        const calData = await calRes.json();
-        const activeStreak = calculateLeetCodeActiveStreak(calData.submissionCalendar);
-        leetcodeStreak = activeStreak > 0 ? activeStreak : undefined;
+        if (proxyData.submissionCalendar) {
+          const activeStreak = calculateLeetCodeActiveStreak(proxyData.submissionCalendar);
+          leetcodeStreak = activeStreak > 0 ? activeStreak : undefined;
+        }
       }
     }
   } catch (error) {

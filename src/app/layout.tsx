@@ -21,7 +21,7 @@ const urbanist = Urbanist({
 export const metadata: Metadata = {
   metadataBase: new URL("https://datafolio.me"),
   title: {
-    default: "Divyanshu Tiwari | Data Scientist & ML Systems Builder",
+    default: "Divyanshu Tiwari | Building with data, code, and AI.",
     template: "%s | Divyanshu Tiwari",
   },
   description:

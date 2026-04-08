@@ -15,6 +15,7 @@ import { portfolioData } from '@/data/portfolioData';
 import { trackGithubClicked, trackContactClicked } from '@/lib/posthog';
 import { useTheme } from '@/components/ThemeProvider';
 import { useSound } from '@/components/SoundProvider';
+import ViewCounter from '@/components/ViewCounter';
 
 interface LocationTagProps {
   location?: string;
@@ -42,6 +43,17 @@ export default function LocationTag({
         />
         <span className="text-slate-700 dark:text-[#E7E9EA] font-medium">{location}</span>
       </div>
+
+      {/* Vertical Pipe Divider between Location and View Counter */}
+      <span
+        className="text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-light"
+        aria-hidden="true"
+      >
+        |
+      </span>
+
+      {/* Global View Counter */}
+      <ViewCounter />
 
       {/* Vertical Pipe Divider */}
       <span

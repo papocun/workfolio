@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getAssetPath } from '@/lib/assetPath';
 import type { ThoughtApiResponse, ThoughtQuote } from '@/types/thought';
 
@@ -8,90 +8,114 @@ interface ThoughtSectionProps {
   className?: string;
 }
 
+// Module-level cache to keep quote completely stable across re-renders and client navigation
+let moduleActiveQuote: ThoughtQuote | null = null;
+
 export default function ThoughtSection({ className = '' }: ThoughtSectionProps) {
-  const [quotes, setQuotes] = useState<ThoughtQuote[]>([]);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
-  const [isPrefersReducedMotion, setIsPrefersReducedMotion] = useState<boolean>(false);
+  const [currentQuote, setCurrentQuote] = useState<ThoughtQuote | null>(moduleActiveQuote);
+  const [isLoading, setIsLoading] = useState<boolean>(!moduleActiveQuote);
 
-  const quotesRef = useRef<ThoughtQuote[]>([]);
-  const isFetchingRef = useRef<boolean>(false);
+  const hasInitializedRef = useRef<boolean>(false);
 
-  // Check prefers-reduced-motion
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-      setIsPrefersReducedMotion(mediaQuery.matches);
-      const listener = (e: MediaQueryListEvent) => setIsPrefersReducedMotion(e.matches);
-      mediaQuery.addEventListener('change', listener);
-      return () => mediaQuery.removeEventListener('change', listener);
-    }
-  }, []);
+    // If quote is already active and set for this visit, do nothing
+    if (hasInitializedRef.current && currentQuote) return;
+    hasInitializedRef.current = true;
 
-  // Fetch quotes batch
-  const fetchQuotes = useCallback(async () => {
-    if (isFetchingRef.current) return;
-    isFetchingRef.current = true;
+    async function loadQuote() {
+      // 1. Detect if the current page load is a browser refresh/reload
+      let isReload = false;
+      try {
+        if (typeof window !== 'undefined' && window.performance) {
+          const navEntries = window.performance.getEntriesByType('navigation');
+          if (navEntries.length > 0) {
+            isReload = (navEntries[0] as PerformanceNavigationTiming).type === 'reload';
+          } else if ((window.performance as any).navigation) {
+            isReload = (window.performance as any).navigation.type === 1;
+          }
+        }
+      } catch {
+        // Fallback: not a reload
+      }
 
-    try {
-      const endpoint = getAssetPath('/api/quotes');
-      const res = await fetch(endpoint, { cache: 'no-cache' }).catch(() => null);
-
-      if (res && res.ok) {
-        const data: ThoughtApiResponse = await res.json();
-        if (data.success && Array.isArray(data.quotes) && data.quotes.length > 0) {
-          quotesRef.current = data.quotes;
-          setQuotes(data.quotes);
+      // 2. If it's NOT a reload, check if a quote was already chosen for this session
+      if (!isReload) {
+        if (moduleActiveQuote) {
+          setCurrentQuote(moduleActiveQuote);
           setIsLoading(false);
-          isFetchingRef.current = false;
           return;
         }
+
+        try {
+          const savedQuoteStr = sessionStorage.getItem('portfolio_active_quote');
+          if (savedQuoteStr) {
+            const parsed = JSON.parse(savedQuoteStr) as ThoughtQuote;
+            if (parsed && parsed.quote && parsed.author) {
+              moduleActiveQuote = parsed;
+              setCurrentQuote(parsed);
+              setIsLoading(false);
+              return;
+            }
+          }
+        } catch {
+          // sessionStorage not available
+        }
       }
-    } catch {
-      // Graceful error handling: keep existing quotes if any
+
+      // 3. Fetch real quotes batch from the existing quotes API
+      try {
+        const endpoint = getAssetPath('/api/quotes');
+        const res = await fetch(endpoint, { cache: 'no-cache' }).catch(() => null);
+
+        if (res && res.ok) {
+          const data: ThoughtApiResponse = await res.json();
+          if (data.success && Array.isArray(data.quotes) && data.quotes.length > 0) {
+            const quotesList = data.quotes;
+
+            // Get previous quote text to avoid consecutive repeats
+            let previousQuoteText: string | null = null;
+            try {
+              const prev = sessionStorage.getItem('portfolio_active_quote');
+              if (prev) {
+                const parsed = JSON.parse(prev);
+                previousQuoteText = parsed?.quote || null;
+              }
+            } catch {
+              // Ignore
+            }
+
+            // Filter out the exact previous quote if possible
+            const candidateQuotes =
+              quotesList.length > 1 && previousQuoteText
+                ? quotesList.filter((q) => q.quote !== previousQuoteText)
+                : quotesList;
+
+            // Select a single quote for this visit
+            const chosenIndex = Math.floor(Math.random() * candidateQuotes.length);
+            const selected = candidateQuotes[chosenIndex] || quotesList[0];
+
+            moduleActiveQuote = selected;
+            setCurrentQuote(selected);
+
+            try {
+              sessionStorage.setItem('portfolio_active_quote', JSON.stringify(selected));
+            } catch {
+              // Ignore
+            }
+
+            setIsLoading(false);
+            return;
+          }
+        }
+      } catch (err) {
+        console.error('[ThoughtSection] Failed to load quotes:', err);
+      }
+
+      setIsLoading(false);
     }
 
-    isFetchingRef.current = false;
-    setIsLoading(false);
-  }, []);
-
-  // Initial load
-  useEffect(() => {
-    fetchQuotes();
-  }, [fetchQuotes]);
-
-  // Rotate quote every 10 seconds with smooth fade transition
-  useEffect(() => {
-    if (quotes.length <= 1) return;
-
-    const interval = setInterval(() => {
-      if (isPrefersReducedMotion) {
-        setCurrentIndex((prev) => (prev + 1) % quotes.length);
-        return;
-      }
-
-      // Step 1: Fade out current quote & author
-      setIsTransitioning(true);
-
-      // Step 2: Switch quote when opacity hits 0, then fade in
-      setTimeout(() => {
-        setCurrentIndex((prev) => {
-          const next = (prev + 1) % quotes.length;
-          // When nearing end of batch, trigger background refresh
-          if (next >= quotes.length - 2) {
-            fetchQuotes();
-          }
-          return next;
-        });
-        setIsTransitioning(false);
-      }, 300);
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, [quotes.length, isPrefersReducedMotion, fetchQuotes]);
-
-  const currentQuote = quotes[currentIndex];
+    loadQuote();
+  }, [currentQuote]);
 
   return (
     <section
@@ -104,7 +128,7 @@ export default function ThoughtSection({ className = '' }: ThoughtSectionProps) 
       </h2>
 
       {/* Thought Card Container */}
-      <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 dark:border-[#2F3336]/60 bg-white/70 dark:bg-[#16181C]/40 p-6 sm:p-8 min-h-[165px] sm:min-h-[185px] flex flex-col justify-between shadow-xs transition-colors duration-200">
+      <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 dark:border-[#2F3336]/60 bg-white/70 dark:bg-[#16181C]/40 p-6 sm:p-8 min-h-[165px] sm:min-h-[185px] flex flex-col justify-center shadow-xs transition-colors duration-200">
         {/* Subtle Decorative Background Quotation Mark */}
         <div
           className="pointer-events-none absolute top-3 left-4 sm:top-4 sm:left-6 text-slate-200/70 dark:text-[#2F3336]/35 select-none"
@@ -129,12 +153,8 @@ export default function ThoughtSection({ className = '' }: ThoughtSectionProps) 
               <div className="h-3 w-32 bg-slate-200/50 dark:bg-[#2F3336]/40 rounded-md mt-2" />
             </div>
           ) : currentQuote ? (
-            /* Quote and Author with Synchronized Smooth Fade Transition */
-            <div
-              className={`transition-opacity duration-300 ease-in-out ${
-                isTransitioning ? 'opacity-0' : 'opacity-100'
-              }`}
-            >
+            /* Quote and Author */
+            <div className="transition-opacity duration-300 ease-in-out opacity-100">
               <blockquote className="text-[14px] sm:text-[15.5px] md:text-[16px] font-normal leading-[1.65] text-slate-800 dark:text-slate-200 tracking-normal">
                 “{currentQuote.quote}”
               </blockquote>
@@ -156,18 +176,6 @@ export default function ThoughtSection({ className = '' }: ThoughtSectionProps) 
               Thought of the day
             </div>
           )}
-        </div>
-
-        {/* Unobtrusive Attribution Link */}
-        <div className="relative z-10 pt-2 text-right">
-          <a
-            href="https://zenquotes.io/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[9.5px] sm:text-[10px] text-slate-400/80 dark:text-[#71767B]/70 hover:text-slate-600 dark:hover:text-slate-400 transition-colors inline-block select-none"
-          >
-            Quotes provided by ZenQuotes
-          </a>
         </div>
       </div>
     </section>

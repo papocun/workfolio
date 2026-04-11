@@ -187,9 +187,9 @@ export default function LeetCodeContributions({
       }
 
       try {
-        // 1. Fetch from Next.js server API route
+        // 1. Fetch from Next.js server API route (with trailing slash)
         const endpoint = getAssetPath(
-          `/api/leetcode-contributions?username=${encodeURIComponent(username)}&_t=${Date.now()}`
+          `/api/leetcode-contributions/?username=${encodeURIComponent(username)}&_t=${Date.now()}`
         );
         const res = await fetch(endpoint, { cache: 'no-cache' }).catch(() => null);
 
@@ -207,23 +207,50 @@ export default function LeetCodeContributions({
           }
         }
 
-        // 2. Direct fallback to public LeetCode API if local route is unavailable
-        const publicEndpoint = `https://leetcode-api-faisalshohag.vercel.app/${encodeURIComponent(username)}`;
-        const publicRes = await fetch(publicEndpoint).catch(() => null);
+        // 2. Primary fallback: Alfa LeetCode API (high availability & CORS-enabled)
+        try {
+          const alfaEndpoint = `https://alfa-leetcode-api.onrender.com/${encodeURIComponent(username)}/calendar`;
+          const alfaRes = await fetch(alfaEndpoint).catch(() => null);
 
-        if (publicRes && publicRes.ok) {
-          const publicData = await publicRes.json();
-          if (publicData && publicData.submissionCalendar) {
-            const builtCalendar = buildCalendarFromRaw(publicData.submissionCalendar);
-            if (!isCancelled) {
-              setCalendar(builtCalendar);
-              setEffectiveUsername(username);
-              setIsLoading(false);
-              setHasError(false);
+          if (alfaRes && alfaRes.ok) {
+            const alfaData = await alfaRes.json();
+            if (alfaData && alfaData.submissionCalendar) {
+              const builtCalendar = buildCalendarFromRaw(alfaData.submissionCalendar);
+              if (!isCancelled) {
+                setCalendar(builtCalendar);
+                setEffectiveUsername(username);
+                setIsLoading(false);
+                setHasError(false);
+              }
+              isFetchingRef.current = false;
+              return;
             }
-            isFetchingRef.current = false;
-            return;
           }
+        } catch {
+          // Proceed to tertiary fallback
+        }
+
+        // 3. Tertiary fallback: Public FaisalShohag proxy
+        try {
+          const publicEndpoint = `https://leetcode-api-faisalshohag.vercel.app/${encodeURIComponent(username)}`;
+          const publicRes = await fetch(publicEndpoint).catch(() => null);
+
+          if (publicRes && publicRes.ok) {
+            const publicData = await publicRes.json();
+            if (publicData && publicData.submissionCalendar) {
+              const builtCalendar = buildCalendarFromRaw(publicData.submissionCalendar);
+              if (!isCancelled) {
+                setCalendar(builtCalendar);
+                setEffectiveUsername(username);
+                setIsLoading(false);
+                setHasError(false);
+              }
+              isFetchingRef.current = false;
+              return;
+            }
+          }
+        } catch {
+          // Fall through to error
         }
 
         throw new Error('Could not retrieve live LeetCode submissions');

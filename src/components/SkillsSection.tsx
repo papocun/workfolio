@@ -1,4 +1,7 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { TransitionPanel } from '@/components/core/transition-panel';
 
 interface SkillItem {
   name: string;
@@ -284,7 +287,7 @@ function VectorDbIcon() {
 }
 
 /* ============================================================
-   Exact 5 Final Categories for Data Engineer + AI Data Engineer
+   Exact 4 Categories for Data Engineering & AI
    ============================================================ */
 
 const DATA_ENGINEERING_SKILLS: SkillCategory[] = [
@@ -296,42 +299,37 @@ const DATA_ENGINEERING_SKILLS: SkillCategory[] = [
     ],
   },
   {
-    category: 'Data Engineering',
+    category: 'Data Engineering & AI',
     skills: [
       { name: 'PySpark', icon: <PySparkLogo /> },
       { name: 'ETL / ELT', icon: <EtlWorkflowIcon /> },
       { name: 'Data Pipelines', icon: <DataPipelinesIcon /> },
       { name: 'Data Modelling', icon: <DataModellingIcon /> },
       { name: 'Data Quality', icon: <DataQualityIcon /> },
+      { name: 'LLM / RAG', icon: <LlmRagIcon /> },
+      { name: 'Vector Databases', icon: <VectorDbIcon /> },
     ],
   },
   {
-    category: 'Data Platform & Warehousing',
+    category: 'Data Platform',
     skills: [
       { name: 'Snowflake', icon: <SnowflakeLogo /> },
       { name: 'Amazon Redshift', icon: <RedshiftLogo /> },
       { name: 'Amazon S3', icon: <S3Logo /> },
+      { name: 'AWS Glue', icon: <GlueLogo /> },
     ],
   },
   {
-    category: 'Orchestration & Transformation',
+    category: 'Orchestration & Infrastructure',
     skills: [
       { name: 'Apache Airflow', icon: <AirflowLogo /> },
       { name: 'Dagster', icon: <DagsterLogo /> },
       { name: 'dbt', icon: <DbtLogo /> },
-    ],
-  },
-  {
-    category: 'AI Data & Infrastructure',
-    skills: [
       { name: 'AWS', icon: <AwsLogo /> },
-      { name: 'AWS Glue', icon: <GlueLogo /> },
       { name: 'Docker', icon: <DockerLogo /> },
       { name: 'Git', icon: <GitLogo /> },
       { name: 'GitHub', icon: <GitHubLogo /> },
       { name: 'Linux', icon: <LinuxLogo /> },
-      { name: 'LLM / RAG', icon: <LlmRagIcon /> },
-      { name: 'Vector Databases', icon: <VectorDbIcon /> },
     ],
   },
 ];
@@ -341,33 +339,98 @@ interface SkillsSectionProps {
 }
 
 export default function SkillsSection({ className = '' }: SkillsSectionProps) {
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [timerKey, setTimerKey] = useState<number>(0);
+
+  // Auto-rotate every 5 seconds; reset countdown whenever activeIndex or timerKey changes
+  useEffect(() => {
+    if (isPaused) return;
+
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % DATA_ENGINEERING_SKILLS.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isPaused, timerKey]);
+
+  const handleCategorySelect = (index: number) => {
+    setActiveIndex(index);
+    // Restart the 5-second countdown from this moment
+    setTimerKey((k) => k + 1);
+  };
+
   return (
     <section
       className={`w-full ${className}`}
       aria-label="Skills & Technologies"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
       {/* Top Thin Horizontal Divider */}
       <hr className="border-t border-slate-200/80 dark:border-[#2F3336]/60 my-6 sm:my-7" />
 
       {/* Section Heading with Theme-Aware Typography */}
-      <h2 className="text-[17px] sm:text-[18px] font-bold text-slate-900 dark:text-slate-100 tracking-tight mb-3.5 sm:mb-4">
+      <h2 className="text-[17px] sm:text-[18px] font-bold text-slate-900 dark:text-slate-100 tracking-tight mb-3 sm:mb-3.5">
         Skills
       </h2>
 
-      {/* 5 Clean Categories & Compact Rectangular Skill Boxes */}
-      <div className="space-y-2.5 sm:space-y-3">
-        {DATA_ENGINEERING_SKILLS.map((item) => (
-          <div
-            key={item.category}
-            className="flex flex-col sm:flex-row sm:items-start gap-1.5 sm:gap-3"
-          >
-            {/* Category Name on Left - High-contrast theme-aware typography */}
-            <span className="text-[12.5px] sm:text-[13px] font-medium text-slate-600 dark:text-slate-400 w-full sm:w-[195px] md:w-[210px] shrink-0 sm:pt-1 transition-colors duration-200">
+      {/* 4 Compact Selectable Category Tabs */}
+      <div
+        role="tablist"
+        aria-label="Skills categories"
+        onKeyDown={(e) => {
+          if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            handleCategorySelect((activeIndex + 1) % DATA_ENGINEERING_SKILLS.length);
+          } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            handleCategorySelect(
+              (activeIndex - 1 + DATA_ENGINEERING_SKILLS.length) % DATA_ENGINEERING_SKILLS.length
+            );
+          }
+        }}
+        className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-3 sm:mb-3.5"
+      >
+        {DATA_ENGINEERING_SKILLS.map((item, index) => {
+          const isActive = activeIndex === index;
+          return (
+            <button
+              key={item.category}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              tabIndex={0}
+              onClick={() => handleCategorySelect(index)}
+              className={`inline-flex items-center px-2.5 sm:px-3 py-1 text-[11.5px] sm:text-[12px] font-medium rounded-md transition-all duration-150 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] ${
+                isActive
+                  ? 'bg-slate-900 text-white dark:bg-[#1E2732] dark:text-slate-100 border border-slate-900 dark:border-[#2F3336] shadow-xs'
+                  : 'bg-slate-100/80 text-slate-600 dark:bg-[#16181C]/60 dark:text-[#71767B] border border-slate-200/60 dark:border-transparent hover:bg-slate-200/70 dark:hover:bg-[#16181C] hover:text-slate-900 dark:hover:text-slate-200'
+              }`}
+            >
               {item.category}
-            </span>
+            </button>
+          );
+        })}
+      </div>
 
-            {/* Individual Rectangular Skill Boxes on Right (6px radius, compact padding) */}
-            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 flex-1">
+      {/* TransitionPanel rendering only the active category's skill boxes */}
+      <div className="min-h-[72px] sm:min-h-[76px] flex items-center">
+        <TransitionPanel
+          activeIndex={activeIndex}
+          transition={{ duration: 0.2, ease: 'easeInOut' }}
+          variants={{
+            enter: { opacity: 0, y: -16, filter: 'blur(4px)' },
+            center: { opacity: 1, y: 0, filter: 'blur(0px)' },
+            exit: { opacity: 0, y: 16, filter: 'blur(4px)' },
+          }}
+          className="w-full"
+        >
+          {DATA_ENGINEERING_SKILLS.map((item) => (
+            <div
+              key={item.category}
+              className="flex flex-wrap items-center gap-1.5 sm:gap-2 py-1"
+            >
               {item.skills.map((skill) => (
                 <div
                   key={skill.name}
@@ -382,12 +445,12 @@ export default function SkillsSection({ className = '' }: SkillsSectionProps) {
                 </div>
               ))}
             </div>
-          </div>
-        ))}
+          ))}
+        </TransitionPanel>
       </div>
 
       {/* Bottom Thin Horizontal Divider */}
-      <hr className="border-t border-slate-200/80 dark:border-[#2F3336]/60 mt-6 sm:mt-7" />
+      <hr className="border-t border-slate-200/80 dark:border-[#2F3336]/60 mt-5 sm:mt-6" />
     </section>
   );
 }

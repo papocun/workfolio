@@ -8,6 +8,7 @@ import { SoundProvider } from "@/components/SoundProvider";
 import CustomCursor from "@/components/CustomCursor";
 import TwitterFollowAlert from "@/components/TwitterFollowAlert";
 import { PostHogProvider } from "@/components/PostHogProvider";
+import PageTransition from "@/components/PageTransition";
 import { portfolioData } from "@/data/portfolioData";
 import "./globals.css";
 
@@ -143,7 +144,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `
               (function() {
                 try {
-                  var saved = localStorage.getItem('workfolio-theme');
+                  var saved = localStorage.getItem('theme') || localStorage.getItem('workfolio-theme');
                   if (saved === 'light') {
                     document.documentElement.classList.remove('dark');
                   } else {
@@ -157,14 +158,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col font-sans bg-[#FAF9F6] dark:bg-[#000000] text-slate-800 dark:text-slate-100 selection:bg-sky-100 dark:selection:bg-[#1E2732] selection:text-sky-900 dark:selection:text-[#E7E9EA] transition-colors duration-200">
+      <body className="min-h-full flex flex-col font-sans bg-[#FAF9F6] dark:bg-[#000000] text-slate-800 dark:text-slate-100 selection:bg-sky-100 dark:selection:bg-[#1E2732] selection:text-sky-900 dark:selection:text-[#E7E9EA]">
         <PostHogProvider>
           <ThemeProvider>
             <SoundProvider>
               <GridBackground />
               <CustomCursor />
               <Navbar />
-              <main className="flex-1 w-full relative z-10">{children}</main>
+              <main className="flex-1 w-full relative z-10 flex flex-col">
+                <PageTransition>{children}</PageTransition>
+              </main>
               <TwitterFollowAlert />
               <Footer />
             </SoundProvider>

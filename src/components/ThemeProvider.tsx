@@ -13,27 +13,73 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('dark');
+const STORAGE_KEY = 'theme';
+const LEGACY_STORAGE_KEY = 'workfolio-theme';
 
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  // Always initialize to 'dark' for SSR & default rule
+  const [theme, setThemeState] = useState<Theme>('dark');
+  const transitionTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Synchronize state with early head script & localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem('workfolio-theme') as Theme | null;
-    if (saved === 'light' || saved === 'dark') {
-      setThemeState(saved);
-      if (saved === 'dark') {
+    try {
+      const saved = (localStorage.getItem(STORAGE_KEY) ||
+        localStorage.getItem(LEGACY_STORAGE_KEY)) as Theme | null;
+
+      if (saved === 'light') {
+        setThemeState('light');
+        document.documentElement.classList.remove('dark');
+      } else if (saved === 'dark') {
+        setThemeState('dark');
         document.documentElement.classList.add('dark');
       } else {
-        document.documentElement.classList.remove('dark');
+        // No saved preference -> ALWAYS DARK MODE
+        // Never use system or browser preference
+        setThemeState('dark');
+        document.documentElement.classList.add('dark');
       }
-    } else {
+    } catch {
+      // Fallback to dark mode on storage error
+      setThemeState('dark');
       document.documentElement.classList.add('dark');
-      localStorage.setItem('workfolio-theme', 'dark');
     }
+
+    return () => {
+      if (transitionTimerRef.current) {
+        clearTimeout(transitionTimerRef.current);
+      }
+    };
   }, []);
 
   const setTheme = (t: Theme) => {
+    if (t === theme) return;
+
+    // Check prefers-reduced-motion
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Apply coordinated theme-transitioning class only for manual user switches
+    if (!prefersReducedMotion && typeof document !== 'undefined') {
+      if (transitionTimerRef.current) {
+        clearTimeout(transitionTimerRef.current);
+      }
+      document.documentElement.classList.add('theme-transitioning');
+      transitionTimerRef.current = setTimeout(() => {
+        document.documentElement.classList.remove('theme-transitioning');
+        transitionTimerRef.current = null;
+      }, 250);
+    }
+
     setThemeState(t);
-    localStorage.setItem('workfolio-theme', t);
+    try {
+      localStorage.setItem(STORAGE_KEY, t);
+      localStorage.setItem(LEGACY_STORAGE_KEY, t);
+    } catch {
+      // Ignore storage errors (e.g. private browsing quota)
+    }
+
     if (t === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
@@ -42,7 +88,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const toggleTheme = () => {
-    const next = theme === 'dark' ? 'light' : 'dark';
+    const next: Theme = theme === 'dark' ? 'light' : 'dark';
     setTheme(next);
   };
 

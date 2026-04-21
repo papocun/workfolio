@@ -5,21 +5,32 @@ import React, { createContext, useContext, useEffect, useState, useCallback, use
 interface SoundContextType {
   isSoundOn: boolean;
   toggleSound: () => void;
-  playClickSound: () => void;
+  setSoundEnabled: (enabled: boolean) => void;
+  playClickSound: (customVolume?: number) => void;
+  volume: number;
+  setVolume: (vol: number) => void;
 }
 
 const SoundContext = createContext<SoundContextType | undefined>(undefined);
 
 export function SoundProvider({ children }: { children: React.ReactNode }) {
   const [isSoundOn, setIsSoundOn] = useState(false);
+  const [volume, setVolumeState] = useState(70);
   const audioCtxRef = useRef<AudioContext | null>(null);
 
   // Initialize from localStorage
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('workfolio-sound');
-      if (saved === 'true') {
+      const savedSound = localStorage.getItem('workfolio-sound');
+      if (savedSound === 'true') {
         setIsSoundOn(true);
+      }
+      const savedVolume = localStorage.getItem('workfolio-volume');
+      if (savedVolume !== null) {
+        const parsed = parseInt(savedVolume, 10);
+        if (!isNaN(parsed) && parsed >= 0 && parsed <= 100) {
+          setVolumeState(parsed);
+        }
       }
     } catch {
       // ignore
@@ -46,48 +57,82 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Crisp mechanical tactile click sound synthesizer (~60% pleasant audio level)
-  const playClickSound = useCallback(() => {
-    const ctx = getAudioContext();
-    if (!ctx) return;
+  // Crisp mechanical tactile click sound synthesizer scaled by volume
+  const playClickSound = useCallback(
+    (customVolume?: number) => {
+      const effectiveVol = customVolume !== undefined ? customVolume : volume;
+      if (effectiveVol <= 0) return;
 
-    try {
-      const now = ctx.currentTime;
+      const ctx = getAudioContext();
+      if (!ctx) return;
 
-      // 1. High transient mechanical click tick (clean 60% listening volume)
-      const osc1 = ctx.createOscillator();
-      const gain1 = ctx.createGain();
-      osc1.type = 'sine';
-      osc1.frequency.setValueAtTime(2400, now);
-      osc1.frequency.exponentialRampToValueAtTime(600, now + 0.022);
+      try {
+        const now = ctx.currentTime;
+        const volFraction = Math.max(0, Math.min(1, effectiveVol / 100));
 
-      // Volume set to ~0.06 (balanced ~60% UI sound level)
-      gain1.gain.setValueAtTime(0.065, now);
-      gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.022);
+        // 1. High transient mechanical click tick
+        const osc1 = ctx.createOscillator();
+        const gain1 = ctx.createGain();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(2400, now);
+        osc1.frequency.exponentialRampToValueAtTime(600, now + 0.022);
 
-      osc1.connect(gain1);
-      gain1.connect(ctx.destination);
-      osc1.start(now);
-      osc1.stop(now + 0.025);
+        gain1.gain.setValueAtTime(0.065 * volFraction, now);
+        gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.022);
 
-      // 2. Soft subtle body pop for tactile mechanical feel
-      const osc2 = ctx.createOscillator();
-      const gain2 = ctx.createGain();
-      osc2.type = 'triangle';
-      osc2.frequency.setValueAtTime(650, now);
-      osc2.frequency.exponentialRampToValueAtTime(140, now + 0.018);
+        osc1.connect(gain1);
+        gain1.connect(ctx.destination);
+        osc1.start(now);
+        osc1.stop(now + 0.025);
 
-      gain2.gain.setValueAtTime(0.045, now);
-      gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.018);
+        // 2. Soft subtle body pop for tactile mechanical feel
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(650, now);
+        osc2.frequency.exponentialRampToValueAtTime(140, now + 0.018);
 
-      osc2.connect(gain2);
-      gain2.connect(ctx.destination);
-      osc2.start(now);
-      osc2.stop(now + 0.02);
-    } catch {
-      // Audio autoplay policy catch
-    }
-  }, [getAudioContext]);
+        gain2.gain.setValueAtTime(0.045 * volFraction, now);
+        gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.018);
+
+        osc2.connect(gain2);
+        gain2.connect(ctx.destination);
+        osc2.start(now);
+        osc2.stop(now + 0.02);
+      } catch {
+        // Audio autoplay policy catch
+      }
+    },
+    [getAudioContext, volume]
+  );
+
+  const setVolume = useCallback(
+    (vol: number) => {
+      const clamped = Math.max(0, Math.min(100, Math.round(vol)));
+      setVolumeState(clamped);
+      try {
+        localStorage.setItem('workfolio-volume', String(clamped));
+      } catch {
+        // ignore
+      }
+    },
+    []
+  );
+
+  const setSoundEnabled = useCallback(
+    (enabled: boolean) => {
+      setIsSoundOn(enabled);
+      try {
+        localStorage.setItem('workfolio-sound', String(enabled));
+      } catch {
+        // ignore
+      }
+      if (enabled) {
+        setTimeout(() => playClickSound(volume), 0);
+      }
+    },
+    [playClickSound, volume]
+  );
 
   const toggleSound = useCallback(() => {
     setIsSoundOn((prev) => {
@@ -98,12 +143,11 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
         // ignore
       }
       if (next) {
-        // Play instant confirmation feedback click
-        setTimeout(playClickSound, 0);
+        setTimeout(() => playClickSound(volume), 0);
       }
       return next;
     });
-  }, [playClickSound]);
+  }, [playClickSound, volume]);
 
   // Global listener: plays click sound whenever an interactive element is clicked while sound is ON
   useEffect(() => {
@@ -135,7 +179,10 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
       value={{
         isSoundOn,
         toggleSound,
+        setSoundEnabled,
         playClickSound,
+        volume,
+        setVolume,
       }}
     >
       {children}

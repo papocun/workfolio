@@ -283,13 +283,13 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
           {showStatsRow && (
             <div className="flex items-center gap-1.5 mb-2 flex-wrap">
               {hasStreak && (
-                <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/25 dark:border-amber-500/35 bg-amber-500/10 dark:bg-amber-500/15 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-amber-800 dark:text-amber-300">
+                <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/25 dark:border-amber-500/35 bg-amber-500/10 dark:bg-amber-500/15 px-2.5 py-0.5 font-mono text-[12px] font-semibold text-amber-800 dark:text-amber-300">
                   <span>{profile.streak}</span>
                   <span aria-hidden="true">🔥</span>
                 </span>
               )}
               {hasRating && (
-                <span className="inline-flex items-center gap-1 rounded-full border border-sky-500/25 dark:border-sky-500/35 bg-sky-500/10 dark:bg-sky-500/15 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-sky-700 dark:text-[#1D9BF0]">
+                <span className="inline-flex items-center gap-1 rounded-full border border-sky-500/25 dark:border-sky-500/35 bg-sky-500/10 dark:bg-sky-500/15 px-2.5 py-0.5 font-mono text-[12px] font-semibold text-sky-700 dark:text-[#1D9BF0]">
                   <span>★ {profile.rating} • 8 Contests</span>
                 </span>
               )}
@@ -297,7 +297,7 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
           )}
 
           {/* Account / Username Tag */}
-          <span className="font-mono text-[11.5px] sm:text-[12px] text-slate-500 dark:text-[#71767B]">
+          <span className="font-mono text-[12.5px] sm:text-[13px] text-slate-500 dark:text-slate-400">
             @{profile.username}
           </span>
 
@@ -307,7 +307,7 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
           </h2>
 
           {/* Solved Problems Count */}
-          <p className="text-[13px] sm:text-[13.5px] font-medium text-slate-600 dark:text-slate-400 mt-1">
+          <p className="text-[14.5px] sm:text-[15px] font-medium text-slate-600 dark:text-slate-400 mt-1">
             {profile.solvedCount}
           </p>
         </div>
@@ -331,7 +331,7 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
                 });
               }
             }}
-            className="group/btn inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 dark:border-[#2F3336] bg-slate-50 dark:bg-[#000000] px-3.5 py-1.5 text-[12px] font-mono font-medium text-slate-800 dark:text-[#E7E9EA] shadow-2xs transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-900 dark:hover:border-slate-100 hover:bg-slate-100 dark:hover:bg-[#1E2732] active:scale-95 whitespace-nowrap"
+            className="group/btn inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 dark:border-[#2F3336] bg-slate-50 dark:bg-[#000000] px-4 py-2 text-[13px] font-mono font-medium text-slate-800 dark:text-[#E7E9EA] shadow-2xs transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-900 dark:hover:border-slate-100 hover:bg-slate-100 dark:hover:bg-[#1E2732] active:scale-95 whitespace-nowrap"
           >
             <span>View Profile</span>
             <svg

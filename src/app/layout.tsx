@@ -165,9 +165,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <GridBackground />
               <CustomCursor />
               <Navbar />
-              <main className="flex-1 w-full relative z-10 flex flex-col">
+              <div className="flex-1 w-full relative z-10 flex flex-col" role="none">
                 <PageTransition>{children}</PageTransition>
-              </main>
+              </div>
               <TwitterFollowAlert />
               <Footer />
             </SoundProvider>

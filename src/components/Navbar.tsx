@@ -6,6 +6,12 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/base-ui/avatar
 import { ScrollProgress } from '@/components/core/scroll-progress';
 import { getAssetPath } from '@/lib/assetPath';
 import { portfolioData } from '@/data/portfolioData';
+import {
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+} from '@/components/animate-ui/components/headless/popover';
+import { SettingsContent } from '@/components/SettingsPopover';
 
 const NAV_ITEMS = [
   { label: 'projects', href: '/projects', isUnderConstruction: false },
@@ -28,7 +34,7 @@ export default function Navbar() {
       <div className="max-w-[680px] mx-auto px-4 sm:px-6 py-3 sm:py-3.5 flex items-center justify-between gap-2">
         {/* Left Branding */}
         <Link
-          className="text-[13px] sm:text-[14.5px] font-semibold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-75 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] shrink-0"
+          className="text-[14px] sm:text-[15.5px] font-semibold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-75 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] shrink-0"
           href="/"
         >
           divyanshu tiwari
@@ -36,7 +42,7 @@ export default function Navbar() {
 
         {/* Right Navigation & Profile Avatar */}
         <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-          <nav className="flex items-center gap-1.5 sm:gap-2.5 text-[11.5px] sm:text-[12.5px]">
+          <nav aria-label="Main navigation" className="flex items-center gap-1.5 sm:gap-2.5 text-[13px] sm:text-[14px]">
             {NAV_ITEMS.map((item, index) => {
               const isActive = pathname === item.href;
 
@@ -66,7 +72,7 @@ export default function Navbar() {
                     />
                   </Link>
                   {index < NAV_ITEMS.length - 1 && (
-                    <span className="text-slate-300 dark:text-slate-700 select-none text-[10px] sm:text-xs" aria-hidden="true">
+                    <span className="text-slate-300 dark:text-slate-700 select-none text-[11px]" aria-hidden="true">
                       ·
                     </span>
                   )}
@@ -78,22 +84,30 @@ export default function Navbar() {
           {/* Vertical Divider */}
           <span className="h-3.5 sm:h-4 w-[1px] bg-slate-200 dark:bg-slate-800" aria-hidden="true" />
 
-          {/* User Profile Avatar (Redirects to homepage on click) */}
-          <Link
-            href="/"
-            aria-label="Go to homepage"
-            className="group/avatar inline-flex items-center rounded-full transition-transform duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] shrink-0"
-          >
-            <Avatar className="h-6.5 w-6.5 sm:h-7.5 sm:w-7.5 ring-2 ring-slate-200/90 dark:ring-slate-700 select-none cursor-pointer">
-              <AvatarImage
-                src={getAssetPath('/images/projects/NUmercaiq.gif')}
-                alt={portfolioData.name}
-              />
-              <AvatarFallback className="text-[10px] sm:text-[10.5px] font-mono font-semibold">
-                {getInitials(portfolioData.name)}
-              </AvatarFallback>
-            </Avatar>
-          </Link>
+          {/* Settings Trigger using existing circular avatar */}
+          <Popover className="relative inline-flex items-center shrink-0">
+            <PopoverButton
+              aria-label="Open settings"
+              className="group/avatar inline-flex items-center rounded-full transition-transform duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] cursor-pointer shrink-0"
+            >
+              <Avatar className="h-6.5 w-6.5 sm:h-7.5 sm:w-7.5 ring-2 ring-slate-200/90 dark:ring-slate-700 select-none cursor-pointer">
+                <AvatarImage
+                  src={getAssetPath('/images/projects/NUmercaiq.gif')}
+                  alt={portfolioData.name}
+                />
+                <AvatarFallback className="text-[10px] sm:text-[10.5px] font-mono font-semibold">
+                  {getInitials(portfolioData.name)}
+                </AvatarFallback>
+              </Avatar>
+            </PopoverButton>
+
+            <PopoverPanel
+              anchor={{ to: 'bottom-end', gap: 10 }}
+              className="w-[270px] sm:w-[290px] max-w-[calc(100vw-32px)] rounded-2xl border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md shadow-xl dark:shadow-2xl p-4 sm:p-5 text-slate-800 dark:text-slate-100 select-none"
+            >
+              <SettingsContent />
+            </PopoverPanel>
+          </Popover>
         </div>
       </div>
 

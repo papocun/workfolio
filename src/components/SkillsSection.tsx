@@ -371,7 +371,7 @@ export default function SkillsSection({ className = '' }: SkillsSectionProps) {
       <hr className="border-t border-slate-200/80 dark:border-[#2F3336]/60 my-6 sm:my-7" />
 
       {/* Section Heading with Theme-Aware Typography */}
-      <h2 className="text-[17px] sm:text-[18px] font-bold text-slate-900 dark:text-slate-100 tracking-tight mb-3 sm:mb-3.5">
+      <h2 className="text-[19px] sm:text-[21px] font-bold text-slate-900 dark:text-slate-100 tracking-tight mb-3.5 sm:mb-4">
         Skills
       </h2>
 
@@ -390,7 +390,7 @@ export default function SkillsSection({ className = '' }: SkillsSectionProps) {
             );
           }
         }}
-        className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-3 sm:mb-3.5"
+        className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-3.5 sm:mb-4"
       >
         {DATA_ENGINEERING_SKILLS.map((item, index) => {
           const isActive = activeIndex === index;
@@ -402,10 +402,10 @@ export default function SkillsSection({ className = '' }: SkillsSectionProps) {
               aria-selected={isActive}
               tabIndex={0}
               onClick={() => handleCategorySelect(index)}
-              className={`inline-flex items-center px-2.5 sm:px-3 py-1 text-[11.5px] sm:text-[12px] font-medium rounded-md transition-all duration-150 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] ${
+              className={`inline-flex items-center px-3 sm:px-3.5 py-1.5 text-[13px] sm:text-[13.5px] font-medium rounded-md transition-all duration-150 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] ${
                 isActive
                   ? 'bg-slate-900 text-white dark:bg-[#1E2732] dark:text-slate-100 border border-slate-900 dark:border-[#2F3336] shadow-xs'
-                  : 'bg-slate-100/80 text-slate-600 dark:bg-[#16181C]/60 dark:text-[#71767B] border border-slate-200/60 dark:border-transparent hover:bg-slate-200/70 dark:hover:bg-[#16181C] hover:text-slate-900 dark:hover:text-slate-200'
+                  : 'bg-slate-100/80 text-slate-600 dark:bg-[#16181C]/60 dark:text-slate-400 border border-slate-200/60 dark:border-transparent hover:bg-slate-200/70 dark:hover:bg-[#16181C] hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               {item.category}
@@ -415,7 +415,7 @@ export default function SkillsSection({ className = '' }: SkillsSectionProps) {
       </div>
 
       {/* TransitionPanel rendering only the active category's skill boxes */}
-      <div className="min-h-[72px] sm:min-h-[76px] flex items-center">
+      <div className="min-h-[76px] sm:min-h-[80px] flex items-center">
         <TransitionPanel
           activeIndex={activeIndex}
           transition={{ duration: 0.2, ease: 'easeInOut' }}
@@ -429,12 +429,12 @@ export default function SkillsSection({ className = '' }: SkillsSectionProps) {
           {DATA_ENGINEERING_SKILLS.map((item) => (
             <div
               key={item.category}
-              className="flex flex-wrap items-center gap-1.5 sm:gap-2 py-1"
+              className="flex flex-wrap items-center gap-2 sm:gap-2.5 py-1"
             >
               {item.skills.map((skill) => (
                 <div
                   key={skill.name}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] border border-slate-200/90 dark:border-[#2F3336]/80 bg-white/80 dark:bg-[#16181C]/70 shadow-2xs text-slate-800 dark:text-slate-200 text-[12px] sm:text-[12.5px] font-medium tracking-tight hover:border-[#1D9BF0]/60 dark:hover:border-[#1D9BF0]/60 hover:bg-slate-50 dark:hover:bg-[#1E2732]/80 transition-all duration-150 cursor-default select-none group"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[6px] border border-slate-200/90 dark:border-[#2F3336]/80 bg-white/80 dark:bg-[#16181C]/70 shadow-2xs text-slate-800 dark:text-slate-200 text-[13px] sm:text-[13.5px] font-medium tracking-tight hover:border-[#1D9BF0]/60 dark:hover:border-[#1D9BF0]/60 hover:bg-slate-50 dark:hover:bg-[#1E2732]/80 transition-all duration-150 cursor-default select-none group"
                 >
                   <span className="shrink-0 flex items-center justify-center transition-transform duration-150 group-hover:scale-105">
                     {skill.icon}

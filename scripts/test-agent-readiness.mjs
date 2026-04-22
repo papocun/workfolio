@@ -123,7 +123,7 @@ async function runStaticOutputTests() {
   const indexHtml = fs.readFileSync(indexPath, 'utf-8');
 
   assert(indexHtml.includes("Divyanshu Tiwari"), "Homepage raw HTML contains <h1>Hi, I'm Divyanshu Tiwari</h1> without JavaScript");
-  assert((indexHtml.includes('Building in') || indexHtml.includes('Working in')) && (indexHtml.includes('Data &amp; AI') || indexHtml.includes('Data & AI') || indexHtml.includes('Data Engineering')), 'Homepage raw HTML contains first bio paragraph');
+  assert((indexHtml.includes('Building in') || indexHtml.includes('Working in') || indexHtml.includes('working in')) && (indexHtml.includes('Data &amp; AI') || indexHtml.includes('Data & AI') || indexHtml.includes('Data Engineering')), 'Homepage raw HTML contains first bio paragraph');
   assert(indexHtml.includes('LLMs') && indexHtml.includes('RAG'), 'Homepage raw HTML contains LLM/RAG paragraph');
   
   // Character count check of meaningful text

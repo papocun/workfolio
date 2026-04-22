@@ -96,11 +96,11 @@ export default function Footer() {
             <div>
               <Link
                 href="/"
-                className="text-[15px] sm:text-[16px] font-bold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-85 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                className="text-[16px] sm:text-[17px] font-bold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-85 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]"
               >
                 {portfolioData.name.toLowerCase()}
               </Link>
-              <p className="text-[12.5px] sm:text-[13px] text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed max-w-[280px]">
+              <p className="text-[14px] sm:text-[14.5px] text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed max-w-[280px]">
                 {portfolioData.roleHeadline}
               </p>
             </div>
@@ -110,10 +110,10 @@ export default function Footer() {
           <div className="sm:col-span-6 flex justify-start sm:justify-end gap-10 sm:gap-16">
             {/* Column 1: Connect */}
             <div>
-              <h3 className="font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 select-none">
+              <h3 className="font-mono text-[12px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 select-none">
                 Connect
               </h3>
-              <ul className="space-y-2 text-[12.5px]">
+              <ul className="space-y-2 text-[14px]">
                 {SOCIAL_LINKS.map((item) => {
                   const Icon = item.icon;
                   return (
@@ -129,7 +129,7 @@ export default function Footer() {
                             url: item.href,
                           })
                         }
-                        className="group relative inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-0.5"
+                        className="group relative inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-1"
                       >
                         <Icon size={15} weight="regular" className="shrink-0 opacity-80 group-hover:opacity-100 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]" />
                         <span>{item.label}</span>
@@ -143,10 +143,10 @@ export default function Footer() {
 
             {/* Column 2: Profiles */}
             <div>
-              <h3 className="font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 select-none">
+              <h3 className="font-mono text-[12px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 select-none">
                 Profiles
               </h3>
-              <ul className="space-y-2 text-[12.5px]">
+              <ul className="space-y-2 text-[14px]">
                 {PROFILE_LINKS.map((item) => (
                   <li key={item.label}>
                     <a
@@ -171,7 +171,7 @@ export default function Footer() {
                           });
                         }
                       }}
-                      className="group relative inline-flex items-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-0.5"
+                      className="group relative inline-flex items-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-1"
                     >
                       <span>{item.label}</span>
                       <span className="absolute -bottom-0.5 left-0 h-[1px] w-full bg-slate-900 dark:bg-slate-100 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" />
@@ -184,7 +184,7 @@ export default function Footer() {
         </div>
 
         {/* Subtle Bottom Row with Real-Time Clock */}
-        <div className="border-t border-slate-100 dark:border-slate-800/80 pt-6 mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11.5px] font-mono text-slate-400 dark:text-slate-500 text-center sm:text-left">
+        <div className="border-t border-slate-100 dark:border-slate-800/80 pt-6 mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-between gap-3 text-[13px] font-mono text-slate-400 dark:text-slate-500 text-center sm:text-left">
           <div className="flex items-center gap-2">
             <span>&copy; 2026 {portfolioData.name}</span>
             <span>·</span>

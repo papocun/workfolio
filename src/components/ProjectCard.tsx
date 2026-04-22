@@ -72,11 +72,11 @@ export default function ProjectCard({
       {/* 2. Project Header Row: Title, Description & Expand Chevron */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
-          <h2 className="text-[18px] sm:text-[22px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-snug">
+          <h2 className="text-[20px] sm:text-[24px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-snug">
             {project.title}
           </h2>
           {project.description && (
-            <p className="text-[13px] sm:text-[14px] text-slate-600 dark:text-slate-400 leading-relaxed mt-1">
+            <p className="text-[14.5px] sm:text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mt-1">
               {project.description}
             </p>
           )}
@@ -122,14 +122,14 @@ export default function ProjectCard({
             <div className="pt-4 sm:pt-5 mt-3 sm:mt-4 border-t border-slate-100 dark:border-slate-800/80">
               {/* Technology Stack */}
               <div className="mb-4 sm:mb-5">
-                <span className="block text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-500 mb-2 select-none">
+                <span className="block text-[12px] font-mono font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2 select-none">
                   Tech Stack
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {project.techStack.map((tech: string) => (
                     <span
                       key={tech}
-                      className="rounded-md bg-slate-100/90 dark:bg-[#16181C] border border-slate-200/90 dark:border-[#2F3336] px-2.5 py-1 text-[11px] font-mono font-medium text-slate-700 dark:text-slate-300 transition-colors hover:border-slate-300 dark:hover:border-slate-500 shadow-2xs"
+                      className="rounded-md bg-slate-100/90 dark:bg-[#16181C] border border-slate-200/90 dark:border-[#2F3336] px-3 py-1 text-[12px] font-mono font-medium text-slate-700 dark:text-slate-300 transition-colors hover:border-slate-300 dark:hover:border-slate-500 shadow-2xs"
                     >
                       {tech}
                     </span>
@@ -143,10 +143,10 @@ export default function ProjectCard({
                   {project.impactMetrics.map((point: string, i: number) => (
                     <li
                       key={i}
-                      className="flex items-start gap-2 text-[13px] sm:text-[13.5px] text-slate-600 dark:text-slate-400 leading-[1.6]"
+                      className="flex items-start gap-2.5 text-[14px] sm:text-[15px] text-slate-600 dark:text-slate-400 leading-[1.65]"
                     >
                       <ArrowRight
-                        size={12}
+                        size={14}
                         weight="bold"
                         className="text-[#1D9BF0] shrink-0 mt-1"
                         aria-hidden="true"
@@ -158,7 +158,7 @@ export default function ProjectCard({
               )}
 
               {/* GitHub / Live Demo Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-100 dark:border-slate-800/80 font-mono text-[12px]">
+              <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-100 dark:border-slate-800/80 font-mono text-[13px]">
                 <a
                   href={project.githubUrl}
                   target="_blank"
@@ -170,13 +170,13 @@ export default function ProjectCard({
                       url: project.githubUrl,
                     })
                   }
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#16181C] hover:bg-slate-50 dark:hover:bg-[#1E2732] text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white transition-all duration-150 shadow-2xs hover:border-slate-300 dark:hover:border-slate-500 font-medium group/btn cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#16181C] hover:bg-slate-50 dark:hover:bg-[#1E2732] text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white transition-all duration-150 shadow-2xs hover:border-slate-300 dark:hover:border-slate-500 font-medium group/btn cursor-pointer"
                 >
                   <span>GitHub</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="11"
-                    height="11"
+                    width="12"
+                    height="12"
                     fill="currentColor"
                     viewBox="0 0 256 256"
                     className="translate-y-[0.5px] transition-transform duration-200 ease-out group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 shrink-0"
@@ -192,13 +192,13 @@ export default function ProjectCard({
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackProjectDemoClicked(project.title, project.liveUrl)}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#1D9BF0]/30 hover:border-[#1D9BF0] bg-[#1D9BF0]/10 hover:bg-[#1D9BF0]/20 text-[#1D9BF0] font-medium transition-all duration-150 shadow-2xs group/btn cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-[#1D9BF0]/30 hover:border-[#1D9BF0] bg-[#1D9BF0]/10 hover:bg-[#1D9BF0]/20 text-[#1D9BF0] font-medium transition-all duration-150 shadow-2xs group/btn cursor-pointer"
                   >
                     <span>Live Demo</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="11"
-                      height="11"
+                      width="12"
+                      height="12"
                       fill="currentColor"
                       viewBox="0 0 256 256"
                       className="translate-y-[0.5px] transition-transform duration-200 ease-out group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 shrink-0"

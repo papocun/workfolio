@@ -27,7 +27,7 @@ const breadcrumbJsonLd = {
 
 export default function BlogPage() {
   return (
-    <main className="max-w-[680px] mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 sm:pb-24 transition-colors duration-200">
+    <main className="max-w-[680px] mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 sm:pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
@@ -46,7 +46,7 @@ export default function BlogPage() {
         <h1 className="sr-only">Blog</h1>
 
         {/* TextShimmer animation directly underneath */}
-        <TextShimmer className="font-mono text-sm" duration={1}>
+        <TextShimmer className="font-mono text-[15px]" duration={1}>
           Work in progress...
         </TextShimmer>
       </div>

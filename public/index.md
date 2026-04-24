@@ -7,13 +7,9 @@ Website: https://datafolio.me/
 
 ## About
 
-I work at the intersection of data, machine learning, and software, building systems that solve problems beyond a notebook. I've worked with startups and small teams on problems ranging from fraud scoring and forecasting to automation and real-time APIs, where the interesting part is usually turning an idea into something reliable enough to use.
+22, working in Data & AI. Most days I'm building data pipelines and trying to make them actually reliable not just working once and breaking later. Lately I've been figuring out where LLMs and RAG genuinely help with data work, and where people are just forcing AI into things that don't need it.
 
-My work moves between experimentation and engineering. I enjoy understanding the problem first, testing what actually works, and then building the pieces around it. Sometimes that means an ML model, sometimes a data pipeline or API, and sometimes figuring out why the numbers don't make sense in the first place.
-
-These days, I'm also exploring LLMs, RAG, and AI applications—mostly with the same question in mind: can this be made genuinely useful, or is it just another demo?
-
-Outside of work, I build side projects, play chess, read, and follow whatever happens to catch my curiosity. I like learning by building, breaking things, and going deep enough to understand how they work.
+Outside of that: chess, coffee, and writing. Thanks for stopping by :)
 
 ## Navigation & Sections
 

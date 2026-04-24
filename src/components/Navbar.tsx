@@ -30,7 +30,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#FAF9F6]/85 dark:bg-[#000000]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/60 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]">
+    <header className="sticky top-0 z-50 w-full bg-[#FAF9F6]/85 dark:bg-[#000000]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/60">
       <div className="max-w-[680px] mx-auto px-4 sm:px-6 py-3 sm:py-3.5 flex items-center justify-between gap-2">
         {/* Left Branding */}
         <Link
@@ -84,7 +84,7 @@ export default function Navbar() {
           {/* Vertical Divider */}
           <span className="h-3.5 sm:h-4 w-[1px] bg-slate-200 dark:bg-slate-800" aria-hidden="true" />
 
-          {/* Settings Trigger using existing circular avatar */}
+          {/* Settings Trigger using existing circular header icon */}
           <Popover className="relative inline-flex items-center shrink-0">
             <PopoverButton
               aria-label="Open settings"
@@ -102,8 +102,8 @@ export default function Navbar() {
             </PopoverButton>
 
             <PopoverPanel
-              anchor={{ to: 'bottom-end', gap: 10 }}
-              className="w-[270px] sm:w-[290px] max-w-[calc(100vw-32px)] rounded-2xl border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md shadow-xl dark:shadow-2xl p-4 sm:p-5 text-slate-800 dark:text-slate-100 select-none"
+              anchor={{ to: 'bottom-end', gap: 8 }}
+              className="w-[240px] sm:w-[260px] max-w-[calc(100vw-32px)] rounded-2xl border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md shadow-xl dark:shadow-2xl p-3.5 sm:p-4 text-slate-800 dark:text-slate-100 select-none"
             >
               <SettingsContent />
             </PopoverPanel>

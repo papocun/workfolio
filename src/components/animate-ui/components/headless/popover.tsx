@@ -101,7 +101,14 @@ export function Popover({ children, className = '', ...props }: PopoverProps) {
         panelRef,
       }}
     >
-      <div className={`relative ${className}`} {...props}>
+      <div
+        className={`${
+          className.includes('fixed') || className.includes('absolute')
+            ? ''
+            : 'relative '
+        }${className}`}
+        {...props}
+      >
         {children}
       </div>
     </PopoverContext.Provider>

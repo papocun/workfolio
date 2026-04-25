@@ -1,29 +1,50 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+} from 'react';
 
 export type Theme = 'dark' | 'light';
 
 interface ThemeContextType {
   theme: Theme;
   isDark: boolean;
+  isTransitioning: boolean;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
-  brightness: number;
-  setBrightness: (val: number) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'theme';
 const LEGACY_STORAGE_KEY = 'workfolio-theme';
-const BRIGHTNESS_STORAGE_KEY = 'workfolio-brightness';
+
+// Exact phase durations for fast, crisp transition (total perceived time ~220ms)
+const PHASE1_COVER_MS = 110;
+const PHASE3_REVEAL_MS = 110;
+
+// Theme neutral surface colors
+const DARK_SURFACE = '#000000';
+const LIGHT_SURFACE = '#FAF9F6';
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Always initialize to 'dark' for SSR & default rule
+  // Always initialize to 'dark' for SSR consistency with initial HTML class
   const [theme, setThemeState] = useState<Theme>('dark');
-  const [brightness, setBrightnessState] = useState<number>(100);
-  const transitionTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
+
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+  const isTransitioningRef = useRef<boolean>(false);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  const clearAllTimers = () => {
+    timersRef.current.forEach(clearTimeout);
+    timersRef.current = [];
+  };
 
   // Synchronize state with early head script & localStorage on mount
   useEffect(() => {
@@ -34,102 +55,147 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       if (saved === 'light') {
         setThemeState('light');
         document.documentElement.classList.remove('dark');
-      } else if (saved === 'dark') {
-        setThemeState('dark');
-        document.documentElement.classList.add('dark');
       } else {
-        // No saved preference -> ALWAYS DARK MODE
-        // Never use system or browser preference
+        // Default or saved dark -> ALWAYS DARK MODE
         setThemeState('dark');
         document.documentElement.classList.add('dark');
-      }
-
-      const savedBrightness = localStorage.getItem(BRIGHTNESS_STORAGE_KEY);
-      if (savedBrightness !== null) {
-        const parsed = parseInt(savedBrightness, 10);
-        if (!isNaN(parsed) && parsed >= 60 && parsed <= 140) {
-          setBrightnessState(parsed);
-          document.documentElement.style.setProperty('--theme-brightness', `${parsed}%`);
-          document.documentElement.style.setProperty('--bg-intensity', `${(parsed / 100).toFixed(2)}`);
-        }
       }
     } catch {
-      // Fallback to dark mode on storage error
       setThemeState('dark');
       document.documentElement.classList.add('dark');
     }
 
     return () => {
-      if (transitionTimerRef.current) {
-        clearTimeout(transitionTimerRef.current);
-      }
+      clearAllTimers();
     };
   }, []);
 
-  const setBrightness = (val: number) => {
-    const clamped = Math.max(60, Math.min(140, Math.round(val)));
-    setBrightnessState(clamped);
+  const executeImmediateThemeChange = useCallback((nextTheme: Theme) => {
+    setThemeState(nextTheme);
     try {
-      localStorage.setItem(BRIGHTNESS_STORAGE_KEY, String(clamped));
-      document.documentElement.style.setProperty('--theme-brightness', `${clamped}%`);
-      document.documentElement.style.setProperty('--bg-intensity', `${(clamped / 100).toFixed(2)}`);
+      localStorage.setItem(STORAGE_KEY, nextTheme);
+      localStorage.setItem(LEGACY_STORAGE_KEY, nextTheme);
     } catch {
-      // ignore
-    }
-  };
-
-  const setTheme = (t: Theme) => {
-    if (t === theme) return;
-
-    // Check prefers-reduced-motion
-    const prefersReducedMotion =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Apply coordinated theme-transitioning class only for manual user switches
-    if (!prefersReducedMotion && typeof document !== 'undefined') {
-      if (transitionTimerRef.current) {
-        clearTimeout(transitionTimerRef.current);
-      }
-      document.documentElement.classList.add('theme-transitioning');
-      transitionTimerRef.current = setTimeout(() => {
-        document.documentElement.classList.remove('theme-transitioning');
-        transitionTimerRef.current = null;
-      }, 250);
+      // Ignore storage errors
     }
 
-    setThemeState(t);
-    try {
-      localStorage.setItem(STORAGE_KEY, t);
-      localStorage.setItem(LEGACY_STORAGE_KEY, t);
-    } catch {
-      // Ignore storage errors (e.g. private browsing quota)
-    }
-
-    if (t === 'dark') {
+    if (nextTheme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-  };
+  }, []);
 
-  const toggleTheme = () => {
+  const setTheme = useCallback(
+    (targetTheme: Theme) => {
+      if (targetTheme === theme) return;
+      if (isTransitioningRef.current) return; // Prevent race conditions & overlapping transitions
+
+      // Check prefers-reduced-motion
+      const prefersReducedMotion =
+        typeof window !== 'undefined' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (prefersReducedMotion || !overlayRef.current) {
+        executeImmediateThemeChange(targetTheme);
+        return;
+      }
+
+      const overlay = overlayRef.current;
+      isTransitioningRef.current = true;
+      setIsTransitioning(true);
+      clearAllTimers();
+
+      // Current theme surface color:
+      // Dark -> #000000 (covers dark mode seamlessly)
+      // Light -> #FAF9F6 (covers light mode seamlessly)
+      const currentBg = theme === 'dark' ? DARK_SURFACE : LIGHT_SURFACE;
+
+      // Phase 1 — COVER
+      // Prepare overlay with current theme background
+      overlay.style.transition = 'none';
+      overlay.style.backgroundColor = currentBg;
+      overlay.style.opacity = '0';
+      overlay.style.display = 'block';
+
+      // Force layout reflow so opacity: 0 is registered before starting transition
+      void overlay.offsetHeight;
+
+      // Animate overlay opacity to 1 (cover viewport)
+      overlay.style.transition = `opacity ${PHASE1_COVER_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+      overlay.style.opacity = '1';
+
+      // Once cover completes:
+      const coverTimer = setTimeout(() => {
+        // Phase 2 — SWITCH (underneath the 100% opaque overlay)
+        if (targetTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        setThemeState(targetTheme);
+        try {
+          localStorage.setItem(STORAGE_KEY, targetTheme);
+          localStorage.setItem(LEGACY_STORAGE_KEY, targetTheme);
+        } catch {
+          // Ignore storage errors
+        }
+
+        // Wait for React & browser render underneath overlay (double rAF)
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            // Phase 3 — REVEAL
+            // Fade overlay out to reveal the completed new theme as one unified layer
+            overlay.style.transition = `opacity ${PHASE3_REVEAL_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+            overlay.style.opacity = '0';
+
+            const revealTimer = setTimeout(() => {
+              overlay.style.display = 'none';
+              isTransitioningRef.current = false;
+              setIsTransitioning(false);
+            }, PHASE3_REVEAL_MS);
+
+            timersRef.current.push(revealTimer);
+          });
+        });
+      }, PHASE1_COVER_MS);
+
+      timersRef.current.push(coverTimer);
+    },
+    [theme, executeImmediateThemeChange]
+  );
+
+  const toggleTheme = useCallback(() => {
     const next: Theme = theme === 'dark' ? 'light' : 'dark';
     setTheme(next);
-  };
+  }, [theme, setTheme]);
 
   return (
     <ThemeContext.Provider
       value={{
         theme,
         isDark: theme === 'dark',
+        isTransitioning,
         setTheme,
         toggleTheme,
-        brightness,
-        setBrightness,
       }}
     >
       {children}
+      {/* Global Theme Transition Overlay — sits above all content (z-[999999]) */}
+      <div
+        ref={overlayRef}
+        id="theme-transition-overlay"
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 999999,
+          pointerEvents: 'none',
+          display: 'none',
+          opacity: 0,
+          willChange: 'opacity',
+        }}
+      />
     </ThemeContext.Provider>
   );
 }

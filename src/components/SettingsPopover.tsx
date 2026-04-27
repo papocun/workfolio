@@ -29,7 +29,10 @@ function ToggleSwitch({ checked, onChange, label, disabled = false }: ToggleSwit
       aria-checked={checked}
       aria-label={label}
       disabled={disabled}
-      onClick={onChange}
+      onClick={(e) => {
+        e.stopPropagation();
+        onChange();
+      }}
       className={`relative inline-flex h-5 w-9 shrink-0 rounded-full border border-transparent p-0.5 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#16181C] select-none ${
         disabled ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'
       } ${
@@ -70,9 +73,24 @@ export function SettingsContent() {
         </button>
       </div>
 
-      {/* Preferences Toggles (Dark Mode & Sound) */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between gap-2 py-0.5">
+      {/* Preferences Toggles (Dark Mode & Sound) — Entire row clickable for touch & tablet */}
+      <div className="space-y-1">
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={isTransitioning ? undefined : toggleTheme}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              if (!isTransitioning) toggleTheme();
+            }
+          }}
+          className={`flex items-center justify-between gap-2 py-1 px-1 -mx-1 rounded-md transition-colors select-none ${
+            isTransitioning
+              ? 'cursor-not-allowed opacity-75'
+              : 'cursor-pointer hover:bg-slate-100/70 dark:hover:bg-[#1E2732]/60 active:bg-slate-200/50 dark:active:bg-[#1E2732]/90'
+          }`}
+        >
           <span className="text-[13px] font-medium text-slate-700 dark:text-slate-300">
             Dark Mode
           </span>
@@ -84,7 +102,18 @@ export function SettingsContent() {
           />
         </div>
 
-        <div className="flex items-center justify-between gap-2 py-0.5">
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={toggleSound}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              toggleSound();
+            }
+          }}
+          className="flex items-center justify-between gap-2 py-1 px-1 -mx-1 rounded-md transition-colors select-none cursor-pointer hover:bg-slate-100/70 dark:hover:bg-[#1E2732]/60 active:bg-slate-200/50 dark:active:bg-[#1E2732]/90"
+        >
           <span className="text-[13px] font-medium text-slate-700 dark:text-slate-300">
             Sound
           </span>

@@ -8,6 +8,7 @@ import React, {
   useRef,
   useCallback,
 } from 'react';
+import { flushSync } from 'react-dom';
 
 export type Theme = 'dark' | 'light';
 
@@ -106,10 +107,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       setIsTransitioning(true);
       clearAllTimers();
 
-      // Current theme surface color:
+      // Use actual DOM truth for surface color:
       // Dark -> #000000 (covers dark mode seamlessly)
       // Light -> #FAF9F6 (covers light mode seamlessly)
-      const currentBg = theme === 'dark' ? DARK_SURFACE : LIGHT_SURFACE;
+      const isCurrentlyDark =
+        typeof document !== 'undefined'
+          ? document.documentElement.classList.contains('dark')
+          : theme === 'dark';
+      const currentBg = isCurrentlyDark ? DARK_SURFACE : LIGHT_SURFACE;
 
       // Phase 1 — COVER
       // Prepare overlay with current theme background
@@ -133,7 +138,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         } else {
           document.documentElement.classList.remove('dark');
         }
-        setThemeState(targetTheme);
+
+        // Force synchronous React state commit across all components
+        flushSync(() => {
+          setThemeState(targetTheme);
+        });
+
         try {
           localStorage.setItem(STORAGE_KEY, targetTheme);
           localStorage.setItem(LEGACY_STORAGE_KEY, targetTheme);
@@ -141,23 +151,26 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
           // Ignore storage errors
         }
 
-        // Wait for React & browser render underneath overlay (double rAF)
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            // Phase 3 — REVEAL
-            // Fade overlay out to reveal the completed new theme as one unified layer
-            overlay.style.transition = `opacity ${PHASE3_REVEAL_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-            overlay.style.opacity = '0';
+        // Force synchronous style and layout recalculation across the DOM
+        void document.documentElement.offsetHeight;
 
-            const revealTimer = setTimeout(() => {
-              overlay.style.display = 'none';
-              isTransitioningRef.current = false;
-              setIsTransitioning(false);
-            }, PHASE3_REVEAL_MS);
+        // Phase 3 — REVEAL
+        // Brief 25ms tick ensures compositor has bound the recalculated layout
+        const startReveal = () => {
+          overlay.style.transition = `opacity ${PHASE3_REVEAL_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+          overlay.style.opacity = '0';
 
-            timersRef.current.push(revealTimer);
-          });
-        });
+          const finishTimer = setTimeout(() => {
+            overlay.style.display = 'none';
+            isTransitioningRef.current = false;
+            setIsTransitioning(false);
+          }, PHASE3_REVEAL_MS + 20);
+
+          timersRef.current.push(finishTimer);
+        };
+
+        const revealStartTimer = setTimeout(startReveal, 25);
+        timersRef.current.push(revealStartTimer);
       }, PHASE1_COVER_MS);
 
       timersRef.current.push(coverTimer);
@@ -166,7 +179,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   );
 
   const toggleTheme = useCallback(() => {
-    const next: Theme = theme === 'dark' ? 'light' : 'dark';
+    const isCurrentlyDark =
+      typeof document !== 'undefined'
+        ? document.documentElement.classList.contains('dark')
+        : theme === 'dark';
+    const next: Theme = isCurrentlyDark ? 'light' : 'dark';
     setTheme(next);
   }, [theme, setTheme]);
 

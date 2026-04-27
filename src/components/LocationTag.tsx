@@ -27,7 +27,7 @@ export default function LocationTag({
   location = 'Delhi',
   className = '',
 }: LocationTagProps) {
-  const { isDark, toggleTheme } = useTheme();
+  const { isDark, toggleTheme, isTransitioning } = useTheme();
   const { isSoundOn, toggleSound } = useSound();
   const shouldReduceMotion = useReducedMotion();
 
@@ -158,11 +158,14 @@ export default function LocationTag({
         <button
           type="button"
           onClick={toggleTheme}
+          disabled={isTransitioning}
           aria-label={
             isDark ? 'Switch to light mode' : 'Switch to dark mode'
           }
           title={isDark ? 'Theme: Dark' : 'Theme: Light'}
-          className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-1.5 -m-1 rounded cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] overflow-hidden relative w-7 h-7"
+          className={`text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-1.5 -m-1 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] overflow-hidden relative w-7 h-7 ${
+            isTransitioning ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'
+          }`}
         >
           <AnimatePresence mode="wait" initial={false}>
             <motion.span

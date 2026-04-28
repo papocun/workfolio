@@ -132,12 +132,40 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${urbanist.variable} dark h-full antialiased`}
     >
       <head>
+        <meta name="theme-color" content="#000000" id="meta-theme-color" />
         <link rel="icon" type="image/png" href="/favicon.png" />
         <link rel="apple-touch-icon" href="/favicon.png" />
         <link rel="alternate" type="text/markdown" href="https://datafolio.me/llms.txt" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              :root {
+                color-scheme: dark;
+              }
+              html {
+                background-color: #000000;
+              }
+              html.dark,
+              html[data-theme="dark"] {
+                background-color: #000000;
+                color-scheme: dark;
+              }
+              html:not(.dark):not([data-theme="dark"]),
+              html[data-theme="light"] {
+                background-color: #FAF9F6;
+                color-scheme: light;
+              }
+              body {
+                background-color: inherit;
+              }
+              .no-theme-transition,
+              .no-theme-transition *,
+              .no-theme-transition *::before,
+              .no-theme-transition *::after {
+                transition: none !important;
+              }
+            `,
+          }}
         />
         <script
           dangerouslySetInnerHTML={{
@@ -145,17 +173,38 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               (function() {
                 try {
                   var saved = localStorage.getItem('theme') || localStorage.getItem('workfolio-theme');
-                  if (saved === 'light') {
-                    document.documentElement.classList.remove('dark');
+                  var isLight = saved === 'light';
+                  var doc = document.documentElement;
+                  doc.classList.add('no-theme-transition');
+                  if (isLight) {
+                    doc.classList.remove('dark');
+                    doc.setAttribute('data-theme', 'light');
+                    doc.style.colorScheme = 'light';
+                    doc.style.backgroundColor = '#FAF9F6';
                   } else {
-                    document.documentElement.classList.add('dark');
+                    doc.classList.add('dark');
+                    doc.setAttribute('data-theme', 'dark');
+                    doc.style.colorScheme = 'dark';
+                    doc.style.backgroundColor = '#000000';
+                  }
+                  var meta = document.getElementById('meta-theme-color');
+                  if (meta) {
+                    meta.setAttribute('content', isLight ? '#FAF9F6' : '#000000');
                   }
                 } catch (e) {
-                  document.documentElement.classList.add('dark');
+                  var doc = document.documentElement;
+                  doc.classList.add('dark');
+                  doc.setAttribute('data-theme', 'dark');
+                  doc.style.colorScheme = 'dark';
+                  doc.style.backgroundColor = '#000000';
                 }
               })();
             `,
           }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
       </head>
       <body className="min-h-full flex flex-col font-sans bg-[#FAF9F6] dark:bg-[#000000] text-slate-800 dark:text-slate-100 selection:bg-sky-100 dark:selection:bg-[#1E2732] selection:text-sky-900 dark:selection:text-[#E7E9EA]">

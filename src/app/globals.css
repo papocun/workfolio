@@ -59,7 +59,8 @@
 }
 
 /* ─── CSS Custom Properties: Untouched Dark Mode ───────────── */
-.dark {
+.dark,
+[data-theme="dark"] {
   --c-bg: #000000;
   --c-surface: #16181C;
   --c-surface-elevated: #16181C;
@@ -91,6 +92,9 @@
 }
 
 html {
+  background-color: var(--c-bg);
+  color: var(--c-text-primary);
+  color-scheme: light;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -98,23 +102,35 @@ html {
   overflow-x: clip;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+html.dark,
+html[data-theme="dark"] {
+  background-color: #000000;
+  color-scheme: dark;
+}
 
-  .animate-pulse {
-    animation: none !important;
-  }
+html:not(.dark):not([data-theme="dark"]),
+html[data-theme="light"] {
+  background-color: #FAF9F6;
+  color-scheme: light;
 }
 
 body {
+  background-color: var(--c-bg);
+  color: var(--c-text-primary);
   margin: 0;
   padding: 0;
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.65;
   overflow-x: clip;
+}
+
+/* ─── Prevent Theme Transitions on Refresh / Page Load ────── */
+.no-theme-transition,
+.no-theme-transition *,
+.no-theme-transition *::before,
+.no-theme-transition *::after {
+  transition: none !important;
 }
 
 /* ─── Selection Styling ────────────────────────────────────── */

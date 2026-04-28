@@ -33,9 +33,36 @@ const PHASE3_REVEAL_MS = 110;
 const DARK_SURFACE = '#000000';
 const LIGHT_SURFACE = '#FAF9F6';
 
+// Helper to synchronize all DOM theme surfaces synchronously
+const applyThemeToDOM = (targetTheme: Theme) => {
+  if (typeof document === 'undefined') return;
+  const isDark = targetTheme === 'dark';
+  const root = document.documentElement;
+
+  if (isDark) {
+    root.classList.add('dark');
+  } else {
+    root.classList.remove('dark');
+  }
+
+  root.setAttribute('data-theme', targetTheme);
+  root.style.backgroundColor = isDark ? DARK_SURFACE : LIGHT_SURFACE;
+  root.style.colorScheme = isDark ? 'dark' : 'light';
+
+  const meta = document.getElementById('meta-theme-color');
+  if (meta) {
+    meta.setAttribute('content', isDark ? DARK_SURFACE : LIGHT_SURFACE);
+  }
+};
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Always initialize to 'dark' for SSR consistency with initial HTML class
-  const [theme, setThemeState] = useState<Theme>('dark');
+  // Initialize to actual DOM state if available, default to 'dark' for SSR
+  const [theme, setThemeState] = useState<Theme>(() => {
+    if (typeof document !== 'undefined') {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    return 'dark';
+  });
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
 
   const overlayRef = useRef<HTMLDivElement | null>(null);
@@ -53,20 +80,21 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       const saved = (localStorage.getItem(STORAGE_KEY) ||
         localStorage.getItem(LEGACY_STORAGE_KEY)) as Theme | null;
 
-      if (saved === 'light') {
-        setThemeState('light');
-        document.documentElement.classList.remove('dark');
-      } else {
-        // Default or saved dark -> ALWAYS DARK MODE
-        setThemeState('dark');
-        document.documentElement.classList.add('dark');
-      }
+      const nextTheme: Theme = saved === 'light' ? 'light' : 'dark';
+      setThemeState(nextTheme);
+      applyThemeToDOM(nextTheme);
     } catch {
       setThemeState('dark');
-      document.documentElement.classList.add('dark');
+      applyThemeToDOM('dark');
     }
 
+    // Safely remove initial load transition blocker after first paint
+    const frameId = requestAnimationFrame(() => {
+      document.documentElement.classList.remove('no-theme-transition');
+    });
+
     return () => {
+      cancelAnimationFrame(frameId);
       clearAllTimers();
     };
   }, []);
@@ -80,11 +108,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       // Ignore storage errors
     }
 
-    if (nextTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    applyThemeToDOM(nextTheme);
   }, []);
 
   const setTheme = useCallback(
@@ -133,11 +157,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       // Once cover completes:
       const coverTimer = setTimeout(() => {
         // Phase 2 — SWITCH (underneath the 100% opaque overlay)
-        if (targetTheme === 'dark') {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
+        applyThemeToDOM(targetTheme);
 
         // Force synchronous React state commit across all components
         flushSync(() => {

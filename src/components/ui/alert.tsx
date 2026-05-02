@@ -5,7 +5,7 @@ import { WarningCircle, Info, X } from '@phosphor-icons/react';
 
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'warning' | 'info';
-  onClose?: () => void;
+  onClose?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   children: React.ReactNode;
 }

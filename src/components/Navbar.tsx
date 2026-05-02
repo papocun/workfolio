@@ -34,15 +34,17 @@ export default function Navbar() {
       <div className="max-w-[680px] mx-auto px-4 sm:px-6 py-3 sm:py-3.5 flex items-center justify-between gap-2">
         {/* Left Branding */}
         <Link
-          className="text-[14px] sm:text-[15.5px] font-semibold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-75 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] shrink-0"
+          className="text-[14px] sm:text-[15.5px] font-semibold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-75 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] shrink-0 select-none"
           href="/"
+          draggable={false}
+          onDragStart={(e) => e.preventDefault()}
         >
           divyanshu tiwari
         </Link>
 
         {/* Right Navigation & Profile Avatar */}
         <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-          <nav aria-label="Main navigation" className="flex items-center gap-1.5 sm:gap-2.5 text-[13px] sm:text-[14px]">
+          <nav aria-label="Main navigation" className="flex items-center gap-1.5 sm:gap-2.5 text-[13px] sm:text-[14px] select-none">
             {NAV_ITEMS.map((item, index) => {
               const isActive = pathname === item.href;
 
@@ -50,7 +52,9 @@ export default function Navbar() {
                 <div key={item.href} className="flex items-center gap-1.5 sm:gap-2.5">
                   <Link
                     href={item.href}
-                    className={`group relative inline-flex items-center gap-0.5 sm:gap-1 py-1 px-0.5 text-slate-500 dark:text-slate-400 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                    draggable={false}
+                    onDragStart={(e) => e.preventDefault()}
+                    className={`group relative inline-flex items-center gap-0.5 sm:gap-1 py-1 px-0.5 text-slate-500 dark:text-slate-400 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] select-none ${
                       isActive
                         ? 'font-semibold text-slate-900 dark:text-slate-100'
                         : 'hover:text-slate-900 dark:hover:text-slate-100'

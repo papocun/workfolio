@@ -108,7 +108,7 @@ export default function HomePage() {
         </p>
 
         {/* Location Row */}
-        <LocationTag location="Delhi" className="pt-1.5" />
+        <LocationTag location="Delhi" className="pt-1.5" showTooltips={true} />
       </div>
 
       {/* Action Links & Resume Button */}

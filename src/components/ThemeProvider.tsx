@@ -25,10 +25,6 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 const STORAGE_KEY = 'theme';
 const LEGACY_STORAGE_KEY = 'workfolio-theme';
 
-// Exact phase durations for fast, crisp transition (total perceived time ~220ms)
-const PHASE1_COVER_MS = 110;
-const PHASE3_REVEAL_MS = 110;
-
 // Theme neutral surface colors
 const DARK_SURFACE = '#000000';
 const LIGHT_SURFACE = '#FAF9F6';
@@ -64,15 +60,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     return 'dark';
   });
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
-
-  const overlayRef = useRef<HTMLDivElement | null>(null);
   const isTransitioningRef = useRef<boolean>(false);
-  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
-
-  const clearAllTimers = () => {
-    timersRef.current.forEach(clearTimeout);
-    timersRef.current = [];
-  };
 
   // Synchronize state with early head script & localStorage on mount
   useEffect(() => {
@@ -95,7 +83,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
     return () => {
       cancelAnimationFrame(frameId);
-      clearAllTimers();
     };
   }, []);
 
@@ -114,86 +101,62 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const setTheme = useCallback(
     (targetTheme: Theme) => {
       if (targetTheme === theme) return;
-      if (isTransitioningRef.current) return; // Prevent race conditions & overlapping transitions
+      if (isTransitioningRef.current) return; // Prevent overlapping transitions
 
       // Check prefers-reduced-motion
       const prefersReducedMotion =
         typeof window !== 'undefined' &&
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      if (prefersReducedMotion || !overlayRef.current) {
+      // Check if browser supports View Transition API
+      const supportsViewTransition =
+        typeof document !== 'undefined' &&
+        'startViewTransition' in document &&
+        typeof document.startViewTransition === 'function';
+
+      // Fallback immediately if reduced motion is preferred or View Transition is unsupported
+      if (prefersReducedMotion || !supportsViewTransition) {
         executeImmediateThemeChange(targetTheme);
         return;
       }
 
-      const overlay = overlayRef.current;
       isTransitioningRef.current = true;
       setIsTransitioning(true);
-      clearAllTimers();
 
-      // Use actual DOM truth for surface color:
-      // Dark -> #000000 (covers dark mode seamlessly)
-      // Light -> #FAF9F6 (covers light mode seamlessly)
-      const isCurrentlyDark =
-        typeof document !== 'undefined'
-          ? document.documentElement.classList.contains('dark')
-          : theme === 'dark';
-      const currentBg = isCurrentlyDark ? DARK_SURFACE : LIGHT_SURFACE;
+      try {
+        // Temporarily disable component-level transitions so the new DOM snapshot renders cleanly
+        document.documentElement.classList.add('theme-transitioning');
 
-      // Phase 1 — COVER
-      // Prepare overlay with current theme background
-      overlay.style.transition = 'none';
-      overlay.style.backgroundColor = currentBg;
-      overlay.style.opacity = '0';
-      overlay.style.display = 'block';
+        const transition = document.startViewTransition(() => {
+          applyThemeToDOM(targetTheme);
 
-      // Force layout reflow so opacity: 0 is registered before starting transition
-      void overlay.offsetHeight;
+          // Force synchronous React state commit so new tree renders immediately into snapshot
+          flushSync(() => {
+            setThemeState(targetTheme);
+          });
 
-      // Animate overlay opacity to 1 (cover viewport)
-      overlay.style.transition = `opacity ${PHASE1_COVER_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-      overlay.style.opacity = '1';
-
-      // Once cover completes:
-      const coverTimer = setTimeout(() => {
-        // Phase 2 — SWITCH (underneath the 100% opaque overlay)
-        applyThemeToDOM(targetTheme);
-
-        // Force synchronous React state commit across all components
-        flushSync(() => {
-          setThemeState(targetTheme);
+          try {
+            localStorage.setItem(STORAGE_KEY, targetTheme);
+            localStorage.setItem(LEGACY_STORAGE_KEY, targetTheme);
+          } catch {
+            // Ignore storage errors
+          }
         });
 
-        try {
-          localStorage.setItem(STORAGE_KEY, targetTheme);
-          localStorage.setItem(LEGACY_STORAGE_KEY, targetTheme);
-        } catch {
-          // Ignore storage errors
-        }
-
-        // Force synchronous style and layout recalculation across the DOM
-        void document.documentElement.offsetHeight;
-
-        // Phase 3 — REVEAL
-        // Brief 25ms tick ensures compositor has bound the recalculated layout
-        const startReveal = () => {
-          overlay.style.transition = `opacity ${PHASE3_REVEAL_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-          overlay.style.opacity = '0';
-
-          const finishTimer = setTimeout(() => {
-            overlay.style.display = 'none';
-            isTransitioningRef.current = false;
-            setIsTransitioning(false);
-          }, PHASE3_REVEAL_MS + 20);
-
-          timersRef.current.push(finishTimer);
+        const cleanup = () => {
+          document.documentElement.classList.remove('theme-transitioning');
+          isTransitioningRef.current = false;
+          setIsTransitioning(false);
         };
 
-        const revealStartTimer = setTimeout(startReveal, 25);
-        timersRef.current.push(revealStartTimer);
-      }, PHASE1_COVER_MS);
-
-      timersRef.current.push(coverTimer);
+        transition.finished.then(cleanup, cleanup);
+      } catch {
+        // Safe fallback if startViewTransition throws unexpectedly
+        executeImmediateThemeChange(targetTheme);
+        document.documentElement.classList.remove('theme-transitioning');
+        isTransitioningRef.current = false;
+        setIsTransitioning(false);
+      }
     },
     [theme, executeImmediateThemeChange]
   );
@@ -218,21 +181,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
-      {/* Global Theme Transition Overlay — sits above all content (z-[999999]) */}
-      <div
-        ref={overlayRef}
-        id="theme-transition-overlay"
-        aria-hidden="true"
-        style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 999999,
-          pointerEvents: 'none',
-          display: 'none',
-          opacity: 0,
-          willChange: 'opacity',
-        }}
-      />
     </ThemeContext.Provider>
   );
 }

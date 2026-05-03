@@ -89,6 +89,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -123,6 +124,25 @@ body {
   font-size: 16px;
   line-height: 1.65;
   overflow-x: clip;
+}
+
+/* ─── Prevent Browser Link-Drag Previews for Locked Navigation UI ──── */
+header,
+footer,
+nav {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+header a,
+footer a,
+header button,
+footer button,
+nav a,
+.no-drag {
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* ─── Prevent Theme Transitions on Refresh / Page Load ────── */
@@ -273,6 +293,70 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--c-scrollbar-hover);
+}
+
+/* ============================================================
+   GLOBAL VIEW TRANSITION (THEME SWITCHING ONLY)
+   Strictly scoped to html.theme-transitioning so route navigations
+   and external link redirects never trigger a view transition crossfade.
+   ============================================================ */
+html:not(.theme-transitioning)::view-transition-group(root),
+html:not(.theme-transitioning)::view-transition-old(root),
+html:not(.theme-transitioning)::view-transition-new(root) {
+  animation: none !important;
+}
+
+html.theme-transitioning::view-transition-group(root) {
+  animation-duration: 220ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.theme-transitioning::view-transition-image-pair(root) {
+  isolation: isolate;
+}
+
+html.theme-transitioning::view-transition-old(root) {
+  animation: vt-fade-out 220ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+html.theme-transitioning::view-transition-new(root) {
+  animation: vt-fade-in 220ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  mix-blend-mode: normal;
+}
+
+@keyframes vt-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root),
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+/* Disable component-level transitions during View Transition snapshot capture
+   to prevent individual elements from lagging or leading during theme toggle */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: none !important;
 }
 
 

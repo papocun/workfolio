@@ -96,7 +96,9 @@ export default function Footer() {
             <div>
               <Link
                 href="/"
-                className="text-[16px] sm:text-[17px] font-bold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-85 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                draggable={false}
+                onDragStart={(e) => e.preventDefault()}
+                className="text-[16px] sm:text-[17px] font-bold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-85 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] select-none"
               >
                 {portfolioData.name.toLowerCase()}
               </Link>
@@ -122,6 +124,8 @@ export default function Footer() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
+                        draggable={false}
+                        onDragStart={(e) => e.preventDefault()}
                         onClick={() =>
                           trackContactClicked({
                             channel: item.channel,
@@ -129,7 +133,7 @@ export default function Footer() {
                             url: item.href,
                           })
                         }
-                        className="group relative inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-1"
+                        className="group relative inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-1 select-none"
                       >
                         <Icon size={15} weight="regular" className="shrink-0 opacity-80 group-hover:opacity-100 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]" />
                         <span>{item.label}</span>
@@ -153,6 +157,8 @@ export default function Footer() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
+                      draggable={false}
+                      onDragStart={(e) => e.preventDefault()}
                       onClick={() => {
                         if (item.id === 'github') {
                           trackGithubClicked({
@@ -171,7 +177,7 @@ export default function Footer() {
                           });
                         }
                       }}
-                      className="group relative inline-flex items-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-1"
+                      className="group relative inline-flex items-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-1 select-none"
                     >
                       <span>{item.label}</span>
                       <span className="absolute -bottom-0.5 left-0 h-[1px] w-full bg-slate-900 dark:bg-slate-100 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" />

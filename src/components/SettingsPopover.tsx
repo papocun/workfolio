@@ -4,7 +4,6 @@ import React from 'react';
 import Link from 'next/link';
 import {
   X,
-  TwitterLogo,
   LinkedinLogo,
   House,
 } from '@phosphor-icons/react';
@@ -13,6 +12,19 @@ import { useTheme } from '@/components/ThemeProvider';
 import { useSound } from '@/components/SoundProvider';
 import { portfolioData } from '@/data/portfolioData';
 import { trackContactClicked } from '@/lib/posthog';
+
+function XLogoIcon({ className = 'w-3.5 h-3.5' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
 
 interface ToggleSwitchProps {
   checked: boolean;
@@ -73,25 +85,15 @@ export function SettingsContent() {
         </button>
       </div>
 
-      {/* Preferences Toggles (Dark Mode & Sound) — Entire row clickable for touch & tablet */}
+      {/* Preferences Toggles (Dark Mode & Sound) */}
       <div className="space-y-1">
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={isTransitioning ? undefined : toggleTheme}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              if (!isTransitioning) toggleTheme();
-            }
-          }}
-          className={`flex items-center justify-between gap-2 py-1 px-1 -mx-1 rounded-md transition-colors select-none ${
-            isTransitioning
-              ? 'cursor-not-allowed opacity-75'
-              : 'cursor-pointer hover:bg-slate-100/70 dark:hover:bg-[#1E2732]/60 active:bg-slate-200/50 dark:active:bg-[#1E2732]/90'
-          }`}
-        >
-          <span className="text-[13px] font-medium text-slate-700 dark:text-slate-300">
+        <div className="flex items-center justify-between gap-2 py-1 select-none">
+          <span
+            onClick={isTransitioning ? undefined : toggleTheme}
+            className={`text-[13px] font-medium text-slate-700 dark:text-slate-300 ${
+              isTransitioning ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'
+            }`}
+          >
             Dark Mode
           </span>
           <ToggleSwitch
@@ -102,19 +104,11 @@ export function SettingsContent() {
           />
         </div>
 
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={toggleSound}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              toggleSound();
-            }
-          }}
-          className="flex items-center justify-between gap-2 py-1 px-1 -mx-1 rounded-md transition-colors select-none cursor-pointer hover:bg-slate-100/70 dark:hover:bg-[#1E2732]/60 active:bg-slate-200/50 dark:active:bg-[#1E2732]/90"
-        >
-          <span className="text-[13px] font-medium text-slate-700 dark:text-slate-300">
+        <div className="flex items-center justify-between gap-2 py-1 select-none">
+          <span
+            onClick={toggleSound}
+            className="text-[13px] font-medium text-slate-700 dark:text-slate-300 cursor-pointer"
+          >
             Sound
           </span>
           <ToggleSwitch
@@ -131,11 +125,13 @@ export function SettingsContent() {
       {/* Social Media & Navigation Links */}
       <div className="space-y-2 pt-1.5">
         <div className="grid grid-cols-2 gap-2">
-          {/* Twitter Profile */}
+          {/* Twitter/X Profile */}
           <a
             href={portfolioData.socials.twitter}
             target="_blank"
             rel="noopener noreferrer"
+            draggable={false}
+            onDragStart={(e) => e.preventDefault()}
             onClick={() =>
               trackContactClicked({
                 channel: 'twitter',
@@ -143,15 +139,10 @@ export function SettingsContent() {
                 url: portfolioData.socials.twitter,
               })
             }
-            className="group flex items-center justify-center gap-2 px-2.5 py-1.5 rounded-lg border border-slate-200/80 dark:border-[#2F3336]/70 bg-slate-50/60 dark:bg-[#121417]/60 hover:bg-slate-100/90 dark:hover:bg-[#1E2732] hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-150 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0]"
+            className="group flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200/80 dark:border-[#2F3336]/70 bg-slate-50/60 dark:bg-[#121417]/60 hover:bg-slate-100/90 dark:hover:bg-[#1E2732] hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-150 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] select-none"
           >
-            <TwitterLogo
-              size={14}
-              weight="bold"
-              className="text-slate-600 dark:text-slate-300 group-hover:text-[#1D9BF0] transition-colors shrink-0"
-              aria-hidden="true"
-            />
-            <span className="text-[12px] font-medium truncate">Twitter</span>
+            <XLogoIcon className="w-3.5 h-3.5 text-slate-600 dark:text-slate-300 group-hover:text-[#1D9BF0] transition-colors shrink-0" />
+            <span className="text-[12px] font-medium truncate">Twitter/X</span>
           </a>
 
           {/* LinkedIn Profile */}
@@ -159,6 +150,8 @@ export function SettingsContent() {
             href={portfolioData.socials.linkedin}
             target="_blank"
             rel="noopener noreferrer"
+            draggable={false}
+            onDragStart={(e) => e.preventDefault()}
             onClick={() =>
               trackContactClicked({
                 channel: 'linkedin',
@@ -166,7 +159,7 @@ export function SettingsContent() {
                 url: portfolioData.socials.linkedin,
               })
             }
-            className="group flex items-center justify-center gap-2 px-2.5 py-1.5 rounded-lg border border-slate-200/80 dark:border-[#2F3336]/70 bg-slate-50/60 dark:bg-[#121417]/60 hover:bg-slate-100/90 dark:hover:bg-[#1E2732] hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-150 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0]"
+            className="group flex items-center justify-center gap-2 px-2.5 py-1.5 rounded-lg border border-slate-200/80 dark:border-[#2F3336]/70 bg-slate-50/60 dark:bg-[#121417]/60 hover:bg-slate-100/90 dark:hover:bg-[#1E2732] hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-150 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] select-none"
           >
             <LinkedinLogo
               size={14}
@@ -182,7 +175,9 @@ export function SettingsContent() {
         <Link
           href="/"
           onClick={close}
-          className="group flex items-center justify-center gap-2 w-full px-2.5 py-1.5 rounded-lg border border-slate-200/80 dark:border-[#2F3336]/70 bg-slate-50/60 dark:bg-[#121417]/60 hover:bg-slate-100/90 dark:hover:bg-[#1E2732] hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-150 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0]"
+          draggable={false}
+          onDragStart={(e) => e.preventDefault()}
+          className="group flex items-center justify-center gap-2 w-full px-2.5 py-1.5 rounded-lg border border-slate-200/80 dark:border-[#2F3336]/70 bg-slate-50/60 dark:bg-[#121417]/60 hover:bg-slate-100/90 dark:hover:bg-[#1E2732] hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-150 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] select-none"
         >
           <House
             size={14}

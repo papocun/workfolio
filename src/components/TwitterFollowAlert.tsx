@@ -151,15 +151,21 @@ export default function TwitterFollowAlert() {
     };
   }, [pathname, clearAllTimers, handleClose]);
 
-  const handleCardClick = (e: React.MouseEvent) => {
-    // Ignore clicks on the close / dismiss button
-    if ((e.target as HTMLElement).closest('button[aria-label="Dismiss alert"]')) {
-      return;
-    }
+  const handleDismiss = useCallback(
+    (e?: React.MouseEvent) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      handleClose();
+    },
+    [handleClose]
+  );
 
+  const handleLinkClick = () => {
     clearAllTimers();
+    setIsVisible(false);
     trackTwitterFollowClicked();
-    window.open(TWITTER_URL, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -172,47 +178,54 @@ export default function TwitterFollowAlert() {
           transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
           className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[340px] md:w-[370px] pointer-events-auto"
         >
-          <Alert
-            variant="default"
-            onClose={handleClose}
-            onClick={handleCardClick}
-            className="group cursor-pointer border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md hover:border-[#1D9BF0] dark:hover:border-[#1D9BF0] shadow-lg dark:shadow-2xl transition-all duration-200 p-3.5 sm:p-4 pr-3 rounded-2xl flex items-start gap-3"
+          <a
+            href={TWITTER_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleLinkClick}
+            className="block text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] rounded-2xl"
           >
-            {/* X Brand Icon Badge */}
-            <div className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#1D9BF0]/10 text-[#1D9BF0] mt-0.5 transition-transform duration-200 group-hover:scale-105">
-              <XLogoIcon className="w-4 h-4" />
-            </div>
-
-            {/* Content: Header, Arrow & Rotating Subheader */}
-            <div className="flex-1 min-w-0 pr-1">
-              <div className="flex items-center justify-between gap-1.5">
-                <AlertTitle className="text-[13.5px] sm:text-[14px] font-bold text-slate-900 dark:text-[#E7E9EA] group-hover:text-[#1D9BF0] dark:group-hover:text-[#1D9BF0] transition-colors duration-150 truncate">
-                  Follow me on X/Twitter
-                </AlertTitle>
-                <ArrowRight
-                  size={14}
-                  weight="bold"
-                  className="text-[#1D9BF0] transition-transform duration-200 ease-out group-hover:translate-x-1 shrink-0"
-                />
+            <Alert
+              variant="default"
+              onClose={handleDismiss}
+              className="group cursor-pointer border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md hover:border-[#1D9BF0] dark:hover:border-[#1D9BF0] shadow-lg dark:shadow-2xl transition-all duration-200 p-3.5 sm:p-4 pr-3 rounded-2xl flex items-start gap-3"
+            >
+              {/* X Brand Icon Badge */}
+              <div className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#1D9BF0]/10 text-[#1D9BF0] mt-0.5 transition-transform duration-200 group-hover:scale-105">
+                <XLogoIcon className="w-4 h-4" />
               </div>
 
-              {/* Rotating Subheader with smooth fade/slide */}
-              <div className="mt-1 h-[34px] sm:h-[32px] overflow-hidden relative">
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={subheadingIndex}
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.22, ease: 'easeOut' }}
-                    className="text-[12px] sm:text-[12.5px] text-slate-600 dark:text-slate-400 leading-snug line-clamp-2"
-                  >
-                    {SUBHEADINGS[subheadingIndex]}
-                  </motion.p>
-                </AnimatePresence>
+              {/* Content: Header, Arrow & Rotating Subheader */}
+              <div className="flex-1 min-w-0 pr-1">
+                <div className="flex items-center justify-between gap-1.5">
+                  <AlertTitle className="text-[13.5px] sm:text-[14px] font-bold text-slate-900 dark:text-[#E7E9EA] group-hover:text-[#1D9BF0] dark:group-hover:text-[#1D9BF0] transition-colors duration-150 truncate">
+                    Follow me on X/Twitter
+                  </AlertTitle>
+                  <ArrowRight
+                    size={14}
+                    weight="bold"
+                    className="text-[#1D9BF0] transition-transform duration-200 ease-out group-hover:translate-x-1 shrink-0"
+                  />
+                </div>
+
+                {/* Rotating Subheader with smooth fade/slide */}
+                <div className="mt-1 h-[34px] sm:h-[32px] overflow-hidden relative">
+                  <AnimatePresence mode="wait">
+                    <motion.p
+                      key={subheadingIndex}
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
+                      transition={{ duration: 0.22, ease: 'easeOut' }}
+                      className="text-[12px] sm:text-[12.5px] text-slate-600 dark:text-slate-400 leading-snug line-clamp-2"
+                    >
+                      {SUBHEADINGS[subheadingIndex]}
+                    </motion.p>
+                  </AnimatePresence>
+                </div>
               </div>
-            </div>
-          </Alert>
+            </Alert>
+          </a>
         </motion.div>
       )}
     </AnimatePresence>

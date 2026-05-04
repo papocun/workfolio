@@ -3,8 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { ArrowRight } from '@phosphor-icons/react';
-import { Alert, AlertTitle } from '@/components/base-ui/alert';
+import { ArrowRight, X } from '@phosphor-icons/react';
 import { portfolioData } from '@/data/portfolioData';
 import {
   trackTwitterFollowAlertShown,
@@ -152,11 +151,9 @@ export default function TwitterFollowAlert() {
   }, [pathname, clearAllTimers, handleClose]);
 
   const handleDismiss = useCallback(
-    (e?: React.MouseEvent) => {
-      if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
       handleClose();
     },
     [handleClose]
@@ -164,7 +161,6 @@ export default function TwitterFollowAlert() {
 
   const handleLinkClick = () => {
     clearAllTimers();
-    setIsVisible(false);
     trackTwitterFollowClicked();
   };
 
@@ -176,56 +172,65 @@ export default function TwitterFollowAlert() {
           animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
           exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 15, scale: 0.96 }}
           transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[340px] md:w-[370px] pointer-events-auto"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[340px] md:w-[370px] pointer-events-auto select-none"
         >
-          <a
-            href={TWITTER_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={handleLinkClick}
-            className="block text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] rounded-2xl"
-          >
-            <Alert
-              variant="default"
-              onClose={handleDismiss}
-              className="group cursor-pointer border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md hover:border-[#1D9BF0] dark:hover:border-[#1D9BF0] shadow-lg dark:shadow-2xl transition-all duration-200 p-3.5 sm:p-4 pr-3 rounded-2xl flex items-start gap-3"
+          <div className="relative group border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md hover:border-[#1D9BF0] dark:hover:border-[#1D9BF0] shadow-lg dark:shadow-2xl transition-colors duration-150 p-3.5 sm:p-4 pr-3 rounded-2xl flex items-start gap-3">
+            {/* Native direct external link covering card area without nested buttons or click-animation */}
+            <a
+              href={TWITTER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={handleLinkClick}
+              aria-label="Follow me on X/Twitter"
+              className="absolute inset-0 z-10 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0]"
+              style={{ WebkitTouchCallout: 'none', WebkitTapHighlightColor: 'transparent' }}
+            />
+
+            {/* X Brand Icon Badge */}
+            <div className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#1D9BF0]/10 text-[#1D9BF0] mt-0.5 transition-transform duration-200 group-hover:scale-105 pointer-events-none">
+              <XLogoIcon className="w-4 h-4" />
+            </div>
+
+            {/* Content: Header, Arrow & Rotating Subheader */}
+            <div className="flex-1 min-w-0 pr-1 pointer-events-none">
+              <div className="flex items-center justify-between gap-1.5">
+                <span className="text-[13.5px] sm:text-[14px] font-bold text-slate-900 dark:text-[#E7E9EA] group-hover:text-[#1D9BF0] dark:group-hover:text-[#1D9BF0] transition-colors duration-150 truncate">
+                  Follow me on X/Twitter
+                </span>
+                <ArrowRight
+                  size={14}
+                  weight="bold"
+                  className="text-[#1D9BF0] transition-transform duration-200 ease-out group-hover:translate-x-1 shrink-0"
+                />
+              </div>
+
+              {/* Rotating Subheader with smooth fade/slide */}
+              <div className="mt-1 h-[34px] sm:h-[32px] overflow-hidden relative">
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={subheadingIndex}
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.22, ease: 'easeOut' }}
+                    className="text-[12px] sm:text-[12.5px] text-slate-600 dark:text-slate-400 leading-snug line-clamp-2"
+                  >
+                    {SUBHEADINGS[subheadingIndex]}
+                  </motion.p>
+                </AnimatePresence>
+              </div>
+            </div>
+
+            {/* Dismiss Button — on top (z-20) as an independent sibling of the link */}
+            <button
+              type="button"
+              onClick={handleDismiss}
+              aria-label="Dismiss alert"
+              className="relative z-20 shrink-0 p-1.5 sm:p-1 -mr-1 -mt-1 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors duration-150 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
             >
-              {/* X Brand Icon Badge */}
-              <div className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#1D9BF0]/10 text-[#1D9BF0] mt-0.5 transition-transform duration-200 group-hover:scale-105">
-                <XLogoIcon className="w-4 h-4" />
-              </div>
-
-              {/* Content: Header, Arrow & Rotating Subheader */}
-              <div className="flex-1 min-w-0 pr-1">
-                <div className="flex items-center justify-between gap-1.5">
-                  <AlertTitle className="text-[13.5px] sm:text-[14px] font-bold text-slate-900 dark:text-[#E7E9EA] group-hover:text-[#1D9BF0] dark:group-hover:text-[#1D9BF0] transition-colors duration-150 truncate">
-                    Follow me on X/Twitter
-                  </AlertTitle>
-                  <ArrowRight
-                    size={14}
-                    weight="bold"
-                    className="text-[#1D9BF0] transition-transform duration-200 ease-out group-hover:translate-x-1 shrink-0"
-                  />
-                </div>
-
-                {/* Rotating Subheader with smooth fade/slide */}
-                <div className="mt-1 h-[34px] sm:h-[32px] overflow-hidden relative">
-                  <AnimatePresence mode="wait">
-                    <motion.p
-                      key={subheadingIndex}
-                      initial={{ opacity: 0, y: 4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -4 }}
-                      transition={{ duration: 0.22, ease: 'easeOut' }}
-                      className="text-[12px] sm:text-[12.5px] text-slate-600 dark:text-slate-400 leading-snug line-clamp-2"
-                    >
-                      {SUBHEADINGS[subheadingIndex]}
-                    </motion.p>
-                  </AnimatePresence>
-                </div>
-              </div>
-            </Alert>
-          </a>
+              <X size={15} weight="bold" />
+            </button>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

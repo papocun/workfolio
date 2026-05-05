@@ -51,7 +51,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <main className="max-w-[680px] mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 sm:pb-20">
+    <main className="w-full max-w-[680px] mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 sm:pb-20 min-w-0">
       {/* Main Notice Banner */}
       <AlertBanner
         title="Notice: Some pages are still being built"
@@ -63,7 +63,7 @@ export default function HomePage() {
       />
 
       {/* Main Heading with Animated Scramble only on the Name */}
-      <h1 className="text-[26px] sm:text-[34px] font-bold text-slate-900 dark:text-slate-100 leading-[1.2] tracking-tight mb-4 sm:mb-5">
+      <h1 className="text-[25px] min-[360px]:text-[28px] sm:text-[34px] font-bold text-slate-900 dark:text-slate-100 leading-[1.2] tracking-tight mb-4 sm:mb-5 break-words">
         Hi, I&apos;m{" "}
         <TextScramble
           text="Divyanshu Tiwari"
@@ -112,7 +112,7 @@ export default function HomePage() {
       </div>
 
       {/* Action Links & Resume Button */}
-      <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-6 sm:pt-8 mt-2 text-[14px] sm:text-[14.5px]">
+      <div className="flex flex-wrap items-center gap-3.5 sm:gap-6 pt-5 sm:pt-8 mt-2 text-[14px] sm:text-[14.5px]">
         <EmailContactLink email={portfolioData.email} />
 
         {/* Sliding Pill Resume Action */}
@@ -123,7 +123,7 @@ export default function HomePage() {
       <hr className="border-t border-slate-200/80 dark:border-[#2F3336]/60 my-6 sm:my-7" />
 
       {/* Activity Section */}
-      <section className="w-full" aria-label="Activity">
+      <section className="w-full max-w-full min-w-0" aria-label="Activity">
         <h2 className="text-[19px] sm:text-[21px] font-bold text-slate-900 dark:text-slate-100 tracking-tight mb-3.5 sm:mb-4">
           Activity
         </h2>

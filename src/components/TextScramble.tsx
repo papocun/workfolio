@@ -139,7 +139,7 @@ export default function TextScramble({
 
   return (
     <Component
-      className={`inline-block tabular-nums font-sans ${className}`}
+      className={`inline-block max-w-full break-words tabular-nums font-sans ${className}`}
       aria-label={text}
       role="text"
       onMouseEnter={handleMouseEnter}
@@ -147,7 +147,7 @@ export default function TextScramble({
         fontVariantNumeric: 'tabular-nums',
       }}
     >
-      <span aria-hidden="true" className="select-none inline-block">
+      <span aria-hidden="true" className="select-none inline-block max-w-full break-words">
         {displayText}
       </span>
     </Component>

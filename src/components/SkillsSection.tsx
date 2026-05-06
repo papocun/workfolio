@@ -362,7 +362,7 @@ export default function SkillsSection({ className = '' }: SkillsSectionProps) {
 
   return (
     <section
-      className={`w-full ${className}`}
+      className={`w-full max-w-full min-w-0 ${className}`}
       aria-label="Skills & Technologies"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -424,7 +424,7 @@ export default function SkillsSection({ className = '' }: SkillsSectionProps) {
             center: { opacity: 1, y: 0, filter: 'blur(0px)' },
             exit: { opacity: 0, y: 16, filter: 'blur(4px)' },
           }}
-          className="w-full"
+          className="w-full max-w-full min-w-0"
         >
           {DATA_ENGINEERING_SKILLS.map((item) => (
             <div

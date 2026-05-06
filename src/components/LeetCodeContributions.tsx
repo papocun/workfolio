@@ -354,7 +354,7 @@ export default function LeetCodeContributions({
   if (isLoading) {
     return (
       <div
-        className={`w-full rounded-xl border border-slate-200/70 dark:border-[#2F3336]/60 bg-white/40 dark:bg-[#16181C]/30 p-3.5 sm:p-4 transition-colors duration-200 ${className}`}
+        className={`w-full max-w-full min-w-0 rounded-xl border border-slate-200/70 dark:border-[#2F3336]/60 bg-white/40 dark:bg-[#16181C]/30 p-3.5 sm:p-4 transition-colors duration-200 ${className}`}
         aria-busy="true"
         aria-label="Loading LeetCode activity"
       >
@@ -390,7 +390,7 @@ export default function LeetCodeContributions({
   return (
     <section
       ref={containerRef}
-      className={`relative w-full rounded-xl border border-slate-200/80 dark:border-[#2F3336]/60 bg-white/70 dark:bg-[#16181C]/40 p-3.5 sm:p-4 shadow-xs transition-colors duration-200 ${className}`}
+      className={`relative w-full max-w-full min-w-0 rounded-xl border border-slate-200/80 dark:border-[#2F3336]/60 bg-white/70 dark:bg-[#16181C]/40 p-3.5 sm:p-4 shadow-xs transition-colors duration-200 ${className}`}
       aria-label="LeetCode Submissions Heatmap"
     >
       {/* Floating Tooltip matching exact prompt requirement:
@@ -456,7 +456,8 @@ export default function LeetCodeContributions({
         ref={scrollRef}
         tabIndex={0}
         aria-label="Scrollable LeetCode submission heatmap"
-        className="w-full overflow-x-auto pb-0.5 outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]/50 rounded-lg [scrollbar-width:thin] scrollbar-thumb-slate-300/70 dark:scrollbar-thumb-[#2F3336]/70"
+        className="w-full max-w-full min-w-0 overflow-x-auto pb-0.5 outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]/50 rounded-lg [scrollbar-width:thin] scrollbar-thumb-slate-300/70 dark:scrollbar-thumb-[#2F3336]/70 [touch-action:pan-x]"
+        style={{ WebkitOverflowScrolling: 'touch' }}
       >
         <div className="min-w-fit flex flex-col gap-1 select-none">
           {/* Month Labels Row aligned with week columns */}

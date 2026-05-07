@@ -65,124 +65,129 @@ export default function LocationTag({
     <div
       className={`flex items-center gap-3 sm:gap-3.5 text-[14px] sm:text-[14.5px] text-slate-500 dark:text-slate-400 font-medium flex-wrap ${className}`}
     >
-      {/* Location with Phosphor MapPin */}
-      <div className="flex items-center gap-1.5">
-        <IconTooltip enabled={showTooltips} label="Delhi">
-          <span
-            className="inline-flex items-center justify-center cursor-default focus:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] rounded p-1 -m-1"
-            tabIndex={0}
-            role="img"
-            aria-label="Delhi"
-            data-tooltip-target="location"
-          >
-            <MapPin
-              size={16}
-              weight="bold"
-              className="text-slate-400 dark:text-slate-400 shrink-0"
-              aria-hidden="true"
-            />
-          </span>
-        </IconTooltip>
-        <span className="text-slate-700 dark:text-[#E7E9EA] font-medium">{location}</span>
+      {/* Group 1: Location & View Counter */}
+      <div className="flex items-center gap-2.5 sm:gap-3">
+        {/* Location with Phosphor MapPin */}
+        <div className="flex items-center gap-1.5">
+          <IconTooltip enabled={showTooltips} label="Delhi">
+            <span
+              className="inline-flex items-center justify-center cursor-default focus:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] rounded p-1 -m-1"
+              tabIndex={0}
+              role="img"
+              aria-label="Delhi"
+              data-tooltip-target="location"
+            >
+              <MapPin
+                size={16}
+                weight="bold"
+                className="text-slate-400 dark:text-slate-400 shrink-0"
+                aria-hidden="true"
+              />
+            </span>
+          </IconTooltip>
+          <span className="text-slate-700 dark:text-[#E7E9EA] font-medium">{location}</span>
+        </div>
+
+        {/* Vertical Pipe Divider between Location and View Counter */}
+        <span
+          className="text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-light"
+          aria-hidden="true"
+        >
+          |
+        </span>
+
+        {/* Global View Counter */}
+        <ViewCounter showTooltip={showTooltips} />
       </div>
 
-      {/* Vertical Pipe Divider between Location and View Counter */}
+      {/* Middle Vertical Pipe Divider (hidden when wrapped on mobile) */}
       <span
-        className="text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-light"
+        className="hidden min-[480px]:inline text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-light"
         aria-hidden="true"
       >
         |
       </span>
 
-      {/* Global View Counter */}
-      <ViewCounter showTooltip={showTooltips} />
+      {/* Group 2: Social Links & Controls */}
+      <div className="flex items-center gap-2.5 sm:gap-3">
+        {/* Social Phosphor Icons */}
+        <div className="flex items-center gap-2.5">
+          {/* GitHub */}
+          <IconTooltip enabled={showTooltips} label="GitHub">
+            <a
+              href={portfolioData.socials.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              draggable={false}
+              onDragStart={(e) => e.preventDefault()}
+              onClick={() =>
+                trackGithubClicked({
+                  location: 'location_bar',
+                  url: portfolioData.socials.github,
+                })
+              }
+              aria-label="GitHub"
+              className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-1.5 -m-1 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] select-none"
+            >
+              <GithubLogo size={16} weight="regular" className="shrink-0" />
+            </a>
+          </IconTooltip>
 
-      {/* Vertical Pipe Divider */}
-      <span
-        className="text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-light"
-        aria-hidden="true"
-      >
-        |
-      </span>
+          {/* LinkedIn */}
+          <IconTooltip enabled={showTooltips} label="LinkedIn">
+            <a
+              href={portfolioData.socials.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              draggable={false}
+              onDragStart={(e) => e.preventDefault()}
+              onClick={() =>
+                trackContactClicked({
+                  channel: 'linkedin',
+                  location: 'location_bar',
+                  url: portfolioData.socials.linkedin,
+                })
+              }
+              aria-label="LinkedIn"
+              className="text-slate-400 dark:text-slate-400 hover:text-[#0A66C2] dark:hover:text-[#0A66C2] transition-colors duration-150 inline-flex items-center justify-center p-1.5 -m-1 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] select-none"
+            >
+              <LinkedinLogo size={16} weight="regular" className="shrink-0" />
+            </a>
+          </IconTooltip>
 
-      {/* Social Phosphor Icons */}
-      <div className="flex items-center gap-2.5">
-        {/* GitHub */}
-        <IconTooltip enabled={showTooltips} label="GitHub">
-          <a
-            href={portfolioData.socials.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            draggable={false}
-            onDragStart={(e) => e.preventDefault()}
-            onClick={() =>
-              trackGithubClicked({
-                location: 'location_bar',
-                url: portfolioData.socials.github,
-              })
-            }
-            aria-label="GitHub"
-            className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-1.5 -m-1 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] select-none"
-          >
-            <GithubLogo size={16} weight="regular" className="shrink-0" />
-          </a>
-        </IconTooltip>
+          {/* X */}
+          <IconTooltip enabled={showTooltips} label="X">
+            <a
+              href={portfolioData.socials.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+              draggable={false}
+              onDragStart={(e) => e.preventDefault()}
+              onClick={() =>
+                trackContactClicked({
+                  channel: 'twitter',
+                  location: 'location_bar',
+                  url: portfolioData.socials.twitter,
+                })
+              }
+              aria-label="X"
+              className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-1.5 -m-1 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] select-none"
+            >
+              <XLogo size={16} weight="regular" className="shrink-0" />
+            </a>
+          </IconTooltip>
+        </div>
 
-        {/* LinkedIn */}
-        <IconTooltip enabled={showTooltips} label="LinkedIn">
-          <a
-            href={portfolioData.socials.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            draggable={false}
-            onDragStart={(e) => e.preventDefault()}
-            onClick={() =>
-              trackContactClicked({
-                channel: 'linkedin',
-                location: 'location_bar',
-                url: portfolioData.socials.linkedin,
-              })
-            }
-            aria-label="LinkedIn"
-            className="text-slate-400 dark:text-slate-400 hover:text-[#0A66C2] dark:hover:text-[#0A66C2] transition-colors duration-150 inline-flex items-center justify-center p-1.5 -m-1 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] select-none"
-          >
-            <LinkedinLogo size={16} weight="regular" className="shrink-0" />
-          </a>
-        </IconTooltip>
+        {/* Vertical Pipe Divider */}
+        <span
+          className="text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-light"
+          aria-hidden="true"
+        >
+          |
+        </span>
 
-        {/* X */}
-        <IconTooltip enabled={showTooltips} label="X">
-          <a
-            href={portfolioData.socials.twitter}
-            target="_blank"
-            rel="noopener noreferrer"
-            draggable={false}
-            onDragStart={(e) => e.preventDefault()}
-            onClick={() =>
-              trackContactClicked({
-                channel: 'twitter',
-                location: 'location_bar',
-                url: portfolioData.socials.twitter,
-              })
-            }
-            aria-label="X"
-            className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-1.5 -m-1 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] select-none"
-          >
-            <XLogo size={16} weight="regular" className="shrink-0" />
-          </a>
-        </IconTooltip>
-      </div>
-
-      {/* Vertical Pipe Divider */}
-      <span
-        className="text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-light"
-        aria-hidden="true"
-      >
-        |
-      </span>
-
-      {/* Sound & Theme Controls */}
-      <div className="flex items-center gap-2.5">
+        {/* Sound & Theme Controls */}
+        <div className="flex items-center gap-2.5">
         {/* Sound Toggle (Sound On / Sound Off) */}
         <IconTooltip enabled={showTooltips} label="Sound">
           <button
@@ -245,6 +250,7 @@ export default function LocationTag({
         </IconTooltip>
       </div>
     </div>
+  </div>
   );
 
   return showTooltips ? (

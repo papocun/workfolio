@@ -172,7 +172,7 @@ export default function TwitterFollowAlert() {
           animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
           exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 15, scale: 0.96 }}
           transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[340px] md:w-[370px] pointer-events-auto select-none"
+          className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 z-50 max-w-[calc(100vw-2rem)] w-auto sm:w-[340px] md:w-[370px] pointer-events-auto select-none"
         >
           <div className="relative group border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md hover:border-[#1D9BF0] dark:hover:border-[#1D9BF0] shadow-lg dark:shadow-2xl transition-colors duration-150 p-3.5 sm:p-4 pr-3 rounded-2xl flex items-start gap-3">
             {/* Native direct external link covering card area without nested buttons or click-animation */}

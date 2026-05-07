@@ -87,8 +87,8 @@ function LiveTimeDisplay() {
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-slate-200/80 dark:border-slate-800/80 bg-[#FAF9F6] dark:bg-[#000000] text-slate-600 dark:text-slate-400 mt-16 sm:mt-20 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]">
-      <div className="max-w-[680px] mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-8 sm:pb-12">
+    <footer className="w-full max-w-full min-w-0 border-t border-slate-200/80 dark:border-slate-800/80 bg-[#FAF9F6] dark:bg-[#000000] text-slate-600 dark:text-slate-400 mt-16 sm:mt-20 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]">
+      <div className="max-w-[680px] w-full min-w-0 mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-8 sm:pb-12">
         {/* Main Footer Multi-Column Structure */}
         <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 sm:gap-6">
           {/* Left Column: Personal / Identity Area */}
@@ -190,14 +190,14 @@ export default function Footer() {
         </div>
 
         {/* Subtle Bottom Row with Real-Time Clock */}
-        <div className="border-t border-slate-100 dark:border-slate-800/80 pt-6 mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-between gap-3 text-[13px] font-mono text-slate-400 dark:text-slate-500 text-center sm:text-left">
-          <div className="flex items-center gap-2">
+        <div className="border-t border-slate-100 dark:border-slate-800/80 pt-6 mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-between gap-3 text-[12.5px] sm:text-[13px] font-mono text-slate-400 dark:text-slate-500 text-center sm:text-left">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
             <span>&copy; 2026 {portfolioData.name}</span>
             <span>·</span>
             <span>All rights reserved</span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
             <LiveTimeDisplay />
             <span>·</span>
             <span>{portfolioData.location}</span>

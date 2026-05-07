@@ -31,10 +31,10 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#FAF9F6]/85 dark:bg-[#000000]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/60">
-      <div className="max-w-[680px] mx-auto px-4 sm:px-6 py-3 sm:py-3.5 flex items-center justify-between gap-2">
+      <div className="max-w-[680px] w-full min-w-0 mx-auto px-2.5 min-[360px]:px-4 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between gap-1 min-[360px]:gap-2">
         {/* Left Branding */}
         <Link
-          className="text-[14px] sm:text-[15.5px] font-semibold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-75 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] shrink-0 select-none"
+          className="text-[13px] min-[360px]:text-[14px] sm:text-[15.5px] font-semibold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-75 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] shrink-0 select-none"
           href="/"
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
@@ -43,13 +43,13 @@ export default function Navbar() {
         </Link>
 
         {/* Right Navigation & Profile Avatar */}
-        <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-          <nav aria-label="Main navigation" className="flex items-center gap-1.5 sm:gap-2.5 text-[13px] sm:text-[14px] select-none">
+        <div className="flex items-center gap-1.5 min-[360px]:gap-2 sm:gap-4 shrink-0">
+          <nav aria-label="Main navigation" className="flex items-center gap-1 min-[360px]:gap-1.5 sm:gap-2.5 text-[11.5px] min-[360px]:text-[13px] sm:text-[14px] select-none">
             {NAV_ITEMS.map((item, index) => {
               const isActive = pathname === item.href;
 
               return (
-                <div key={item.href} className="flex items-center gap-1.5 sm:gap-2.5">
+                <div key={item.href} className="flex items-center gap-1 min-[360px]:gap-1.5 sm:gap-2.5">
                   <Link
                     href={item.href}
                     draggable={false}
@@ -76,7 +76,7 @@ export default function Navbar() {
                     />
                   </Link>
                   {index < NAV_ITEMS.length - 1 && (
-                    <span className="text-slate-300 dark:text-slate-700 select-none text-[11px]" aria-hidden="true">
+                    <span className="text-slate-300 dark:text-slate-700 select-none text-[10px] sm:text-[11px]" aria-hidden="true">
                       ·
                     </span>
                   )}
@@ -94,12 +94,12 @@ export default function Navbar() {
               aria-label="Open settings"
               className="group/avatar inline-flex items-center rounded-full transition-transform duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] cursor-pointer shrink-0"
             >
-              <Avatar className="h-6.5 w-6.5 sm:h-7.5 sm:w-7.5 ring-2 ring-slate-200/90 dark:ring-slate-700 select-none cursor-pointer">
+              <Avatar className="h-6 w-6 sm:h-7.5 sm:w-7.5 ring-2 ring-slate-200/90 dark:ring-slate-700 select-none cursor-pointer">
                 <AvatarImage
                   src={getAssetPath('/images/projects/NUmercaiq.gif')}
                   alt={portfolioData.name}
                 />
-                <AvatarFallback className="text-[10px] sm:text-[10.5px] font-mono font-semibold">
+                <AvatarFallback className="text-[9px] sm:text-[10.5px] font-mono font-semibold">
                   {getInitials(portfolioData.name)}
                 </AvatarFallback>
               </Avatar>

@@ -72,7 +72,7 @@ export default function AlertBanner({
               weight="fill"
               className={`shrink-0 mt-0.5 ${iconColor}`}
             />
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               <AlertTitle>{title}</AlertTitle>
               {description && <AlertDescription>{description}</AlertDescription>}
             </div>

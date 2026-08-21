@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { getAssetPath } from '@/lib/assetPath';
 import type { Project } from '@/types';
 
 interface ProjectCardProps {
@@ -15,7 +16,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {project.imageSrc && (
         <div className="relative aspect-[16/5.5] sm:aspect-[4/1] w-full mb-5 sm:mb-6 overflow-hidden rounded-xl border border-slate-200/70 dark:border-slate-800/80 bg-slate-950 flex items-center justify-center select-none">
           <Image
-            src={project.imageSrc}
+            src={getAssetPath(project.imageSrc)}
             alt={project.title}
             fill
             sizes="(max-width: 768px) 100vw, 720px"

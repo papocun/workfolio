@@ -1,0 +1,171 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import {
+  LinkedinLogo,
+  TwitterLogo,
+} from '@phosphor-icons/react';
+import { portfolioData } from '@/data/portfolioData';
+
+const SOCIAL_LINKS = [
+  {
+    label: 'LinkedIn',
+    href: portfolioData.socials.linkedin,
+    icon: LinkedinLogo,
+  },
+  {
+    label: 'Twitter / X',
+    href: portfolioData.socials.twitter || 'https://x.com/21dvy_t',
+    icon: TwitterLogo,
+  },
+];
+
+const PROFILE_LINKS = [
+  {
+    label: 'GitHub',
+    href: portfolioData.socials.github,
+  },
+  {
+    label: 'LeetCode',
+    href: portfolioData.socials.leetcode || 'https://leetcode.com/u/21_dvynshx/',
+  },
+  {
+    label: 'DailySQL',
+    href: portfolioData.socials.dailysql || 'https://dailysql.in/u/divyanshutiwari281',
+  },
+];
+
+function LiveTimeDisplay() {
+  const [formattedTime, setFormattedTime] = useState<string>('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const datePart = now.toLocaleDateString('en-US', {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      });
+      const timePart = now.toLocaleTimeString('en-US', {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+      });
+      setFormattedTime(`${datePart} · ${timePart}`);
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <span className="tabular-nums select-none" suppressHydrationWarning>
+      {formattedTime || 'Loading time...'}
+    </span>
+  );
+}
+
+export default function Footer() {
+  return (
+    <footer className="w-full border-t border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#090d16] text-slate-600 dark:text-slate-400 mt-20 transition-colors duration-200">
+      <div className="max-w-[680px] mx-auto px-6 pt-12 sm:pt-14 pb-10 sm:pb-12">
+        {/* Main Footer Multi-Column Structure */}
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 sm:gap-6">
+          {/* Left Column: Personal / Identity Area */}
+          <div className="sm:col-span-6 flex flex-col justify-between">
+            <div>
+              <Link
+                href="/"
+                className="text-[15px] sm:text-[16px] font-bold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-85 transition-opacity"
+              >
+                {portfolioData.name.toLowerCase()}
+              </Link>
+              <p className="text-[12.5px] sm:text-[13px] text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed max-w-[280px]">
+                {portfolioData.roleHeadline}
+              </p>
+
+              {/* Status Callout */}
+              <div className="mt-4 flex items-center gap-2 font-mono text-[11.5px] text-slate-500 dark:text-slate-400">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff3131] opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff3131]" />
+                </span>
+                <span>Open to ML & Data Science roles</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Columns: Connect & Profiles */}
+          <div className="sm:col-span-6 flex sm:justify-end gap-12 sm:gap-16">
+            {/* Column 1: Connect */}
+            <div>
+              <h3 className="font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 select-none">
+                Connect
+              </h3>
+              <ul className="space-y-2 text-[12.5px]">
+                {SOCIAL_LINKS.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <li key={item.label}>
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors py-0.5"
+                      >
+                        <Icon size={15} weight="regular" className="shrink-0 opacity-80 group-hover:opacity-100" />
+                        <span>{item.label}</span>
+                        <span className="absolute -bottom-0.5 left-0 h-[1px] w-full bg-slate-900 dark:bg-slate-100 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" />
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            {/* Column 2: Profiles */}
+            <div>
+              <h3 className="font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 select-none">
+                Profiles
+              </h3>
+              <ul className="space-y-2 text-[12.5px]">
+                {PROFILE_LINKS.map((item) => (
+                  <li key={item.label}>
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group relative inline-flex items-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors py-0.5"
+                    >
+                      <span>{item.label}</span>
+                      <span className="absolute -bottom-0.5 left-0 h-[1px] w-full bg-slate-900 dark:bg-slate-100 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Subtle Bottom Row with Real-Time Clock */}
+        <div className="border-t border-slate-100 dark:border-slate-800/80 pt-6 mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11.5px] font-mono text-slate-400 dark:text-slate-500">
+          <div className="flex items-center gap-2">
+            <span>&copy; 2026 {portfolioData.name}</span>
+            <span>·</span>
+            <span>All rights reserved</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <LiveTimeDisplay />
+            <span>·</span>
+            <span>{portfolioData.location}</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}

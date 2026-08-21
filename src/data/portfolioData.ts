@@ -97,7 +97,7 @@ export const portfolioData: PersonalProfile = {
       githubUrl: "https://github.com/papocun/Customer-Segmentation-Project",
       liveUrl: "http://16.171.71.103/",
       isFeatured: true,
-      imageSrc: "/images/projects/Customer Intelligence Engine.png",
+      imageSrc: "/images/projects/customer-intelligence-engine.png",
     },
     {
       id: "demandcast",
@@ -113,7 +113,7 @@ export const portfolioData: PersonalProfile = {
       techStack: ["Python", "CatBoost", "FastAPI", "Docker", "AWS"],
       githubUrl: "https://github.com/papocun/DemandCast",
       isFeatured: true,
-      imageSrc: "/images/projects/demand cast.png",
+      imageSrc: "/images/projects/demand-cast.png",
     },
     {
       id: "inventory-intelligence-engine",
@@ -136,8 +136,7 @@ export const portfolioData: PersonalProfile = {
       ],
       githubUrl: "https://github.com/papocun/Inventory-supply-chain-optimization",
       isFeatured: true,
-      imageSrc:
-        "/images/projects/Data-driven inventory classification and decision system.png",
+      imageSrc: "/images/projects/inventory-intelligence-engine.png",
     },
   ],
 

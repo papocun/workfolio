@@ -64,7 +64,7 @@ export default function ProjectsList({ projects }: ProjectsListProps) {
                   alt={project.title}
                   fill
                   sizes="(max-width: 680px) 100vw, 680px"
-                  className="object-cover object-[20px_center] translate-x-[20px] transition-transform duration-300 group-hover:scale-[1.02]"
+                  className="object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
                 />
               ) : (
                 <div className="p-6 sm:p-8 flex flex-col justify-between h-full">

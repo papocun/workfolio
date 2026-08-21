@@ -61,13 +61,13 @@ function ProjectStackCard({
           className={`relative h-[130px] sm:h-[155px] w-full rounded-lg border border-slate-200/80 dark:border-slate-800 overflow-hidden select-none ${project.previewBg}`}
         >
           {project.imageSrc ? (
-            <div className="relative w-full h-full bg-slate-100 dark:bg-slate-900">
+            <div className="relative w-full h-full bg-slate-100 dark:bg-slate-900 overflow-hidden">
               <Image
                 src={getAssetPath(project.imageSrc)}
                 alt={project.title}
                 fill
                 sizes="(max-width: 680px) 100vw, 680px"
-                className="object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+                className="object-cover object-[20px_center] translate-x-[20px] transition-transform duration-300 group-hover:scale-[1.02]"
               />
             </div>
           ) : (

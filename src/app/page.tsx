@@ -65,10 +65,10 @@ export default function HomePage() {
           href="https://mail.google.com/mail/?view=cm&fs=1&to=divyanshutiwari281@gmail.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative py-0.5 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors duration-150"
+          className="group relative py-0.5 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 cursor-pointer select-none"
         >
           <span>divyanshutiwari281@gmail.com</span>
-          <span className="absolute -bottom-0.5 left-0 h-[1.5px] w-full bg-slate-900 dark:bg-slate-100 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" />
+          <span className="absolute -bottom-0.5 left-0 h-[1.5px] w-full bg-slate-900 dark:bg-slate-100 origin-left scale-x-0 group-hover:scale-x-100 group-active:scale-x-100 group-focus:scale-x-100 transition-transform duration-200 ease-out" />
         </a>
 
         {/* Creative Sliding Pill Resume Action */}

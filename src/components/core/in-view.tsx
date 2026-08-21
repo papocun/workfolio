@@ -4,17 +4,14 @@ import { ReactNode, useRef } from 'react';
 import {
   motion,
   useInView,
-  Variant,
+  Variants,
   Transition,
   UseInViewOptions,
 } from 'framer-motion';
 
 interface InViewProps {
   children: ReactNode;
-  variants?: {
-    hidden: Variant;
-    visible: Variant;
-  };
+  variants?: Variants;
   transition?: Transition;
   viewOptions?: UseInViewOptions;
   as?: React.ElementType;

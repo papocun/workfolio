@@ -1,16 +1,12 @@
 'use client';
 
-import { AnimatePresence, motion, Transition, Variant } from 'framer-motion';
+import { AnimatePresence, motion, Transition, Variants } from 'framer-motion';
 import React, { Children, ReactNode } from 'react';
 
 export interface TransitionPanelProps extends React.HTMLAttributes<HTMLDivElement> {
   activeIndex: number;
   children: ReactNode[];
-  variants?: {
-    enter: (direction: number) => Variant;
-    center: Variant;
-    exit: (direction: number) => Variant;
-  };
+  variants?: Variants;
   transition?: Transition;
   custom?: number;
   className?: string;
@@ -28,7 +24,7 @@ export function TransitionPanel({
   const childArray = Children.toArray(children);
   const currentChild = childArray[activeIndex];
 
-  const defaultVariants = {
+  const defaultVariants: Variants = {
     enter: (direction: number) => ({
       x: direction > 0 ? 40 : -40,
       opacity: 0,

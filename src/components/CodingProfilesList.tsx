@@ -4,87 +4,117 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { getAssetPath } from '@/lib/assetPath';
 import { trackLeetcodeClicked, trackStratascratchClicked } from '@/lib/posthog';
+import {
+  INITIAL_CODING_PROFILES,
+  CODING_PROFILE_CONFIGS,
+  formatSolvedCount,
+  type CodingProfileItem,
+} from '@/data/codingProfiles';
 
-export interface CodingProfileItem {
-  id: 'leetcode' | 'dailysql' | 'stratascratch';
-  platform: string;
-  username: string;
-  solvedCount: string;
-  url: string;
-  imageSrc: string;
-  imageAlt: string;
-}
+export type { CodingProfileItem } from '@/data/codingProfiles';
+export const CODING_PROFILES: CodingProfileItem[] = INITIAL_CODING_PROFILES;
 
-// Verified baseline profile data from actual live profiles
-export const CODING_PROFILES: CodingProfileItem[] = [
-  {
-    id: 'leetcode',
-    platform: 'LeetCode',
-    username: '21_dvynshx',
-    solvedCount: '122 problems solved',
-    url: 'https://leetcode.com/u/21_dvynshx/',
-    imageSrc: '/images/code/leetcode.png',
-    imageAlt: 'LeetCode Avatar - 21_dvynshx',
-  },
-  {
-    id: 'dailysql',
-    platform: 'DailySQL',
-    username: 'divyanshutiwari281',
-    solvedCount: '104 queries solved',
-    url: 'https://dailysql.in/u/divyanshutiwari281',
-    imageSrc: '/images/code/dailysql.jpg',
-    imageAlt: 'DailySQL Avatar - divyanshutiwari281',
-  },
-  {
-    id: 'stratascratch',
-    platform: 'StrataScratch',
-    username: 'papocun',
-    solvedCount: '52 problems solved',
-    url: 'https://platform.stratascratch.com/user/papocun',
-    imageSrc: '/images/code/stratascratch.jpg',
-    imageAlt: 'StrataScratch Avatar - papocun',
-  },
-];
+// Session-level memory cache to avoid duplicate requests across component re-renders
+let cachedStatsMap: Record<string, string> | null = null;
+let lastFetchTimestamp = 0;
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
 interface CodingProfilesListProps {
   profiles?: CodingProfileItem[];
 }
 
 export default function CodingProfilesList({
-  profiles = CODING_PROFILES,
+  profiles = INITIAL_CODING_PROFILES,
 }: CodingProfilesListProps) {
   const [items, setItems] = useState<CodingProfileItem[]>(profiles);
 
   useEffect(() => {
-    // Dynamic refresh from real profile data endpoint
     let isMounted = true;
+
     async function fetchLiveStats() {
-      try {
-        const res = await fetch('/api/coding-stats');
-        if (res.ok && isMounted) {
-          const data = await res.json();
+      const now = Date.now();
+
+      // Reuse cached stats if fresh
+      if (cachedStatsMap && now - lastFetchTimestamp < CACHE_TTL_MS) {
+        if (isMounted) {
           setItems((prev) =>
             prev.map((item) => {
-              if (item.id === 'leetcode' && data.leetcode?.formatted) {
-                return { ...item, solvedCount: data.leetcode.formatted };
-              }
-              if (item.id === 'dailysql' && data.dailysql?.formatted) {
-                return { ...item, solvedCount: data.dailysql.formatted };
-              }
-              if (item.id === 'stratascratch' && data.stratascratch?.formatted) {
-                return { ...item, solvedCount: data.stratascratch.formatted };
-              }
-              return item;
+              const cachedFormatted = cachedStatsMap?.[item.id];
+              return cachedFormatted ? { ...item, solvedCount: cachedFormatted } : item;
             })
           );
         }
-      } catch (err) {
-        // Keeps verified baseline data if network fails
-        console.error('Error loading live coding stats:', err);
+        return;
+      }
+
+      let updatedViaApi = false;
+
+      // 1. Try internal API endpoint first (with basePath support)
+      try {
+        const apiEndpoint = getAssetPath('/api/coding-stats');
+        const res = await fetch(apiEndpoint, { cache: 'no-cache' }).catch(() => null);
+
+        if (res && res.ok) {
+          const data = await res.json();
+          const newMap: Record<string, string> = {};
+
+          if (data.leetcode?.formatted) newMap.leetcode = data.leetcode.formatted;
+          if (data.dailysql?.formatted) newMap.dailysql = data.dailysql.formatted;
+          if (data.stratascratch?.formatted) newMap.stratascratch = data.stratascratch.formatted;
+
+          cachedStatsMap = { ...cachedStatsMap, ...newMap };
+          lastFetchTimestamp = Date.now();
+          updatedViaApi = true;
+
+          if (isMounted) {
+            setItems((prev) =>
+              prev.map((item) => {
+                const newFormatted = newMap[item.id];
+                return newFormatted ? { ...item, solvedCount: newFormatted } : item;
+              })
+            );
+          }
+        }
+      } catch {
+        // Continue to client-side fallback if server endpoint is unavailable
+      }
+
+      // 2. Client-side fallback (for static hosting like GitHub Pages where /api/ is not running)
+      if (!updatedViaApi) {
+        try {
+          const lcUsername = CODING_PROFILE_CONFIGS.leetcode.username;
+          const lcRes = await fetch(
+            `https://alfa-leetcode-api.onrender.com/userProfile/${lcUsername}`
+          ).catch(() => null);
+
+          if (lcRes && lcRes.ok && isMounted) {
+            const lcData = await lcRes.json();
+            if (typeof lcData.totalSolved === 'number' && lcData.totalSolved > 0) {
+              const formatted = formatSolvedCount(
+                lcData.totalSolved,
+                CODING_PROFILE_CONFIGS.leetcode.unit
+              );
+              cachedStatsMap = {
+                ...cachedStatsMap,
+                leetcode: formatted,
+              };
+              lastFetchTimestamp = Date.now();
+
+              setItems((prev) =>
+                prev.map((item) =>
+                  item.id === 'leetcode' ? { ...item, solvedCount: formatted } : item
+                )
+              );
+            }
+          }
+        } catch {
+          // Gracefully maintain verified baseline state without broken UI
+        }
       }
     }
 
     fetchLiveStats();
+
     return () => {
       isMounted = false;
     };

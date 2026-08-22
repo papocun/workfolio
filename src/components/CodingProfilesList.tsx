@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { getAssetPath } from '@/lib/assetPath';
+import { trackLeetcodeClicked, trackStratascratchClicked } from '@/lib/posthog';
 
 export interface CodingProfileItem {
   id: 'leetcode' | 'dailysql' | 'stratascratch';
@@ -128,6 +129,19 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
             href={profile.url}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              if (profile.id === 'leetcode') {
+                trackLeetcodeClicked({
+                  location: 'coding_profiles_list',
+                  url: profile.url,
+                });
+              } else if (profile.id === 'stratascratch') {
+                trackStratascratchClicked({
+                  location: 'coding_profiles_list',
+                  url: profile.url,
+                });
+              }
+            }}
             className="group/btn inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 dark:border-[#2F3336] bg-slate-50 dark:bg-[#000000] px-3.5 py-1.5 text-[12px] font-mono font-medium text-slate-800 dark:text-[#E7E9EA] shadow-2xs transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-900 dark:hover:border-slate-100 hover:bg-slate-100 dark:hover:bg-[#1E2732] active:scale-95"
           >
             <span>View Profile</span>

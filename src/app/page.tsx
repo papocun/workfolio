@@ -1,7 +1,10 @@
+'use client';
+
 import TextScramble from "@/components/TextScramble";
 import ResumeButton from "@/components/ResumeButton";
 import AlertBanner from "@/components/ui/AlertBanner";
 import { portfolioData } from "@/data/portfolioData";
+import { trackEmailClicked, trackContactClicked } from "@/lib/posthog";
 
 export default function HomePage() {
   return (
@@ -66,6 +69,17 @@ export default function HomePage() {
           href="https://mail.google.com/mail/?view=cm&fs=1&to=divyanshutiwari281@gmail.com"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => {
+            trackEmailClicked({
+              email: portfolioData.email,
+              location: 'homepage_hero',
+            });
+            trackContactClicked({
+              channel: 'email',
+              location: 'homepage_hero',
+              url: 'https://mail.google.com/mail/?view=cm&fs=1&to=divyanshutiwari281@gmail.com',
+            });
+          }}
           className="group relative py-0.5 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] break-all sm:break-normal"
         >
           <span>divyanshutiwari281@gmail.com</span>

@@ -7,15 +7,23 @@ import {
   TwitterLogo,
 } from '@phosphor-icons/react';
 import { portfolioData } from '@/data/portfolioData';
+import {
+  trackContactClicked,
+  trackGithubClicked,
+  trackLeetcodeClicked,
+  trackStratascratchClicked,
+} from '@/lib/posthog';
 
 const SOCIAL_LINKS = [
   {
     label: 'LinkedIn',
+    channel: 'linkedin',
     href: portfolioData.socials.linkedin,
     icon: LinkedinLogo,
   },
   {
     label: 'Twitter / X',
+    channel: 'twitter',
     href: portfolioData.socials.twitter || 'https://x.com/21dvy_t',
     icon: TwitterLogo,
   },
@@ -24,18 +32,22 @@ const SOCIAL_LINKS = [
 const PROFILE_LINKS = [
   {
     label: 'GitHub',
+    id: 'github',
     href: portfolioData.socials.github,
   },
   {
     label: 'LeetCode',
+    id: 'leetcode',
     href: portfolioData.socials.leetcode || 'https://leetcode.com/u/21_dvynshx/',
   },
   {
     label: 'DailySQL',
+    id: 'dailysql',
     href: portfolioData.socials.dailysql || 'https://dailysql.in/u/divyanshutiwari281',
   },
   {
     label: 'StrataScratch',
+    id: 'stratascratch',
     href: portfolioData.socials.stratascratch || 'https://platform.stratascratch.com/user/papocun',
   },
 ];
@@ -119,6 +131,13 @@ export default function Footer() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() =>
+                          trackContactClicked({
+                            channel: item.channel,
+                            location: 'footer_connect',
+                            url: item.href,
+                          })
+                        }
                         className="group relative inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-0.5"
                       >
                         <Icon size={15} weight="regular" className="shrink-0 opacity-80 group-hover:opacity-100 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]" />
@@ -143,6 +162,24 @@ export default function Footer() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => {
+                        if (item.id === 'github') {
+                          trackGithubClicked({
+                            location: 'footer_profiles',
+                            url: item.href,
+                          });
+                        } else if (item.id === 'leetcode') {
+                          trackLeetcodeClicked({
+                            location: 'footer_profiles',
+                            url: item.href,
+                          });
+                        } else if (item.id === 'stratascratch') {
+                          trackStratascratchClicked({
+                            location: 'footer_profiles',
+                            url: item.href,
+                          });
+                        }
+                      }}
                       className="group relative inline-flex items-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-0.5"
                     >
                       <span>{item.label}</span>

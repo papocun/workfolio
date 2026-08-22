@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { TransitionPanel } from '@/components/core/transition-panel';
 import { portfolioData } from '@/data/portfolioData';
+import { trackLeetcodeClicked } from '@/lib/posthog';
 
 export interface CodePlatform {
   id: string;
@@ -133,6 +134,14 @@ export default function CodeTransitionPanel() {
               href={platform.url}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                if (platform.id === 'leetcode') {
+                  trackLeetcodeClicked({
+                    location: 'code_transition_panel',
+                    url: platform.url,
+                  });
+                }
+              }}
               className="group block rounded-lg border border-slate-200/80 dark:border-slate-800 p-4 sm:p-5 transition-all duration-200 hover:border-slate-400 dark:hover:border-slate-600 hover:shadow-xs bg-[#FBFBFA] dark:bg-[#16181C]"
             >
               {/* Header Box with Platform Index & Live Stat */}

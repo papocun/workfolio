@@ -1,5 +1,8 @@
+'use client';
+
 import React from 'react';
 import { portfolioData } from '@/data/portfolioData';
+import { trackResumeClicked } from '@/lib/posthog';
 
 interface ResumeButtonProps {
   href?: string;
@@ -15,6 +18,7 @@ export default function ResumeButton({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackResumeClicked({ location: 'resume_button', url: href })}
       className={`group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#16181C] px-3.5 text-[12.5px] font-medium text-slate-800 dark:text-slate-200 transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-900 dark:hover:border-slate-100 shadow-2xs ${className}`}
     >
       {/* Default Layer (Leaves on hover: ease-in) */}

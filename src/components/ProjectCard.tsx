@@ -1,17 +1,56 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { getAssetPath } from '@/lib/assetPath';
 import type { Project } from '@/types';
+import {
+  trackProjectViewed,
+  trackGithubClicked,
+  trackProjectDemoClicked,
+} from '@/lib/posthog';
 
 interface ProjectCardProps {
   project: Project;
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
+  const cardRef = useRef<HTMLElement>(null);
+  const hasTrackedViewRef = useRef(false);
+
+  useEffect(() => {
+    if (hasTrackedViewRef.current) return;
+
+    const currentEl = cardRef.current;
+    if (!currentEl) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting && !hasTrackedViewRef.current) {
+          hasTrackedViewRef.current = true;
+          trackProjectViewed(project.title, {
+            project_id: project.id,
+            category: project.category,
+          });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(currentEl);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [project.title, project.id, project.category]);
+
   return (
-    <article className="group rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#16181C] p-4 sm:p-7 shadow-xs dark:shadow-md transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-400 dark:hover:border-slate-700">
+    <article
+      ref={cardRef}
+      className="group rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#16181C] p-4 sm:p-7 shadow-xs dark:shadow-md transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-400 dark:hover:border-slate-700"
+    >
       {/* 1. Wide Project Image/Banner (~2000x500 cinematic ratio) */}
       {project.imageSrc && (
         <div className="relative aspect-[16/6] sm:aspect-[4/1] w-full mb-4 sm:mb-6 overflow-hidden rounded-xl border border-slate-200/70 dark:border-slate-800/80 bg-slate-950 flex items-center justify-center select-none">
@@ -66,6 +105,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           href={project.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() =>
+            trackGithubClicked({
+              project_name: project.title,
+              location: 'project_card',
+              url: project.githubUrl,
+            })
+          }
           className="group/link relative inline-flex items-center gap-1 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-0.5"
         >
           <span>GitHub</span>
@@ -87,6 +133,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() =>
+              trackProjectDemoClicked(project.title, project.liveUrl)
+            }
             className="group/link relative inline-flex items-center gap-1 text-[#1D9BF0] hover:text-[#1a8cd8] transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-0.5"
           >
             <span>Live Demo</span>

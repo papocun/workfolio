@@ -5,6 +5,8 @@ import Footer from "@/components/Footer";
 import GridBackground from "@/components/GridBackground";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import CustomCursor from "@/components/CustomCursor";
+import { PostHogProvider } from "@/components/PostHogProvider";
+import DesktopPet from "@/components/DesktopPet";
 import "./globals.css";
 
 const urbanist = Urbanist({
@@ -48,13 +50,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-full flex flex-col font-sans bg-[#000000] text-slate-100 selection:bg-[#1E2732] selection:text-[#E7E9EA] transition-colors duration-200">
-        <ThemeProvider>
-          <GridBackground />
-          <CustomCursor />
-          <Navbar />
-          <main className="flex-1 w-full relative z-10">{children}</main>
-          <Footer />
-        </ThemeProvider>
+        <PostHogProvider>
+          <ThemeProvider>
+            <GridBackground />
+            <CustomCursor />
+            <Navbar />
+            <main className="flex-1 w-full relative z-10">{children}</main>
+            <Footer />
+            <DesktopPet />
+          </ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   );

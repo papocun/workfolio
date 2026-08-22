@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { getAssetPath } from '@/lib/assetPath';
 
@@ -14,12 +14,13 @@ export interface CodingProfileItem {
   imageAlt: string;
 }
 
+// Verified baseline profile data from actual live profiles
 export const CODING_PROFILES: CodingProfileItem[] = [
   {
     id: 'leetcode',
     platform: 'LeetCode',
     username: '21_dvynshx',
-    solvedCount: '300+ problems solved',
+    solvedCount: '122 problems solved',
     url: 'https://leetcode.com/u/21_dvynshx/',
     imageSrc: '/images/code/leetcode.png',
     imageAlt: 'LeetCode Avatar - 21_dvynshx',
@@ -28,7 +29,7 @@ export const CODING_PROFILES: CodingProfileItem[] = [
     id: 'dailysql',
     platform: 'DailySQL',
     username: 'divyanshutiwari281',
-    solvedCount: '50+ queries solved',
+    solvedCount: '104 queries solved',
     url: 'https://dailysql.in/u/divyanshutiwari281',
     imageSrc: '/images/code/dailysql.jpg',
     imageAlt: 'DailySQL Avatar - divyanshutiwari281',
@@ -37,7 +38,7 @@ export const CODING_PROFILES: CodingProfileItem[] = [
     id: 'stratascratch',
     platform: 'StrataScratch',
     username: 'papocun',
-    solvedCount: '50+ problems solved',
+    solvedCount: '52 problems solved',
     url: 'https://platform.stratascratch.com/user/papocun',
     imageSrc: '/images/code/stratascratch.jpg',
     imageAlt: 'StrataScratch Avatar - papocun',
@@ -51,9 +52,46 @@ interface CodingProfilesListProps {
 export default function CodingProfilesList({
   profiles = CODING_PROFILES,
 }: CodingProfilesListProps) {
+  const [items, setItems] = useState<CodingProfileItem[]>(profiles);
+
+  useEffect(() => {
+    // Dynamic refresh from real profile data endpoint
+    let isMounted = true;
+    async function fetchLiveStats() {
+      try {
+        const res = await fetch('/api/coding-stats');
+        if (res.ok && isMounted) {
+          const data = await res.json();
+          setItems((prev) =>
+            prev.map((item) => {
+              if (item.id === 'leetcode' && data.leetcode?.formatted) {
+                return { ...item, solvedCount: data.leetcode.formatted };
+              }
+              if (item.id === 'dailysql' && data.dailysql?.formatted) {
+                return { ...item, solvedCount: data.dailysql.formatted };
+              }
+              if (item.id === 'stratascratch' && data.stratascratch?.formatted) {
+                return { ...item, solvedCount: data.stratascratch.formatted };
+              }
+              return item;
+            })
+          );
+        }
+      } catch (err) {
+        // Keeps verified baseline data if network fails
+        console.error('Error loading live coding stats:', err);
+      }
+    }
+
+    fetchLiveStats();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <div className="flex w-full flex-col gap-4 sm:gap-5">
-      {profiles.map((profile) => (
+      {items.map((profile) => (
         <CodingProfileCard key={profile.id} profile={profile} />
       ))}
     </div>

@@ -26,11 +26,11 @@ export default function ExperienceTimeline({
     <div className="relative w-full">
       {/* Vertical Timeline Track Line */}
       <div
-        className="absolute left-[19px] sm:left-[21px] top-5 bottom-8 w-[2px] bg-slate-200/90 dark:bg-slate-800/90 -translate-x-1/2"
+        className="absolute left-[17px] sm:left-[21px] top-4 sm:top-5 bottom-6 sm:bottom-8 w-[2px] bg-slate-200/90 dark:bg-slate-800/90 -translate-x-1/2"
         aria-hidden="true"
       />
 
-      <div className="space-y-12 sm:space-y-16">
+      <div className="space-y-10 sm:space-y-16">
         {experiences.map((exp, index) => {
           const isLatest = exp.isCurrent ?? index === 0;
 
@@ -41,31 +41,31 @@ export default function ExperienceTimeline({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="relative flex items-start gap-5 sm:gap-7"
+              className="relative flex items-start gap-3.5 sm:gap-7"
             >
               {/* Large Circular Timeline Node Anchor */}
               <div className="relative z-10 shrink-0 flex items-center justify-center">
                 <div
-                  className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-200 bg-white dark:bg-[#0f1422] ${
+                  className={`w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-200 bg-white dark:bg-[#16181C] ${
                     isLatest
-                      ? 'border-2 border-slate-900 dark:border-slate-100 shadow-md ring-4 ring-slate-100 dark:ring-slate-800/60'
+                      ? 'border-2 border-slate-900 dark:border-slate-100 shadow-md ring-3 sm:ring-4 ring-slate-100 dark:ring-slate-800/60'
                       : 'border-2 border-slate-300 dark:border-slate-700/80 shadow-xs'
                   }`}
                 >
                   {isLatest ? (
                     <span
-                      className="relative flex items-center justify-center h-4 w-4"
+                      className="relative flex items-center justify-center h-3.5 w-3.5 sm:h-4 sm:w-4"
                       aria-label="Currently working here"
                     >
                       {/* Subtle ambient pulse ring */}
-                      <span className="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff3131] opacity-40" />
+                      <span className="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00BA7C] opacity-40" />
                       {/* Gentle secondary halo */}
-                      <span className="motion-safe:animate-pulse absolute inline-flex h-3 w-3 rounded-full bg-[#ff3131]/25" />
+                      <span className="motion-safe:animate-pulse absolute inline-flex h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#00BA7C]/25" />
                       {/* Living solid center dot with soft glow */}
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#ff3131] shadow-[0_0_6px_rgba(255,49,49,0.65)]" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 sm:h-2.5 sm:w-2.5 bg-[#00BA7C] shadow-[0_0_6px_rgba(0,186,124,0.65)]" />
                     </span>
                   ) : (
-                    <span className="w-2.5 h-2.5 rounded-full bg-slate-400 dark:bg-slate-500" />
+                    <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-slate-400 dark:bg-slate-500" />
                   )}
                 </div>
               </div>
@@ -75,11 +75,11 @@ export default function ExperienceTimeline({
                 {/* Header Row: Company & Metadata */}
                 <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <h2 className="text-[19px] sm:text-[22px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-snug">
+                    <h2 className="text-[18px] sm:text-[22px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-snug">
                       {exp.company}
                     </h2>
                     {isLatest && (
-                      <span className="inline-flex items-center gap-1 font-mono text-[10.5px] px-2 py-0.5 rounded-full bg-[#ff3131]/10 text-[#ff3131] dark:text-[#ff4d4d] border border-[#ff3131]/30 font-medium">
+                      <span className="inline-flex items-center gap-1 font-mono text-[10px] sm:text-[10.5px] px-2 py-0.5 rounded-full bg-[#00BA7C]/10 text-[#00BA7C] dark:text-[#00BA7C] border border-[#00BA7C]/30 font-medium">
                         Present
                       </span>
                     )}

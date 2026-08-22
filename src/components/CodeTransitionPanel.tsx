@@ -81,7 +81,7 @@ export default function CodeTransitionPanel() {
   };
 
   return (
-    <div className="w-full rounded-xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#0f1422] p-5 sm:p-6 shadow-sm dark:shadow-xl transition-colors duration-200">
+    <div className="w-full rounded-xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#16181C] p-5 sm:p-6 shadow-sm dark:shadow-xl transition-colors duration-200">
       {/* Platform Switcher Tabs Header */}
       <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/80 pb-3.5 mb-5">
         <div className="flex items-center gap-2">
@@ -102,7 +102,7 @@ export default function CodeTransitionPanel() {
                   {platform.index} / {platform.name.toLowerCase()}
                 </span>
                 {isActive && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff3131] animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#1D9BF0] animate-pulse" />
                 )}
               </button>
             );
@@ -133,7 +133,7 @@ export default function CodeTransitionPanel() {
               href={platform.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block rounded-lg border border-slate-200/80 dark:border-slate-800 p-4 sm:p-5 transition-all duration-200 hover:border-slate-400 dark:hover:border-slate-600 hover:shadow-xs bg-[#FBFBFA] dark:bg-[#151c2e]"
+              className="group block rounded-lg border border-slate-200/80 dark:border-slate-800 p-4 sm:p-5 transition-all duration-200 hover:border-slate-400 dark:hover:border-slate-600 hover:shadow-xs bg-[#FBFBFA] dark:bg-[#16181C]"
             >
               {/* Header Box with Platform Index & Live Stat */}
               <div

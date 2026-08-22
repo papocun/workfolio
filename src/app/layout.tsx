@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${urbanist.variable} h-full antialiased`}
+      className={`${urbanist.variable} dark h-full antialiased`}
     >
       <head>
         <script
@@ -33,20 +33,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `
               (function() {
                 try {
-                  var stored = localStorage.getItem('workfolio-theme');
-                  var isDark = stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
-                  if (isDark) {
-                    document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.classList.remove('dark');
-                  }
+                  document.documentElement.classList.add('dark');
                 } catch (e) {}
               })();
             `,
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col font-sans bg-white dark:bg-[#090d16] text-slate-900 dark:text-slate-100 selection:bg-slate-900 dark:selection:bg-slate-100 selection:text-white dark:selection:text-slate-900 transition-colors duration-200">
+      <body className="min-h-full flex flex-col font-sans bg-[#000000] text-slate-100 selection:bg-[#1E2732] selection:text-[#E7E9EA] transition-colors duration-200">
         <ThemeProvider>
           <GridBackground />
           <CustomCursor />

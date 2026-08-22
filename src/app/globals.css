@@ -4,7 +4,7 @@
 
 /* ============================================================
    WORKFOLIO DESIGN SYSTEM — globals.css
-   Tailwind CSS v4 · @theme inline tokens & Dark Mode
+   Tailwind CSS v4 · Pure Dark Mode Design System
    ============================================================ */
 
 /* ─── Theme Token Definitions ──────────────────────────────── */
@@ -13,27 +13,40 @@
   --font-sans: var(--font-sans), "Urbanist", ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-sans), "Urbanist", ui-sans-serif, system-ui, sans-serif;
 
-  /* ── Color Palette: Slate ── */
-  --color-slate-50: #f8fafc;
-  --color-slate-100: #f1f5f9;
-  --color-slate-200: #e2e8f0;
-  --color-slate-300: #cbd5e1;
-  --color-slate-400: #94a3b8;
-  --color-slate-500: #64748b;
-  --color-slate-600: #475569;
-  --color-slate-700: #334155;
-  --color-slate-800: #1e293b;
-  --color-slate-900: #0f172a;
-  --color-slate-950: #020617;
+  /* ── Color Palette: Design System Neutral & Slate Scale ── */
+  --color-slate-50: #FFFFFF;
+  --color-slate-100: #E7E9EA;
+  --color-slate-200: #E7E9EA;
+  --color-slate-300: #E7E9EA;
+  --color-slate-400: #71767B;
+  --color-slate-500: #71767B;
+  --color-slate-600: #71767B;
+  --color-slate-700: #2F3336;
+  --color-slate-800: #2F3336;
+  --color-slate-900: #16181C;
+  --color-slate-950: #000000;
 
-  /* ── Color Palette: Blue Accent ── */
-  --color-blue-50: #eff6ff;
-  --color-blue-100: #dbeafe;
-  --color-blue-200: #bfdbfe;
-  --color-blue-500: #3b82f6;
-  --color-blue-600: #2563eb;
-  --color-blue-700: #1d4ed8;
-  --color-blue-800: #1e40af;
+  /* ── Semantic Design Tokens ── */
+  --color-background: #000000;
+  --color-surface-elevated: #16181C;
+  --color-surface-hover: #1E2732;
+  --color-border-divider: #2F3336;
+  --color-text-primary: #E7E9EA;
+  --color-text-secondary: #71767B;
+  --color-accent-blue: #1D9BF0;
+  --color-like-heart: #F91880;
+  --color-retweet-success: #00BA7C;
+  --color-error-warning: #F4212E;
+  --color-inverse-white: #FFFFFF;
+
+  /* ── Color Palette: Accent Blue ── */
+  --color-blue-50: #0a1726;
+  --color-blue-100: #102a45;
+  --color-blue-200: #1a416d;
+  --color-blue-500: #1D9BF0;
+  --color-blue-600: #1D9BF0;
+  --color-blue-700: #1a8cd8;
+  --color-blue-800: #1a8cd8;
 
   /* ── Layout Constraints ── */
   --container: 680px;
@@ -53,28 +66,29 @@
   --duration-slow: 300ms;
 }
 
-/* ─── CSS Custom Properties ────────────────────────────────── */
-:root {
-  --c-bg: #ffffff;
-  --c-scrollbar: #d1d5db;
-  --c-scrollbar-hover: #9CA3AF;
-  --color-heading: #0f172a;
-  --focus-ring: 0 0 0 2px #fff, 0 0 0 4px var(--color-heading);
-  --grid-color: rgba(15, 23, 42, 0.045);
-  --grid-dot-color: rgba(15, 23, 42, 0.08);
-  --grid-size: 24px;
-  --border-subtle: rgba(15, 23, 42, 0.08);
-}
-
+/* ─── CSS Custom Properties (Permanent Dark Mode) ─────────── */
+:root,
 .dark {
-  --c-bg: #090d16;
-  --c-scrollbar: #334155;
-  --c-scrollbar-hover: #475569;
-  --color-heading: #f8fafc;
-  --focus-ring: 0 0 0 2px #090d16, 0 0 0 4px var(--color-heading);
-  --grid-color: rgba(255, 255, 255, 0.035);
-  --grid-dot-color: rgba(255, 255, 255, 0.07);
-  --border-subtle: rgba(255, 255, 255, 0.08);
+  --c-bg: #000000;
+  --c-surface: #16181C;
+  --c-surface-elevated: #16181C;
+  --c-surface-hover: #1E2732;
+  --c-border: #2F3336;
+  --c-text-primary: #E7E9EA;
+  --c-text-secondary: #71767B;
+  --c-accent: #1D9BF0;
+  --c-heart: #F91880;
+  --c-success: #00BA7C;
+  --c-error: #F4212E;
+  --c-white: #FFFFFF;
+  --c-scrollbar: #2F3336;
+  --c-scrollbar-hover: #71767B;
+  --color-heading: #E7E9EA;
+  --focus-ring: 0 0 0 2px #000000, 0 0 0 4px var(--c-accent);
+  --grid-color: rgba(255, 255, 255, 0.0455);
+  --grid-dot-color: rgba(255, 255, 255, 0.091);
+  --grid-size: 24px;
+  --border-subtle: #2F3336;
 }
 
 /* ─── Base Reset & Defaults ────────────────────────────────── */
@@ -89,6 +103,9 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
+  color-scheme: dark;
+  background-color: #000000;
+  overflow-x: hidden;
 }
 
 body {
@@ -97,25 +114,16 @@ body {
   font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.6;
-  color: var(--color-slate-600);
-  background-color: var(--c-bg);
+  color: var(--c-text-secondary);
+  background-color: #000000;
+  overflow-x: hidden;
   transition: background-color 200ms ease, color 200ms ease;
-}
-
-.dark body {
-  color: var(--color-slate-400);
-  background-color: var(--c-bg);
 }
 
 /* ─── Selection Styling ────────────────────────────────────── */
 ::selection {
-  background-color: var(--color-slate-900);
-  color: #ffffff;
-}
-
-.dark ::selection {
-  background-color: #f1f5f9;
-  color: #0f172a;
+  background-color: #1E2732;
+  color: #E7E9EA;
 }
 
 /* ─── Focus Visible Ring ───────────────────────────────────── */
@@ -174,25 +182,19 @@ body {
   gap: 8px;
   padding: 4px 12px;
   border-radius: var(--radius-pill);
-  background-color: rgba(255, 49, 49, 0.08);
-  border: 1px solid rgba(255, 49, 49, 0.25);
-  color: #ff3131;
+  background-color: rgba(0, 186, 124, 0.12);
+  border: 1px solid rgba(0, 186, 124, 0.25);
+  color: #00BA7C;
   font-size: 12px;
   font-weight: 500;
   line-height: 1.4;
-}
-
-.dark .badge-status {
-  background-color: rgba(255, 49, 49, 0.12);
-  border-color: rgba(255, 49, 49, 0.25);
-  color: #ff4d4d;
 }
 
 .badge-status-dot {
   width: 8px;
   height: 8px;
   border-radius: var(--radius-pill);
-  background-color: #ff3131;
+  background-color: #00BA7C;
   animation: pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
@@ -212,40 +214,28 @@ body {
   align-items: center;
   padding: 4px 8px;
   border-radius: var(--radius-sm);
-  background-color: var(--color-slate-100);
+  background-color: #16181C;
+  border: 1px solid #2F3336;
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: 0.02em;
-  color: var(--color-slate-700);
-}
-
-.dark .pill-tech {
-  background-color: #1e293b;
-  color: #cbd5e1;
+  color: #71767B;
 }
 
 /* ── Card Surface ── */
 .card-surface {
-  background-color: #ffffff;
-  border: 1px solid var(--color-slate-200);
+  background-color: #16181C;
+  border: 1px solid #2F3336;
   border-radius: var(--radius-md);
   padding: 24px;
   transition: border-color 200ms ease, background-color 200ms ease;
 }
 
-.dark .card-surface {
-  background-color: #0f1422;
-  border-color: #1e293b;
-}
-
 .card-surface:hover {
-  border-color: var(--color-slate-400);
-}
-
-.dark .card-surface:hover {
-  border-color: #334155;
+  border-color: #2F3336;
+  background-color: #1E2732;
 }
 
 /* ============================================================

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { WarningCircle, Info } from '@phosphor-icons/react';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,7 +11,7 @@ interface AlertBannerProps {
   variant?: 'default' | 'warning' | 'info';
   dismissible?: boolean;
   autoClose?: boolean;
-  autoCloseDuration?: number; // Duration in milliseconds (e.g. 6000ms - 6.5 seconds)
+  autoCloseDuration?: number; // Duration in milliseconds (5000ms = 5 seconds)
 }
 
 export default function AlertBanner({
@@ -20,19 +20,33 @@ export default function AlertBanner({
   variant = 'warning',
   dismissible = true,
   autoClose = true,
-  autoCloseDuration = 15000,
+  autoCloseDuration = 5000,
 }: AlertBannerProps) {
   const [isVisible, setIsVisible] = useState(true);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleClose = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    setIsVisible(false);
+  }, []);
 
   useEffect(() => {
-    if (!autoClose) return;
+    if (!autoClose || !isVisible) return;
 
-    const timer = setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       setIsVisible(false);
     }, autoCloseDuration);
 
-    return () => clearTimeout(timer);
-  }, [autoClose, autoCloseDuration]);
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [autoClose, autoCloseDuration, isVisible]);
 
   const Icon = variant === 'info' ? Info : WarningCircle;
   const iconColor =
@@ -52,7 +66,7 @@ export default function AlertBanner({
         >
           <Alert
             variant={variant}
-            onClose={dismissible ? () => setIsVisible(false) : undefined}
+            onClose={dismissible ? handleClose : undefined}
           >
             <Icon
               size={18}

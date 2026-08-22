@@ -57,14 +57,14 @@ const EXPERIENCES: TimelineExperienceItem[] = [
 
 export default function ExperiencePage() {
   return (
-    <main className="max-w-[680px] mx-auto px-6 pt-8 sm:pt-10 pb-20 transition-colors duration-200">
+    <main className="max-w-[680px] mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 sm:pb-20 transition-colors duration-200">
       {/* Section Header */}
-      <div className="mb-10 sm:mb-12">
+      <div className="mb-8 sm:mb-12">
         <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800/80 text-[11.5px] font-mono text-slate-600 dark:text-slate-400 mb-3 border border-slate-200/60 dark:border-slate-700/60">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#ff3131] animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#1D9BF0] animate-pulse" />
           <span>experience</span>
         </div>
-        <h1 className="text-[26px] sm:text-[30px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2.5">
+        <h1 className="text-[24px] sm:text-[30px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2 sm:mb-2.5">
           Experience
         </h1>
         <p className="text-[13.5px] sm:text-[14.5px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-[620px]">

@@ -34,6 +34,10 @@ const PROFILE_LINKS = [
     label: 'DailySQL',
     href: portfolioData.socials.dailysql || 'https://dailysql.in/u/divyanshutiwari281',
   },
+  {
+    label: 'StrataScratch',
+    href: portfolioData.socials.stratascratch || 'https://platform.stratascratch.com/user/papocun',
+  },
 ];
 
 function LiveTimeDisplay() {

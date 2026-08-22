@@ -29,7 +29,7 @@ export function Alert({
   return (
     <div
       role="alert"
-      className={`relative w-full rounded-xl border p-3 sm:p-4 text-[12.5px] sm:text-[13.5px] transition-all duration-200 shadow-xs flex items-start gap-2.5 sm:gap-3 ${variantStyles[variant]} ${className}`}
+      className={`relative w-full rounded-xl border p-3 sm:p-4 text-[12.5px] sm:text-[13.5px] transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-xs flex items-start gap-2.5 sm:gap-3 ${variantStyles[variant]} ${className}`}
       {...props}
     >
       {children}
@@ -38,7 +38,7 @@ export function Alert({
           type="button"
           onClick={onClose}
           aria-label="Dismiss alert"
-          className="shrink-0 p-1.5 sm:p-1 -mr-1 -mt-1 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+          className="shrink-0 p-1.5 sm:p-1 -mr-1 -mt-1 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] cursor-pointer"
         >
           <X size={15} weight="bold" />
         </button>

@@ -23,8 +23,8 @@ export default function AnimatedProjectsList({
     : {
         hidden: {
           opacity: 0,
-          y: 100,
-          filter: 'blur(4px)',
+          y: 24,
+          filter: 'blur(3px)',
         },
         visible: {
           opacity: 1,
@@ -39,14 +39,14 @@ export default function AnimatedProjectsList({
         <InView
           key={project.id}
           viewOptions={{
-            margin: '0px 0px -120px 0px',
+            margin: '0px 0px -60px 0px',
             once: true,
           }}
           variants={variants}
           transition={{
-            duration: 0.5,
-            ease: 'easeInOut',
-            delay: shouldReduceMotion ? 0 : index * 0.1,
+            duration: 0.3,
+            ease: 'easeOut',
+            delay: shouldReduceMotion ? 0 : index * 0.08,
           }}
         >
           <ProjectCard project={project} />

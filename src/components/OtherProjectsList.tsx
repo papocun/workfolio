@@ -70,7 +70,7 @@ export default function OtherProjectsList() {
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group block py-4 sm:py-5 transition-colors duration-150 -mx-2 px-2 rounded-lg hover:bg-slate-50/80 dark:hover:bg-slate-900/50 cursor-pointer"
+            className="group block py-4 sm:py-5 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] -mx-2 px-2 rounded-lg hover:bg-slate-50/80 dark:hover:bg-slate-900/50 cursor-pointer"
           >
             <div className="flex items-start justify-between gap-3 sm:gap-4">
               {/* Left Column: Number + Name + Description */}
@@ -81,7 +81,7 @@ export default function OtherProjectsList() {
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <h3 className="text-[14.5px] sm:text-[15px] font-semibold text-slate-800 dark:text-slate-200 group-hover:text-slate-950 dark:group-hover:text-white transition-colors">
+                    <h3 className="text-[14.5px] sm:text-[15px] font-semibold text-slate-800 dark:text-slate-200 group-hover:text-slate-950 dark:group-hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]">
                       {project.title}
                     </h3>
                   </div>
@@ -111,7 +111,7 @@ export default function OtherProjectsList() {
                 <span className="font-mono text-[11.5px] sm:text-[12px] text-slate-400 dark:text-slate-500">
                   {project.year}
                 </span>
-                <span className="text-slate-400 dark:text-slate-500 group-hover:text-slate-900 dark:group-hover:text-slate-100 group-hover:translate-x-1 transition-all duration-150 inline-flex items-center text-[13px] sm:text-[14px]">
+                <span className="text-slate-400 dark:text-slate-500 group-hover:text-slate-900 dark:group-hover:text-slate-100 group-hover:translate-x-1 transition-all duration-150 ease-out inline-flex items-center text-[13px] sm:text-[14px]">
                   →
                 </span>
               </div>

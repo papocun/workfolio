@@ -38,7 +38,7 @@ export default function LockedPagePlaceholder({
       </div>
 
       {/* Clean Minimal Locked Page Card */}
-      <div className="w-full rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#16181C] p-6 sm:p-12 shadow-xs dark:shadow-xl transition-colors duration-200 flex flex-col items-center text-center">
+      <div className="w-full rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#16181C] p-6 sm:p-12 shadow-xs dark:shadow-xl transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] flex flex-col items-center text-center">
         {/* Subtle Lock Icon */}
         <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 flex items-center justify-center text-slate-600 dark:text-slate-300 mb-5 shadow-xs">
           <LockKey size={22} weight="regular" />
@@ -57,7 +57,7 @@ export default function LockedPagePlaceholder({
         {/* Simple Return Link */}
         <Link
           href="/"
-          className="group relative inline-flex items-center gap-1.5 font-mono text-[12px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors py-1 px-3 rounded-lg border border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50"
+          className="group relative inline-flex items-center gap-1.5 font-mono text-[12px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] py-1 px-3 rounded-lg border border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50"
         >
           <span>← return home</span>
         </Link>

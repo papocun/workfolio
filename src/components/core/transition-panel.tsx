@@ -54,7 +54,7 @@ export function TransitionPanel({
           transition={
             transition || {
               x: { type: 'spring', stiffness: 350, damping: 32 },
-              opacity: { duration: 0.2 },
+              opacity: { duration: 0.2, ease: 'easeOut' },
             }
           }
           className="w-full"

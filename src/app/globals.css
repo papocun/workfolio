@@ -107,7 +107,7 @@ html {
   scroll-behavior: smooth;
   color-scheme: dark;
   background-color: #000000;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -118,7 +118,7 @@ body {
   line-height: 1.6;
   color: var(--c-text-secondary);
   background-color: #000000;
-  overflow-x: hidden;
+  overflow-x: clip;
   transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1), color 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 

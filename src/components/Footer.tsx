@@ -100,7 +100,7 @@ export default function Footer() {
           </div>
 
           {/* Right Columns: Connect & Profiles */}
-          <div className="sm:col-span-6 flex justify-between sm:justify-end gap-8 sm:gap-16">
+          <div className="sm:col-span-6 flex justify-start sm:justify-end gap-10 sm:gap-16">
             {/* Column 1: Connect */}
             <div>
               <h3 className="font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 select-none">

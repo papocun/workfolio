@@ -105,15 +105,15 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
   return (
     <article className="group relative flex flex-col-reverse sm:flex-row items-stretch justify-between gap-4 sm:gap-6 overflow-hidden rounded-2xl border border-slate-200/90 dark:border-[#2F3336] bg-white dark:bg-[#16181C] p-4 sm:p-6 shadow-xs dark:shadow-md transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-400 dark:hover:border-slate-700">
       {/* Left Column: Info & CTA */}
-      <div className="flex flex-1 flex-col justify-between gap-3">
-        <div>
+      <div className="flex flex-1 flex-row items-end justify-between gap-3 sm:flex-col sm:items-start sm:justify-between">
+        <div className="flex-1 min-w-0">
           {/* Account / Username Tag */}
           <span className="font-mono text-[11.5px] sm:text-[12px] text-slate-500 dark:text-[#71767B]">
             @{profile.username}
           </span>
 
           {/* Platform Name */}
-          <h2 className="text-[19px] sm:text-[22px] font-bold text-slate-900 dark:text-[#E7E9EA] tracking-tight leading-snug mt-0.5">
+          <h2 className="text-[19px] sm:text-[22px] font-bold text-slate-900 dark:text-[#E7E9EA] tracking-tight leading-snug mt-0.5 truncate">
             {profile.platform}
           </h2>
 
@@ -124,7 +124,7 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
         </div>
 
         {/* Minimal Link CTA Button */}
-        <div className="pt-2 sm:pt-3">
+        <div className="shrink-0 pt-0 sm:pt-3">
           <a
             href={profile.url}
             target="_blank"
@@ -142,7 +142,7 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
                 });
               }
             }}
-            className="group/btn inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 dark:border-[#2F3336] bg-slate-50 dark:bg-[#000000] px-3.5 py-1.5 text-[12px] font-mono font-medium text-slate-800 dark:text-[#E7E9EA] shadow-2xs transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-900 dark:hover:border-slate-100 hover:bg-slate-100 dark:hover:bg-[#1E2732] active:scale-95"
+            className="group/btn inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 dark:border-[#2F3336] bg-slate-50 dark:bg-[#000000] px-3.5 py-1.5 text-[12px] font-mono font-medium text-slate-800 dark:text-[#E7E9EA] shadow-2xs transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-900 dark:hover:border-slate-100 hover:bg-slate-100 dark:hover:bg-[#1E2732] active:scale-95 whitespace-nowrap"
           >
             <span>View Profile</span>
             <svg
@@ -151,7 +151,7 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
               height="12"
               fill="currentColor"
               viewBox="0 0 256 256"
-              className="translate-y-[0.5px] transition-transform duration-200 ease-out group-hover/btn:translate-x-0.5"
+              className="translate-y-[0.5px] transition-transform duration-200 ease-out group-hover/btn:translate-x-0.5 shrink-0"
               aria-hidden="true"
             >
               <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z" />

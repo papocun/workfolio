@@ -14,8 +14,14 @@ import {
 export type { CodingProfileItem } from '@/data/codingProfiles';
 export const CODING_PROFILES: CodingProfileItem[] = INITIAL_CODING_PROFILES;
 
+interface CachedStatsItem {
+  formatted?: string;
+  streak?: number;
+  rating?: number;
+}
+
 // Session-level memory cache to avoid duplicate requests across component re-renders
-let cachedStatsMap: Record<string, string> | null = null;
+let cachedStatsMap: Record<string, CachedStatsItem> | null = null;
 let lastFetchTimestamp = 0;
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
@@ -39,8 +45,14 @@ export default function CodingProfilesList({
         if (isMounted) {
           setItems((prev) =>
             prev.map((item) => {
-              const cachedFormatted = cachedStatsMap?.[item.id];
-              return cachedFormatted ? { ...item, solvedCount: cachedFormatted } : item;
+              const cached = cachedStatsMap?.[item.id];
+              if (!cached) return item;
+              return {
+                ...item,
+                solvedCount: cached.formatted || item.solvedCount,
+                streak: cached.streak !== undefined ? cached.streak : item.streak,
+                rating: cached.rating !== undefined ? cached.rating : item.rating,
+              };
             })
           );
         }
@@ -56,11 +68,27 @@ export default function CodingProfilesList({
 
         if (res && res.ok) {
           const data = await res.json();
-          const newMap: Record<string, string> = {};
+          const newMap: Record<string, CachedStatsItem> = {};
 
-          if (data.leetcode?.formatted) newMap.leetcode = data.leetcode.formatted;
-          if (data.dailysql?.formatted) newMap.dailysql = data.dailysql.formatted;
-          if (data.stratascratch?.formatted) newMap.stratascratch = data.stratascratch.formatted;
+          if (data.leetcode) {
+            newMap.leetcode = {
+              formatted: data.leetcode.formatted,
+              streak: data.leetcode.streak,
+              rating: data.leetcode.rating,
+            };
+          }
+          if (data.dailysql) {
+            newMap.dailysql = {
+              formatted: data.dailysql.formatted,
+              streak: data.dailysql.streak,
+            };
+          }
+          if (data.stratascratch) {
+            newMap.stratascratch = {
+              formatted: data.stratascratch.formatted,
+              streak: data.stratascratch.streak,
+            };
+          }
 
           cachedStatsMap = { ...cachedStatsMap, ...newMap };
           lastFetchTimestamp = Date.now();
@@ -69,8 +97,14 @@ export default function CodingProfilesList({
           if (isMounted) {
             setItems((prev) =>
               prev.map((item) => {
-                const newFormatted = newMap[item.id];
-                return newFormatted ? { ...item, solvedCount: newFormatted } : item;
+                const updated = newMap[item.id];
+                if (!updated) return item;
+                return {
+                  ...item,
+                  solvedCount: updated.formatted || item.solvedCount,
+                  streak: updated.streak !== undefined ? updated.streak : item.streak,
+                  rating: updated.rating !== undefined ? updated.rating : item.rating,
+                };
               })
             );
           }
@@ -96,7 +130,10 @@ export default function CodingProfilesList({
               );
               cachedStatsMap = {
                 ...cachedStatsMap,
-                leetcode: formatted,
+                leetcode: {
+                  ...cachedStatsMap?.leetcode,
+                  formatted,
+                },
               };
               lastFetchTimestamp = Date.now();
 
@@ -132,11 +169,32 @@ export default function CodingProfilesList({
 function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
   const [imageError, setImageError] = useState(false);
 
+  const hasStreak = typeof profile.streak === 'number' && profile.streak > 0;
+  const hasRating = typeof profile.rating === 'number' && profile.rating > 0;
+  const showStatsRow = hasStreak || hasRating;
+
   return (
     <article className="group relative flex flex-col-reverse sm:flex-row items-stretch justify-between gap-4 sm:gap-6 overflow-hidden rounded-2xl border border-slate-200/90 dark:border-[#2F3336] bg-white dark:bg-[#16181C] p-4 sm:p-6 shadow-xs dark:shadow-md transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-400 dark:hover:border-slate-700">
       {/* Left Column: Info & CTA */}
       <div className="flex flex-1 flex-row items-end justify-between gap-3 sm:flex-col sm:items-start sm:justify-between">
         <div className="flex-1 min-w-0">
+          {/* Compact Stats Row: Streak & Rating (above username) */}
+          {showStatsRow && (
+            <div className="flex items-center gap-1.5 mb-2 flex-wrap">
+              {hasStreak && (
+                <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/25 dark:border-amber-500/35 bg-amber-500/10 dark:bg-amber-500/15 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-amber-800 dark:text-amber-300">
+                  <span>{profile.streak}</span>
+                  <span aria-hidden="true">🔥</span>
+                </span>
+              )}
+              {hasRating && (
+                <span className="inline-flex items-center gap-1 rounded-full border border-slate-200/90 dark:border-[#2F3336] bg-slate-100/90 dark:bg-[#1E2732] px-2.5 py-0.5 font-mono text-[11px] font-medium text-slate-700 dark:text-[#E7E9EA]">
+                  <span>{profile.rating} rating</span>
+                </span>
+              )}
+            </div>
+          )}
+
           {/* Account / Username Tag */}
           <span className="font-mono text-[11.5px] sm:text-[12px] text-slate-500 dark:text-[#71767B]">
             @{profile.username}

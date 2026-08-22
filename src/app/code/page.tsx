@@ -20,7 +20,7 @@ export default function CodePage() {
           Code
         </h1>
         <p className="text-[13.5px] sm:text-[14.5px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-[620px]">
-          Competitive programming, data structures, and database query optimization profiles.
+          I work on coding problems, SQL questions, and practice my problem-solving skills.
         </p>
       </div>
 

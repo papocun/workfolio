@@ -4,9 +4,15 @@ import ExperienceTimeline, {
 } from '@/components/ExperienceTimeline';
 
 export const metadata: Metadata = {
-  title: 'Experience — Divyanshu Tiwari',
+  title: 'Experience',
   description:
-    'Professional track record in machine learning engineering, predictive fraud scoring, and data analytics.',
+    'Professional track record in machine learning engineering, predictive fraud scoring, and data analytics by Divyanshu Tiwari.',
+  alternates: {
+    canonical: 'https://datafolio.me/experience/',
+    types: {
+      'text/markdown': 'https://datafolio.me/experience.md',
+    },
+  },
 };
 
 const EXPERIENCES: TimelineExperienceItem[] = [

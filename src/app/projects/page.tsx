@@ -4,9 +4,15 @@ import AnimatedProjectsList from '@/components/AnimatedProjectsList';
 import OtherProjectsList from '@/components/OtherProjectsList';
 
 export const metadata: Metadata = {
-  title: 'Projects — Divyanshu Tiwari',
+  title: 'Projects',
   description:
     'Production-grade machine learning systems, predictive pipelines, and containerized cloud APIs built and deployed by Divyanshu Tiwari.',
+  alternates: {
+    canonical: 'https://datafolio.me/projects/',
+    types: {
+      'text/markdown': 'https://datafolio.me/projects.md',
+    },
+  },
 };
 
 export default function ProjectsPage() {

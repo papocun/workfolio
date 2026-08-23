@@ -24,10 +24,34 @@ export const metadata: Metadata = {
     template: "%s | Divyanshu Tiwari",
   },
   description:
-    "Data Scientist and ML systems builder working across machine learning, data, AI applications, and software.",
+    "Portfolio of Divyanshu Tiwari, a Data Scientist and ML Systems Builder working across machine learning, data, AI applications, and real-world software systems.",
+  keywords: [
+    "Divyanshu Tiwari",
+    "Data Scientist",
+    "Machine Learning Systems",
+    "Applied ML Engineer",
+    "FastAPI",
+    "Docker",
+    "CatBoost",
+    "Time Series Forecasting",
+    "Customer Segmentation",
+    "Python",
+    "SQL",
+  ],
   authors: [{ name: "Divyanshu Tiwari", url: "https://datafolio.me" }],
   creator: "Divyanshu Tiwari",
   publisher: "Divyanshu Tiwari",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   alternates: {
     canonical: "https://datafolio.me/",
     types: {
@@ -41,14 +65,23 @@ export const metadata: Metadata = {
     siteName: "Divyanshu Tiwari",
     title: "Divyanshu Tiwari | Data Scientist & ML Systems Builder",
     description:
-      "Data Scientist and ML systems builder working across machine learning, data, AI applications, and software.",
+      "Portfolio of Divyanshu Tiwari, a Data Scientist and ML Systems Builder working across machine learning, data, AI applications, and real-world software systems.",
+    images: [
+      {
+        url: "/images/projects/NUmercaiq.gif",
+        width: 400,
+        height: 400,
+        alt: "Divyanshu Tiwari — Data Scientist & ML Systems Builder",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Divyanshu Tiwari | Data Scientist & ML Systems Builder",
     description:
-      "Data Scientist and ML systems builder working across machine learning, data, AI applications, and software.",
+      "Portfolio of Divyanshu Tiwari, a Data Scientist and ML Systems Builder working across machine learning, data, AI applications, and real-world software systems.",
     creator: "@21dvy_t",
+    images: ["/images/projects/NUmercaiq.gif"],
   },
   icons: {
     icon: "/favicon.png",
@@ -62,9 +95,9 @@ const personJsonLd = {
   "@type": "Person",
   name: portfolioData.name,
   url: "https://datafolio.me/",
-  jobTitle: "Data Scientist",
+  jobTitle: "Data Scientist & ML Systems Builder",
   description:
-    "Data Scientist and ML systems builder working across machine learning, data, AI applications, and software.",
+    "Portfolio of Divyanshu Tiwari, a Data Scientist and ML Systems Builder working across machine learning, data, AI applications, and real-world software systems.",
   sameAs: [
     portfolioData.socials.github,
     portfolioData.socials.linkedin,
@@ -73,6 +106,20 @@ const personJsonLd = {
     portfolioData.socials.dailysql,
     portfolioData.socials.stratascratch,
   ].filter(Boolean),
+  knowsAbout: [
+    "Machine Learning",
+    "Data Science",
+    "Applied ML Systems",
+    "Python",
+    "SQL",
+    "FastAPI",
+    "Docker",
+    "Time Series Forecasting",
+    "Customer Segmentation",
+    "Fraud Scoring",
+    "A/B Testing",
+    "ETL Pipelines",
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

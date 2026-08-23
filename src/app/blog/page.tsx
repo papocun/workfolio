@@ -6,22 +6,56 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Alert, AlertTitle, AlertDescription } from '@/components/base-ui/alert';
 import { TextShimmer } from '@/components/core/text-shimmer';
 
-export default function BlogPage() {
-  useEffect(() => {
-    document.title = 'Blog — Divyanshu Tiwari';
-  }, []);
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: 'https://datafolio.me/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Blog',
+      item: 'https://datafolio.me/blog/',
+    },
+  ],
+};
 
+export default function BlogPage() {
   return (
     <main className="max-w-[680px] mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 sm:pb-24 transition-colors duration-200">
-      {/* 10-Second Initial Notice Banner (Non-dismissible, fades out after 10s) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
+      {/* 10-Second Initial Notice Banner */}
       <InitialNoticeBanner />
 
-      {/* Section Indicator (under construction badge) */}
-      <div className="flex items-center justify-end mb-6 sm:mb-10">
-        <span className="inline-flex items-center gap-1.5 font-mono text-[10.5px] sm:text-[11px] text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/50 px-2 py-0.5 rounded-full">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-          <span>under construction</span>
-        </span>
+      {/* Section Header */}
+      <div className="mb-6 sm:mb-8">
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800/80 text-[11.5px] font-mono text-slate-600 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700/60">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#1D9BF0] animate-pulse" />
+            <span>the writing</span>
+          </div>
+
+          <span className="inline-flex items-center gap-1.5 font-mono text-[10.5px] sm:text-[11px] text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/50 px-2 py-0.5 rounded-full">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+            <span>under construction</span>
+          </span>
+        </div>
+
+        <h1 className="text-[24px] sm:text-[30px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2 sm:mb-2.5">
+          Blog
+        </h1>
+        <p className="text-[13.5px] sm:text-[14.5px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-[620px]">
+          Thoughts, technical notes, and research on machine learning systems and data engineering.
+        </p>
       </div>
 
       {/* Simplified Central Under-Construction Card */}

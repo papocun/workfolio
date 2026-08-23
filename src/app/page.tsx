@@ -8,12 +8,37 @@ import { portfolioData } from "@/data/portfolioData";
 export const metadata: Metadata = {
   title: "Divyanshu Tiwari | Data Scientist & ML Systems Builder",
   description:
-    "Data Scientist and ML systems builder working across machine learning, data, AI applications, and software.",
+    "Portfolio of Divyanshu Tiwari, a Data Scientist and ML Systems Builder working across machine learning, data, AI applications, and real-world software systems.",
   alternates: {
     canonical: "https://datafolio.me/",
     types: {
       "text/markdown": "https://datafolio.me/llms.txt",
     },
+  },
+  openGraph: {
+    title: "Divyanshu Tiwari | Data Scientist & ML Systems Builder",
+    description:
+      "Portfolio of Divyanshu Tiwari, a Data Scientist and ML Systems Builder working across machine learning, data, AI applications, and real-world software systems.",
+    url: "https://datafolio.me/",
+    siteName: "Divyanshu Tiwari",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/images/projects/NUmercaiq.gif",
+        width: 400,
+        height: 400,
+        alt: "Divyanshu Tiwari — Data Scientist & ML Systems Builder",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Divyanshu Tiwari | Data Scientist & ML Systems Builder",
+    description:
+      "Portfolio of Divyanshu Tiwari, a Data Scientist and ML Systems Builder working across machine learning, data, AI applications, and real-world software systems.",
+    creator: "@21dvy_t",
+    images: ["/images/projects/NUmercaiq.gif"],
   },
 };
 

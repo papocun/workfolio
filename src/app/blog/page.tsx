@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { LockKey, WarningCircle } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Alert, AlertTitle, AlertDescription } from '@/components/base-ui/alert';
@@ -42,19 +42,31 @@ export default function BlogPage() {
 
 /**
  * Notice banner shown for the first 10 seconds of entering the page,
- * then smoothly fades out and collapses without manual dismiss button or repeating.
+ * then smoothly fades out and collapses. Can also be manually dismissed
+ * via the X button, which cancels the auto-close timer.
  */
 function InitialNoticeBanner() {
   const [isVisible, setIsVisible] = useState(true);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleClose = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    setIsVisible(false);
+  }, []);
 
   useEffect(() => {
-    // Automatically fade out after 10 seconds
-    const timer = setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       setIsVisible(false);
     }, 10000);
 
     return () => {
-      clearTimeout(timer);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
     };
   }, []);
 
@@ -72,9 +84,9 @@ function InitialNoticeBanner() {
             marginBottom: 0,
             transition: { duration: 0.3, ease: 'easeInOut' },
           }}
-          className="w-full mb-6 overflow-hidden pointer-events-none"
+          className="w-full mb-6 overflow-hidden"
         >
-          <Alert variant="warning" className="cursor-default select-none">
+          <Alert variant="warning" onClose={handleClose}>
             <WarningCircle
               size={18}
               weight="fill"
@@ -83,7 +95,7 @@ function InitialNoticeBanner() {
             <div className="flex-1">
               <AlertTitle>Notice: Some pages are still being built</AlertTitle>
               <AlertDescription>
-                A few sections of my portfolio are still under construction. I’m updating them and will have them ready soon.
+                A few sections of my portfolio are still under construction. I&apos;m updating them and will have them ready soon.
               </AlertDescription>
             </div>
           </Alert>

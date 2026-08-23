@@ -36,31 +36,8 @@ export default function BlogPage() {
       {/* 10-Second Initial Notice Banner */}
       <InitialNoticeBanner />
 
-      {/* Section Header */}
-      <div className="mb-6 sm:mb-8">
-        <div className="flex items-center justify-between gap-2 mb-3">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800/80 text-[11.5px] font-mono text-slate-600 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700/60">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#1D9BF0] animate-pulse" />
-            <span>the writing</span>
-          </div>
-
-          <span className="inline-flex items-center gap-1.5 font-mono text-[10.5px] sm:text-[11px] text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/50 px-2 py-0.5 rounded-full">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-            <span>under construction</span>
-          </span>
-        </div>
-
-        <h1 className="text-[24px] sm:text-[30px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2 sm:mb-2.5">
-          Blog
-        </h1>
-        <p className="text-[13.5px] sm:text-[14.5px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-[620px]">
-          Thoughts, technical notes, and research on machine learning systems and data engineering.
-        </p>
-      </div>
-
-      {/* Simplified Central Under-Construction Card */}
-      <div className="w-full rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#16181C] p-8 sm:p-14 shadow-xs dark:shadow-xl transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] flex flex-col items-center justify-center text-center">
-        {/* Locker Icon */}
+      <div className="w-full flex flex-col items-center justify-center text-center py-20 sm:py-28">
+        {/* Locker Icon with small rounded background */}
         <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 flex items-center justify-center text-slate-600 dark:text-slate-300 mb-3.5 shadow-xs">
           <LockKey size={22} weight="regular" />
         </div>
@@ -138,3 +115,6 @@ function InitialNoticeBanner() {
     </AnimatePresence>
   );
 }
+
+
+

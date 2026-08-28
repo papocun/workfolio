@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   LinkedinLogo,
-  TwitterLogo,
+  XLogo,
 } from '@phosphor-icons/react';
 import { portfolioData } from '@/data/portfolioData';
 import {
@@ -22,10 +22,10 @@ const SOCIAL_LINKS = [
     icon: LinkedinLogo,
   },
   {
-    label: 'Twitter / X',
+    label: 'X (Twitter)',
     channel: 'twitter',
     href: portfolioData.socials.twitter || 'https://x.com/21dvy_t',
-    icon: TwitterLogo,
+    icon: XLogo,
   },
 ];
 
@@ -103,15 +103,6 @@ export default function Footer() {
               <p className="text-[12.5px] sm:text-[13px] text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed max-w-[280px]">
                 {portfolioData.roleHeadline}
               </p>
-
-              {/* Status Callout */}
-              <div className="mt-4 flex items-center gap-2 font-mono text-[11.5px] text-slate-500 dark:text-slate-400">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00BA7C] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00BA7C]" />
-                </span>
-                <span>Open to ML & Data Science roles</span>
-              </div>
             </div>
           </div>
 

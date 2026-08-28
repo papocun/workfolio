@@ -120,7 +120,7 @@ export async function GET() {
       if (typeof liveRating === 'number' && liveRating > 0) {
         leetcodeRating = Math.round(liveRating);
       } else {
-        leetcodeRating = undefined;
+        leetcodeRating = leetcodeConfig.baselineRating || 1652;
       }
     } else {
       // Fallback to public proxy if GraphQL is blocked

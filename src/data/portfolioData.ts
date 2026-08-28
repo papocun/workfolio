@@ -7,7 +7,7 @@ import type { PersonalProfile } from "@/types";
 
 export const portfolioData: PersonalProfile = {
   name: "Divyanshu Tiwari",
-  roleHeadline: "Data Scientist & Applied ML Engineer",
+  roleHeadline: "Learning, Building, Shipping • Data + AI",
   location: "India",
   email: "divyanshutiwari281@gmail.com",
   phone: "+91-6307488190",

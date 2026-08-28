@@ -24,7 +24,8 @@ export const CODING_PROFILE_CONFIGS: Record<CodingPlatformId, CodingProfileConfi
     platform: 'LeetCode',
     username: '21_dvynshx',
     baselineSolvedCount: 122,
-    baselineStreak: undefined, // Only displayed when there is a live active running streak
+    baselineStreak: undefined,
+    baselineRating: 1652,
     unit: 'problems',
     url: 'https://leetcode.com/u/21_dvynshx/',
     imageSrc: '/images/code/leetcode.png',

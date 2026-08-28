@@ -187,7 +187,7 @@ export default function TwitterFollowAlert() {
             <div className="flex-1 min-w-0 pr-1">
               <div className="flex items-center justify-between gap-1.5">
                 <AlertTitle className="text-[13.5px] sm:text-[14px] font-bold text-slate-900 dark:text-[#E7E9EA] group-hover:text-[#1D9BF0] dark:group-hover:text-[#1D9BF0] transition-colors duration-150 truncate">
-                  Follow my Twitter
+                  Follow me on X/Twitter
                 </AlertTitle>
                 <ArrowRight
                   size={14}

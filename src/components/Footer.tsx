@@ -87,7 +87,7 @@ function LiveTimeDisplay() {
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#000000] text-slate-600 dark:text-slate-400 mt-16 sm:mt-20 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]">
+    <footer className="w-full border-t border-slate-200/80 dark:border-slate-800/80 bg-[#FAF9F6] dark:bg-[#000000] text-slate-600 dark:text-slate-400 mt-16 sm:mt-20 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]">
       <div className="max-w-[680px] mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-8 sm:pb-12">
         {/* Main Footer Multi-Column Structure */}
         <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 sm:gap-6">

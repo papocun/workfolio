@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import TextScramble from "@/components/TextScramble";
 import ResumeButton from "@/components/ResumeButton";
 import AlertBanner from "@/components/ui/AlertBanner";
 import EmailContactLink from "@/components/EmailContactLink";
+import LocationTag from "@/components/LocationTag";
 import { portfolioData } from "@/data/portfolioData";
 
 export const metadata: Metadata = {
@@ -55,55 +57,71 @@ export default function HomePage() {
         autoCloseDuration={5000}
       />
 
-      {/* Greeting */}
-      <p className="text-[14px] sm:text-[16px] text-slate-500 dark:text-slate-400 font-medium mb-1 sm:mb-2 leading-snug">
+      {/* Main Heading with Animated Scramble only on the Name */}
+      <h1 className="text-[22px] sm:text-[28px] font-bold text-slate-900 dark:text-slate-100 leading-[1.2] tracking-tight mb-4 sm:mb-5">
         Hi, I&apos;m{" "}
         <TextScramble
-          text="Divyanshu"
-          className="text-slate-900 dark:text-slate-100 font-semibold tracking-normal"
+          text="Divyanshu Tiwari"
+          className="text-slate-900 dark:text-slate-100 font-bold tracking-tight"
         />
-        .
-      </p>
-
-      {/* Headline */}
-      <h1 className="text-[22px] sm:text-[28px] font-bold text-slate-900 dark:text-slate-100 leading-[1.2] tracking-tight mb-3 sm:mb-4">
-        Data Scientist. ML Systems Builder.
       </h1>
 
-      {/* Narrative Bio — Rendered directly in Server HTML for crawlers and agents */}
+      {/* Narrative Bio Story */}
       <div className="space-y-3.5 sm:space-y-4.5 text-[13.5px] sm:text-[14.5px] text-slate-600 dark:text-slate-300 leading-[1.65]">
         <p>
-          I work at the intersection of data, machine learning, and software,
-          building systems that solve problems beyond a notebook. I&apos;ve
-          worked with startups and small teams on problems ranging from fraud
-          scoring and forecasting to automation and real-time APIs, where the
-          interesting part is usually turning an idea into something reliable
-          enough to use.
+          22 | Working in{" "}
+          <Link
+            href="/experience"
+            className="font-bold text-slate-900 dark:text-slate-100 hover:text-[#1D9BF0] dark:hover:text-[#1D9BF0] transition-colors"
+          >
+            Data &amp; AI
+          </Link>
+          . Most of my time goes into testing ideas, building models, and
+          checking whether the results actually hold up or just look good on the
+          surface.
         </p>
         <p>
-          My work moves between experimentation and engineering. I enjoy
-          understanding the problem first, testing what actually works, and then
-          building the pieces around it. Sometimes that means an ML model,
-          sometimes a data pipeline or API, and sometimes figuring out why the
-          numbers don&apos;t make sense in the first place.
+          This is my corner of the internet, where I share what I&apos;m
+          building, learning, and occasionally getting wrong. The work is
+          largely a loop: try something, see where it breaks, figure out if the
+          issue is the data, the assumptions, or the approach, then build the
+          actual system around what holds up, be it a model, a pipeline, or an
+          API.
         </p>
         <p>
-          These days, I&apos;m also exploring LLMs, RAG, and AI
-          applications&mdash;mostly with the same question in mind: can this be
-          made genuinely useful, or is it just another demo?
+          Right now I&apos;m working through LLMs, RAG, and inference
+          engineering, figuring out where they genuinely hold up in real
+          projects and where they don&apos;t.
         </p>
         <p>
-          Outside of work, I build side projects, play chess, read, and follow
-          whatever happens to catch my curiosity. I like learning by building,
-          breaking things, and going deep enough to understand how they work.
+          Outside work:{" "}
+          <a
+            href="https://www.chess.com/member/papocun"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-slate-900 dark:text-slate-100 hover:text-[#1D9BF0] dark:hover:text-[#1D9BF0] transition-colors"
+          >
+            chess
+          </a>
+          , coffee, and{" "}
+          <Link
+            href="/blog"
+            className="font-bold text-slate-900 dark:text-slate-100 hover:text-[#1D9BF0] dark:hover:text-[#1D9BF0] transition-colors"
+          >
+            writing
+          </Link>
+          . Happy to have you here on datafolio, enjoy exploring :)
         </p>
+
+        {/* Location Row */}
+        <LocationTag location="Delhi" className="pt-1.5" />
       </div>
 
-      {/* Action Links & Creative Resume Button */}
+      {/* Action Links & Resume Button */}
       <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-6 sm:pt-8 mt-2 text-[12.5px] sm:text-[13px]">
         <EmailContactLink email={portfolioData.email} />
 
-        {/* Creative Sliding Pill Resume Action */}
+        {/* Sliding Pill Resume Action */}
         <ResumeButton href={portfolioData.socials.resumeUrl} />
       </div>
     </main>

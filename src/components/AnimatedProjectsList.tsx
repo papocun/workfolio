@@ -23,18 +23,16 @@ export default function AnimatedProjectsList({
     : {
         hidden: {
           opacity: 0,
-          y: 24,
-          filter: 'blur(3px)',
+          y: 20,
         },
         visible: {
           opacity: 1,
           y: 0,
-          filter: 'blur(0px)',
         },
       };
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6 sm:gap-8">
       {projects.map((project, index) => (
         <InView
           key={project.id}

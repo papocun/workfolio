@@ -32,4 +32,4 @@ Outside of work, I build side projects, play chess, read, and follow whatever ha
 - LeetCode: https://leetcode.com/u/21_dvynshx/
 - DailySQL: https://dailysql.in/u/divyanshutiwari281
 - StrataScratch: https://platform.stratascratch.com/user/papocun
-- Resume: https://drive.google.com/file/d/1rMIwhj9_4t2hHll5uDJYt8TARGDxbY4A/view?usp=sharing
+- Resume: https://drive.google.com/file/d/14YWbiCTzkLcnwULHuuDESMvNvYIEjLbn/view?usp=sharing

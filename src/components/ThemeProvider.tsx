@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'dark';
+export type Theme = 'dark' | 'light';
 
 interface ThemeContextType {
   theme: Theme;
@@ -14,26 +14,43 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme] = useState<Theme>('dark');
+  const [theme, setThemeState] = useState<Theme>('dark');
 
   useEffect(() => {
-    document.documentElement.classList.add('dark');
-    localStorage.setItem('workfolio-theme', 'dark');
+    const saved = localStorage.getItem('workfolio-theme') as Theme | null;
+    if (saved === 'light' || saved === 'dark') {
+      setThemeState(saved);
+      if (saved === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('workfolio-theme', 'dark');
+    }
   }, []);
 
-  const setTheme = () => {
-    document.documentElement.classList.add('dark');
+  const setTheme = (t: Theme) => {
+    setThemeState(t);
+    localStorage.setItem('workfolio-theme', t);
+    if (t === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   };
 
   const toggleTheme = () => {
-    document.documentElement.classList.add('dark');
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
   };
 
   return (
     <ThemeContext.Provider
       value={{
-        theme: 'dark',
-        isDark: true,
+        theme,
+        isDark: theme === 'dark',
         setTheme,
         toggleTheme,
       }}

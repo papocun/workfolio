@@ -220,7 +220,7 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
   const showStatsRow = hasStreak || hasRating;
 
   return (
-    <article className="group relative flex flex-col-reverse sm:flex-row items-stretch justify-between gap-4 sm:gap-6 overflow-hidden rounded-2xl border border-slate-200/90 dark:border-[#2F3336] bg-white dark:bg-[#16181C] p-4 sm:p-6 shadow-xs dark:shadow-md transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-400 dark:hover:border-slate-700">
+    <article className="group relative flex flex-col-reverse sm:flex-row items-stretch justify-between gap-4 sm:gap-6 overflow-hidden rounded-2xl border border-slate-200/90 dark:border-[#2F3336] bg-white dark:bg-[#16181C] p-4 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-md transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-none">
 
       {/* Geometric background pattern — dark mode only, sits beneath all content */}
       <div className="pointer-events-none absolute inset-0 hidden dark:block opacity-70" aria-hidden="true">

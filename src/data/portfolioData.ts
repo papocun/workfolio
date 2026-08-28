@@ -20,7 +20,7 @@ export const portfolioData: PersonalProfile = {
     dailysql: "https://dailysql.in/u/divyanshutiwari281",
     stratascratch: "https://platform.stratascratch.com/user/papocun",
     resumeUrl:
-      "https://drive.google.com/file/d/1rMIwhj9_4t2hHll5uDJYt8TARGDxbY4A/view?usp=sharing",
+      "https://drive.google.com/file/d/14YWbiCTzkLcnwULHuuDESMvNvYIEjLbn/view?usp=sharing",
   },
 
   hero: {
@@ -39,6 +39,8 @@ export const portfolioData: PersonalProfile = {
       company: "ZeitstoneAI",
       period: "Aug 2026 – Present",
       location: "Remote",
+      summary:
+        "Building an e-commerce financial decision system with 9 scoring models, automated testing, and multi-source data integration.",
       highlights: [
         "Owned end-to-end development of an e-commerce financial decision system, translating business requirements into 9 scoring models, validating them through 119 automated tests, and collaborating across business, backend, data, and database layers to design a multi-source data model connecting Shopify, payment, shipping, returns, and cost data into actionable scoring and dashboard outputs.",
         "Currently integrating and refining the scoring pipeline, working across multiple business data sources to ensure consistent inputs, transformations, and reliable decision outputs.",
@@ -60,6 +62,8 @@ export const portfolioData: PersonalProfile = {
       company: "ChatSpark",
       period: "Mar 2026 – May 2026",
       location: "Remote",
+      summary:
+        "Automated end-to-end Python reporting pipelines and performed SQL cohort analysis to support retention decisions.",
       highlights: [
         "Automated the Excel reporting pipeline end-to-end in Python, reducing dashboard generation time from 3+ hours to under 5 minutes for recurring reports.",
         "Performed SQL-based cohort analysis on transactional data, identifying a 15% decline in repeat purchases over a 90-day window and presenting the findings to support retention decisions.",

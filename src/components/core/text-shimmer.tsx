@@ -24,7 +24,7 @@ export function TextShimmer({
 
   return (
     <motion.p
-      className={`relative inline-block bg-[length:250%_100%,auto] bg-clip-text text-transparent [--base-color:#71767b] [--base-gradient-color:#ffffff] [--bg:linear-gradient(90deg,#0000_calc(50%-var(--spread)),var(--base-gradient-color),#0000_calc(50%+var(--spread)))] [background-repeat:no-repeat,padding-box] ${className}`}
+      className={`relative inline-block bg-[length:250%_100%,auto] bg-clip-text text-transparent [--base-color:#94a3b8] dark:[--base-color:#71767b] [--base-gradient-color:#0f172a] dark:[--base-gradient-color:#ffffff] [--bg:linear-gradient(90deg,#0000_calc(50%-var(--spread)),var(--base-gradient-color),#0000_calc(50%+var(--spread)))] [background-repeat:no-repeat,padding-box] ${className}`}
       initial={{ backgroundPosition: '100% center' }}
       animate={{ backgroundPosition: '0% center' }}
       transition={{

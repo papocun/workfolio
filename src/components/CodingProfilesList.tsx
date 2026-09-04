@@ -26,7 +26,7 @@ interface CachedStatsItem {
 // Session-level memory cache to avoid duplicate requests across component re-renders
 let cachedStatsMap: Record<string, CachedStatsItem> | null = null;
 let lastFetchTimestamp = 0;
-const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+const CACHE_TTL_MS = 60 * 1000; // 1 minute
 
 interface CodingProfilesListProps {
   profiles?: CodingProfileItem[];
@@ -43,11 +43,11 @@ export default function CodingProfilesList({
   useEffect(() => {
     let isMounted = true;
 
-    async function fetchLiveStats() {
+    async function fetchLiveStats(force = false) {
       const now = Date.now();
 
-      // Reuse cached stats if fresh
-      if (cachedStatsMap && now - lastFetchTimestamp < CACHE_TTL_MS) {
+      // Reuse cached stats if fresh and not forced
+      if (!force && cachedStatsMap && now - lastFetchTimestamp < CACHE_TTL_MS) {
         if (isMounted) {
           setItems((prev) =>
             sortCodingProfilesByStreak(
@@ -127,10 +127,9 @@ export default function CodingProfilesList({
       if (!updatedViaApi) {
         try {
           const lcUsername = CODING_PROFILE_CONFIGS.leetcode.username;
-          const [lcRes, calRes] = await Promise.all([
-            fetch(`https://alfa-leetcode-api.onrender.com/userProfile/${lcUsername}`).catch(() => null),
-            fetch(`https://alfa-leetcode-api.onrender.com/userProfileCalendar/${lcUsername}`).catch(() => null),
-          ]);
+          const lcRes = await fetch(
+            `https://leetcode-api-faisalshohag.vercel.app/${encodeURIComponent(lcUsername)}`
+          ).catch(() => null);
 
           let lcFormatted: string | undefined;
           let lcStreak: number | undefined;
@@ -143,12 +142,10 @@ export default function CodingProfilesList({
                 CODING_PROFILE_CONFIGS.leetcode.unit
               );
             }
-          }
-
-          if (calRes && calRes.ok) {
-            const calData = await calRes.json();
-            const activeStreak = calculateLeetCodeActiveStreak(calData.submissionCalendar);
-            lcStreak = activeStreak > 0 ? activeStreak : undefined;
+            if (lcData.submissionCalendar) {
+              const activeStreak = calculateLeetCodeActiveStreak(lcData.submissionCalendar);
+              lcStreak = activeStreak > 0 ? activeStreak : undefined;
+            }
           }
 
           if (lcFormatted || lcStreak !== undefined) {
@@ -187,8 +184,26 @@ export default function CodingProfilesList({
 
     fetchLiveStats();
 
+    // Auto-update stats every 60 seconds with time
+    const interval = setInterval(() => {
+      fetchLiveStats(true);
+    }, 60000);
+
+    // Refresh when user returns to tab
+    const handleFocus = () => {
+      if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
+        fetchLiveStats(true);
+      }
+    };
+
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', handleFocus);
+
     return () => {
       isMounted = false;
+      clearInterval(interval);
+      window.removeEventListener('focus', handleFocus);
+      document.removeEventListener('visibilitychange', handleFocus);
     };
   }, []);
 

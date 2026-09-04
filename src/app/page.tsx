@@ -5,7 +5,12 @@ import ResumeButton from "@/components/ResumeButton";
 import AlertBanner from "@/components/ui/AlertBanner";
 import EmailContactLink from "@/components/EmailContactLink";
 import LocationTag from "@/components/LocationTag";
+import GitHubContributions from "@/components/GitHubContributions";
+import LeetCodeContributions from "@/components/LeetCodeContributions";
+import SkillsSection from "@/components/SkillsSection";
+import ThoughtSection from "@/components/ThoughtSection";
 import { portfolioData } from "@/data/portfolioData";
+import { CODING_PROFILE_CONFIGS } from "@/data/codingProfiles";
 
 export const metadata: Metadata = {
   title: "Divyanshu Tiwari | Data Scientist & ML Systems Builder",
@@ -69,29 +74,30 @@ export default function HomePage() {
       {/* Narrative Bio Story */}
       <div className="space-y-3.5 sm:space-y-4.5 text-[13.5px] sm:text-[14.5px] text-slate-600 dark:text-slate-300 leading-[1.65]">
         <p>
-          22 | Working in{" "}
+          22 | Building in{" "}
           <Link
             href="/experience"
             className="font-bold text-slate-900 dark:text-slate-100 hover:text-[#1D9BF0] dark:hover:text-[#1D9BF0] transition-colors"
           >
-            Data &amp; AI
+            Data Engineering &amp; AI
           </Link>
-          . Most of my time goes into testing ideas, building models, and
-          checking whether the results actually hold up or just look good on the
-          surface.
+          . Most of my time goes into designing data pipelines, building reliable
+          data systems, and figuring out how AI can actually be integrated into
+          the data layer rather than treated as a separate thing.
         </p>
         <p>
           This is my corner of the internet, where I share what I&apos;m
           building, learning, and occasionally getting wrong. The work is
-          largely a loop: try something, see where it breaks, figure out if the
-          issue is the data, the assumptions, or the approach, then build the
-          actual system around what holds up, be it a model, a pipeline, or an
-          API.
+          largely a loop: understand the data, figure out where it breaks,
+          question the assumptions, then build the system around what holds up,
+          whether that&apos;s a pipeline, warehouse, model, or API.
         </p>
         <p>
-          Right now I&apos;m working through LLMs, RAG, and inference
-          engineering, figuring out where they genuinely hold up in real
-          projects and where they don&apos;t.
+          Right now I&apos;m exploring how LLMs and RAG fit into data
+          engineering, from building AI-ready data pipelines and retrieval
+          systems to using LLMs for data workflows, validation, enrichment, and
+          intelligent data processing. I&apos;m mainly interested in where these
+          ideas are genuinely useful in production and where they aren&apos;t.
         </p>
         <p>
           Outside work:{" "}
@@ -124,6 +130,30 @@ export default function HomePage() {
         {/* Sliding Pill Resume Action */}
         <ResumeButton href={portfolioData.socials.resumeUrl} />
       </div>
+
+      {/* Top Divider for Activity Section */}
+      <hr className="border-t border-slate-200/80 dark:border-[#2F3336]/60 my-6 sm:my-7" />
+
+      {/* Activity Section */}
+      <section className="w-full" aria-label="Activity">
+        <h2 className="text-[17px] sm:text-[18px] font-bold text-slate-900 dark:text-slate-100 tracking-tight mb-3.5 sm:mb-4">
+          Activity
+        </h2>
+
+        {/* GitHub Contribution Calendar */}
+        <GitHubContributions username="DIVYANSHU-TIWARI-281" />
+
+        {/* LeetCode Contribution Calendar */}
+        <div className="mt-3.5 sm:mt-4">
+          <LeetCodeContributions username={CODING_PROFILE_CONFIGS.leetcode.username} />
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <SkillsSection />
+
+      {/* Thought Section */}
+      <ThoughtSection />
     </main>
   );
 }

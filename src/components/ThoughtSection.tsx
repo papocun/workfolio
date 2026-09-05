@@ -123,7 +123,7 @@ export default function ThoughtSection({ className = '' }: ThoughtSectionProps) 
       aria-label="Thought"
     >
       {/* Section Heading with Theme-Aware Typography */}
-      <h2 className="text-[17px] sm:text-[18px] font-bold text-slate-900 dark:text-slate-100 tracking-tight mb-3.5 sm:mb-4">
+      <h2 className="text-[19px] sm:text-[21px] font-bold text-slate-900 dark:text-slate-100 tracking-tight mb-3.5 sm:mb-4">
         Thought
       </h2>
 
@@ -155,24 +155,24 @@ export default function ThoughtSection({ className = '' }: ThoughtSectionProps) 
           ) : currentQuote ? (
             /* Quote and Author */
             <div className="transition-opacity duration-300 ease-in-out opacity-100">
-              <blockquote className="text-[14px] sm:text-[15.5px] md:text-[16px] font-normal leading-[1.65] text-slate-800 dark:text-slate-200 tracking-normal">
+              <blockquote className="text-[15px] sm:text-[16.5px] md:text-[17px] font-normal leading-[1.7] text-slate-800 dark:text-slate-200 tracking-normal">
                 “{currentQuote.quote}”
               </blockquote>
 
               {/* Author Row: Small Horizontal Line + Author Name */}
-              <div className="mt-4 sm:mt-5 flex items-center justify-center gap-2 text-slate-500 dark:text-[#71767B]">
+              <div className="mt-4 sm:mt-5 flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400">
                 <span
                   className="w-5 sm:w-7 h-[1px] bg-slate-300/80 dark:bg-[#2F3336]"
                   aria-hidden="true"
                 />
-                <cite className="not-italic text-[11px] sm:text-[12px] font-semibold tracking-wider uppercase text-slate-600 dark:text-slate-400">
+                <cite className="not-italic text-[12.5px] sm:text-[13.5px] font-semibold tracking-wider uppercase text-slate-600 dark:text-slate-400">
                   {currentQuote.author}
                 </cite>
               </div>
             </div>
           ) : (
             /* Fallback if no quote available */
-            <div className="text-[13px] text-slate-400 dark:text-[#71767B]">
+            <div className="text-[14px] text-slate-400 dark:text-slate-500">
               Thought of the day
             </div>
           )}

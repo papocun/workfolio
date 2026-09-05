@@ -51,7 +51,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <main className="max-w-[680px] mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 sm:pb-20 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]">
+    <main className="max-w-[680px] mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 sm:pb-20">
       {/* Main Notice Banner */}
       <AlertBanner
         title="Notice: Some pages are still being built"
@@ -63,7 +63,7 @@ export default function HomePage() {
       />
 
       {/* Main Heading with Animated Scramble only on the Name */}
-      <h1 className="text-[22px] sm:text-[28px] font-bold text-slate-900 dark:text-slate-100 leading-[1.2] tracking-tight mb-4 sm:mb-5">
+      <h1 className="text-[26px] sm:text-[34px] font-bold text-slate-900 dark:text-slate-100 leading-[1.2] tracking-tight mb-4 sm:mb-5">
         Hi, I&apos;m{" "}
         <TextScramble
           text="Divyanshu Tiwari"
@@ -72,35 +72,23 @@ export default function HomePage() {
       </h1>
 
       {/* Narrative Bio Story */}
-      <div className="space-y-3.5 sm:space-y-4.5 text-[13.5px] sm:text-[14.5px] text-slate-600 dark:text-slate-300 leading-[1.65]">
+      <div className="space-y-3.5 sm:space-y-4.5 text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-300 leading-[1.7]">
         <p>
-          22 | Building in{" "}
+          22, working in{" "}
           <Link
             href="/experience"
             className="font-bold text-slate-900 dark:text-slate-100 hover:text-[#1D9BF0] dark:hover:text-[#1D9BF0] transition-colors"
           >
-            Data Engineering &amp; AI
+            Data &amp; AI
           </Link>
-          . Most of my time goes into designing data pipelines, building reliable
-          data systems, and figuring out how AI can actually be integrated into
-          the data layer rather than treated as a separate thing.
+          . Most days I&apos;m building data pipelines and trying to make them
+          actually reliable not just working once and breaking later. Lately
+          I&apos;ve been figuring out where LLMs and RAG genuinely help with data
+          work, and where people are just forcing AI into things that don&apos;t
+          need it.
         </p>
         <p>
-          This is my corner of the internet, where I share what I&apos;m
-          building, learning, and occasionally getting wrong. The work is
-          largely a loop: understand the data, figure out where it breaks,
-          question the assumptions, then build the system around what holds up,
-          whether that&apos;s a pipeline, warehouse, model, or API.
-        </p>
-        <p>
-          Right now I&apos;m exploring how LLMs and RAG fit into data
-          engineering, from building AI-ready data pipelines and retrieval
-          systems to using LLMs for data workflows, validation, enrichment, and
-          intelligent data processing. I&apos;m mainly interested in where these
-          ideas are genuinely useful in production and where they aren&apos;t.
-        </p>
-        <p>
-          Outside work:{" "}
+          Outside of that:{" "}
           <a
             href="https://www.chess.com/member/papocun"
             target="_blank"
@@ -116,7 +104,7 @@ export default function HomePage() {
           >
             writing
           </Link>
-          . Happy to have you here on datafolio, enjoy exploring :)
+          . Thanks for stopping by :)
         </p>
 
         {/* Location Row */}
@@ -124,7 +112,7 @@ export default function HomePage() {
       </div>
 
       {/* Action Links & Resume Button */}
-      <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-6 sm:pt-8 mt-2 text-[12.5px] sm:text-[13px]">
+      <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-6 sm:pt-8 mt-2 text-[14px] sm:text-[14.5px]">
         <EmailContactLink email={portfolioData.email} />
 
         {/* Sliding Pill Resume Action */}
@@ -136,7 +124,7 @@ export default function HomePage() {
 
       {/* Activity Section */}
       <section className="w-full" aria-label="Activity">
-        <h2 className="text-[17px] sm:text-[18px] font-bold text-slate-900 dark:text-slate-100 tracking-tight mb-3.5 sm:mb-4">
+        <h2 className="text-[19px] sm:text-[21px] font-bold text-slate-900 dark:text-slate-100 tracking-tight mb-3.5 sm:mb-4">
           Activity
         </h2>
 

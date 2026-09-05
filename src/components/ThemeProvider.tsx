@@ -9,16 +9,20 @@ interface ThemeContextType {
   isDark: boolean;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
+  brightness: number;
+  setBrightness: (val: number) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'theme';
 const LEGACY_STORAGE_KEY = 'workfolio-theme';
+const BRIGHTNESS_STORAGE_KEY = 'workfolio-brightness';
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Always initialize to 'dark' for SSR & default rule
   const [theme, setThemeState] = useState<Theme>('dark');
+  const [brightness, setBrightnessState] = useState<number>(100);
   const transitionTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Synchronize state with early head script & localStorage on mount
@@ -39,6 +43,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         setThemeState('dark');
         document.documentElement.classList.add('dark');
       }
+
+      const savedBrightness = localStorage.getItem(BRIGHTNESS_STORAGE_KEY);
+      if (savedBrightness !== null) {
+        const parsed = parseInt(savedBrightness, 10);
+        if (!isNaN(parsed) && parsed >= 60 && parsed <= 140) {
+          setBrightnessState(parsed);
+          document.documentElement.style.setProperty('--theme-brightness', `${parsed}%`);
+          document.documentElement.style.setProperty('--bg-intensity', `${(parsed / 100).toFixed(2)}`);
+        }
+      }
     } catch {
       // Fallback to dark mode on storage error
       setThemeState('dark');
@@ -51,6 +65,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       }
     };
   }, []);
+
+  const setBrightness = (val: number) => {
+    const clamped = Math.max(60, Math.min(140, Math.round(val)));
+    setBrightnessState(clamped);
+    try {
+      localStorage.setItem(BRIGHTNESS_STORAGE_KEY, String(clamped));
+      document.documentElement.style.setProperty('--theme-brightness', `${clamped}%`);
+      document.documentElement.style.setProperty('--bg-intensity', `${(clamped / 100).toFixed(2)}`);
+    } catch {
+      // ignore
+    }
+  };
 
   const setTheme = (t: Theme) => {
     if (t === theme) return;
@@ -99,6 +125,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         isDark: theme === 'dark',
         setTheme,
         toggleTheme,
+        brightness,
+        setBrightness,
       }}
     >
       {children}

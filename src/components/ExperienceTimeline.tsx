@@ -51,48 +51,48 @@ export default function ExperienceTimeline({
                 onClick={() => toggleExpand(exp.id)}
                 aria-expanded={isExpanded}
                 aria-controls={contentId}
-                className="w-full text-left group flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] rounded-sm transition-colors py-0.5 cursor-pointer"
+                className="w-full text-left group flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] rounded-sm transition-colors py-1.5 cursor-pointer"
               >
                 {/* Left: Company · Role */}
                 <div className="flex items-baseline gap-2 flex-wrap">
-                  <span className="text-[15px] sm:text-[16px] font-semibold text-slate-900 dark:text-slate-100 group-hover:text-black dark:group-hover:text-white transition-colors">
+                  <span className="text-[16px] sm:text-[17px] font-semibold text-slate-900 dark:text-slate-100 group-hover:text-black dark:group-hover:text-white transition-colors">
                     {exp.company}
                   </span>
                   <span
-                    className="text-slate-400 dark:text-slate-600 select-none text-[13px]"
+                    className="text-slate-400 dark:text-slate-500 select-none text-[14px]"
                     aria-hidden="true"
                   >
                     ·
                   </span>
-                  <span className="text-[13.5px] sm:text-[14.5px] text-slate-600 dark:text-slate-400 font-normal">
+                  <span className="text-[14.5px] sm:text-[15.5px] text-slate-600 dark:text-slate-400 font-normal">
                     {exp.role}
                   </span>
                 </div>
 
                 {/* Right: Date Range & Arrow Indicator */}
                 <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto mt-0.5 sm:mt-0">
-                  <span className="text-[12px] sm:text-[13px] font-mono text-slate-500 dark:text-slate-500 tabular-nums">
+                  <span className="text-[13px] sm:text-[14px] font-mono text-slate-500 dark:text-slate-400 tabular-nums">
                     {exp.period}
                   </span>
                   <span
                     className={`inline-flex items-center justify-center transition-colors ${
                       isExpanded
                         ? 'text-[#1D9BF0]'
-                        : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-700 dark:group-hover:text-slate-300'
+                        : 'text-slate-400 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200'
                     }`}
                     aria-hidden="true"
                   >
                     {isExpanded ? (
-                      <CaretUp size={14} weight="bold" />
+                      <CaretUp size={16} weight="bold" />
                     ) : (
-                      <CaretDown size={14} weight="bold" />
+                      <CaretDown size={16} weight="bold" />
                     )}
                   </span>
                 </div>
               </button>
 
               {/* Short One-Line Summary */}
-              <p className="text-[13px] sm:text-[13.5px] text-slate-600 dark:text-slate-400 leading-relaxed mt-1 sm:mt-1.5">
+              <p className="text-[14.5px] sm:text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mt-1 sm:mt-1.5">
                 {exp.summary}
               </p>
 
@@ -113,10 +113,10 @@ export default function ExperienceTimeline({
                       {exp.narrative.map((bullet, bIdx) => (
                         <div
                           key={bIdx}
-                          className="flex items-start gap-2 text-[13px] sm:text-[13.5px] text-slate-700 dark:text-slate-300 leading-[1.6]"
+                          className="flex items-start gap-2.5 text-[14px] sm:text-[15px] text-slate-700 dark:text-slate-300 leading-[1.65]"
                         >
                           <ArrowRight
-                            size={12}
+                            size={14}
                             weight="bold"
                             className="text-[#1D9BF0] shrink-0 mt-1"
                             aria-hidden="true"
@@ -131,7 +131,7 @@ export default function ExperienceTimeline({
                           {exp.technologies.map((tech) => (
                             <span
                               key={tech}
-                              className="rounded bg-slate-100 dark:bg-[#16181C] border border-slate-200/80 dark:border-[#2F3336] px-2 py-0.5 text-[11px] font-mono text-slate-700 dark:text-slate-400 font-medium"
+                              className="rounded bg-slate-100 dark:bg-[#16181C] border border-slate-200/80 dark:border-[#2F3336] px-2.5 py-1 text-[12px] font-mono text-slate-700 dark:text-slate-300 font-medium"
                             >
                               {tech}
                             </span>

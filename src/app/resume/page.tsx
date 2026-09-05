@@ -14,7 +14,7 @@ export default function ResumePage() {
   }, []);
 
   return (
-    <main className="max-w-[680px] mx-auto px-6 pt-16 pb-20 text-center font-mono text-[13px] text-slate-500">
+    <main className="max-w-[680px] mx-auto px-6 pt-16 pb-20 text-center font-mono text-[14px] text-slate-500 dark:text-slate-400">
       <p className="mb-3">Opening verified resume...</p>
       <a
         href={portfolioData.socials.resumeUrl}

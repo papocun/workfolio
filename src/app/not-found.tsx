@@ -50,25 +50,25 @@ const RECOVERY_LINKS = [
 
 export default function NotFound() {
   return (
-    <main className="max-w-[680px] mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-20 sm:pb-24 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]">
+    <main className="max-w-[680px] mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-20 sm:pb-24">
       {/* 404 Badge */}
-      <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200/70 dark:border-amber-800/60 text-[11.5px] font-mono text-amber-700 dark:text-amber-300 mb-4">
+      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200/70 dark:border-amber-800/60 text-[12.5px] font-mono text-amber-700 dark:text-amber-300 mb-4">
         <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
         <span>HTTP 404 · Page Not Found</span>
       </div>
 
       {/* Heading */}
-      <h1 className="text-[24px] sm:text-[32px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-3">
+      <h1 className="text-[28px] sm:text-[36px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-3">
         This page could not be found.
       </h1>
 
-      <p className="text-[13.5px] sm:text-[14.5px] text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
+      <p className="text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
         The URL you requested does not exist or has moved. Use the links below to navigate to valid sections of the site or access agent-friendly resources.
       </p>
 
       {/* Navigation & Recovery Links Section */}
       <section aria-label="Available Pages & Recovery Links">
-        <h2 className="font-mono text-[11.5px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 select-none">
+        <h2 className="font-mono text-[12px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 select-none">
           Available Pages &amp; Resources
         </h2>
 
@@ -80,14 +80,14 @@ export default function NotFound() {
               className="group block rounded-xl border border-slate-200/90 dark:border-[#2F3336] bg-white dark:bg-[#16181C] p-3.5 sm:p-4 shadow-xs hover:border-slate-400 dark:hover:border-slate-600 transition-all duration-150"
             >
               <div className="flex items-center justify-between gap-2">
-                <span className="font-semibold text-[14px] text-slate-900 dark:text-slate-100 group-hover:text-[#1D9BF0] transition-colors">
-                  {link.title} <span className="font-mono text-[12px] text-slate-400 font-normal">({link.href})</span>
+                <span className="font-semibold text-[15px] text-slate-900 dark:text-slate-100 group-hover:text-[#1D9BF0] transition-colors">
+                  {link.title} <span className="font-mono text-[13px] text-slate-400 font-normal">({link.href})</span>
                 </span>
-                <span className="text-slate-400 group-hover:translate-x-0.5 transition-transform text-[12px]">
+                <span className="text-slate-400 group-hover:translate-x-0.5 transition-transform text-[14px]">
                   &rarr;
                 </span>
               </div>
-              <p className="text-[12.5px] text-slate-500 dark:text-slate-400 mt-1 leading-normal">
+              <p className="text-[14px] text-slate-500 dark:text-slate-400 mt-1 leading-normal">
                 {link.description}
               </p>
             </Link>

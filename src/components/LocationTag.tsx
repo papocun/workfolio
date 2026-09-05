@@ -33,14 +33,14 @@ export default function LocationTag({
 
   return (
     <div
-      className={`flex items-center gap-3 sm:gap-3.5 text-[13px] sm:text-[13.5px] text-slate-500 dark:text-[#71767B] font-medium flex-wrap ${className}`}
+      className={`flex items-center gap-3 sm:gap-3.5 text-[14px] sm:text-[14.5px] text-slate-500 dark:text-slate-400 font-medium flex-wrap ${className}`}
     >
       {/* Location with Phosphor MapPin */}
       <div className="flex items-center gap-1.5">
         <MapPin
-          size={15}
+          size={16}
           weight="bold"
-          className="text-slate-400 dark:text-[#71767B] shrink-0"
+          className="text-slate-400 dark:text-slate-400 shrink-0"
           aria-hidden="true"
         />
         <span className="text-slate-700 dark:text-[#E7E9EA] font-medium">{location}</span>
@@ -79,9 +79,9 @@ export default function LocationTag({
             })
           }
           aria-label="GitHub Profile"
-          className="text-slate-400 dark:text-[#71767B] hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-0.5 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
+          className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-1.5 -m-1 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
         >
-          <GithubLogo size={15} weight="regular" className="shrink-0" />
+          <GithubLogo size={16} weight="regular" className="shrink-0" />
         </a>
 
         {/* LinkedIn */}
@@ -97,9 +97,9 @@ export default function LocationTag({
             })
           }
           aria-label="LinkedIn Profile"
-          className="text-slate-400 dark:text-[#71767B] hover:text-[#0A66C2] dark:hover:text-[#0A66C2] transition-colors duration-150 inline-flex items-center justify-center p-0.5 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
+          className="text-slate-400 dark:text-slate-400 hover:text-[#0A66C2] dark:hover:text-[#0A66C2] transition-colors duration-150 inline-flex items-center justify-center p-1.5 -m-1 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
         >
-          <LinkedinLogo size={15} weight="regular" className="shrink-0" />
+          <LinkedinLogo size={16} weight="regular" className="shrink-0" />
         </a>
 
         {/* X */}
@@ -115,9 +115,9 @@ export default function LocationTag({
             })
           }
           aria-label="X (Twitter) Profile"
-          className="text-slate-400 dark:text-[#71767B] hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-0.5 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
+          className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-1.5 -m-1 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
         >
-          <XLogo size={15} weight="regular" className="shrink-0" />
+          <XLogo size={16} weight="regular" className="shrink-0" />
         </a>
       </div>
 
@@ -141,16 +141,16 @@ export default function LocationTag({
               : 'Sound muted (click to enable sound)'
           }
           title={isSoundOn ? 'Sound: On' : 'Sound: Off'}
-          className={`p-0.5 rounded transition-colors duration-150 inline-flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] ${
+          className={`p-1.5 -m-1 rounded transition-colors duration-150 inline-flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] ${
             isSoundOn
               ? 'text-[#1D9BF0] hover:text-[#1a8cd8]'
-              : 'text-slate-400 dark:text-[#71767B] hover:text-slate-900 dark:hover:text-[#E7E9EA]'
+              : 'text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E7E9EA]'
           }`}
         >
           {isSoundOn ? (
-            <SpeakerHigh size={15} weight="bold" className="shrink-0" />
+            <SpeakerHigh size={16} weight="bold" className="shrink-0" />
           ) : (
-            <SpeakerSlash size={15} weight="regular" className="shrink-0" />
+            <SpeakerSlash size={16} weight="regular" className="shrink-0" />
           )}
         </button>
 
@@ -162,7 +162,7 @@ export default function LocationTag({
             isDark ? 'Switch to light mode' : 'Switch to dark mode'
           }
           title={isDark ? 'Theme: Dark' : 'Theme: Light'}
-          className="text-slate-400 dark:text-[#71767B] hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-0.5 rounded cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] overflow-hidden relative w-5 h-5"
+          className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-1.5 -m-1 rounded cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] overflow-hidden relative w-7 h-7"
         >
           <AnimatePresence mode="wait" initial={false}>
             <motion.span
@@ -185,9 +185,9 @@ export default function LocationTag({
               className="inline-flex items-center justify-center shrink-0"
             >
               {isDark ? (
-                <Sun size={15} weight="regular" className="shrink-0" />
+                <Sun size={16} weight="regular" className="shrink-0" />
               ) : (
-                <Moon size={15} weight="regular" className="shrink-0" />
+                <Moon size={16} weight="regular" className="shrink-0" />
               )}
             </motion.span>
           </AnimatePresence>

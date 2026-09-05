@@ -5,9 +5,9 @@ export const LLMS_TXT_CONTENT = `# Divyanshu Tiwari
 > Data Scientist and ML Systems Builder working across machine learning, data, AI applications, and software.
 
 ## About
-
-Data Scientist and ML systems builder working across machine learning, data, AI applications, and software. I build systems that solve problems beyond a notebook, working with early-stage startups and teams on fraud scoring pipelines, time-series forecasting, customer segmentation, and real-time APIs.
-
+ 
+22, working in Data & AI. Most days I'm building data pipelines and trying to make them actually reliable not just working once and breaking later. Lately I've been figuring out where LLMs and RAG genuinely help with data work, and where people are just forcing AI into things that don't need it. Outside of that: chess, coffee, and writing. Thanks for stopping by :)
+ 
 - Location: India
 - Email: divyanshutiwari281@gmail.com
 - Website: https://datafolio.me/

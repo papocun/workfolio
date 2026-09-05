@@ -13,7 +13,7 @@ import { portfolioData } from "@/data/portfolioData";
 import { CODING_PROFILE_CONFIGS } from "@/data/codingProfiles";
 
 export const metadata: Metadata = {
-  title: "Divyanshu Tiwari | Data Scientist & ML Systems Builder",
+  title: "Divyanshu Tiwari | Building with data, code, and AI.",
   description:
     "Portfolio of Divyanshu Tiwari, a Data Scientist and ML Systems Builder working across machine learning, data, AI applications, and real-world software systems.",
   alternates: {

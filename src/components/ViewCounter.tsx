@@ -1,39 +1,50 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Eye } from '@phosphor-icons/react';
 import { fetchGlobalViews } from '@/lib/viewsClient';
+
+// Module-level state: persists across Next.js client-side route transitions,
+// but resets on actual browser document loads and page refreshes.
+let hasCountedThisDocument = false;
+
+function isDocumentRootLoad(): boolean {
+  if (typeof window === 'undefined') return false;
+  const path = window.location.pathname.replace(/\/$/, '');
+  const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || '').replace(/\/$/, '');
+  return path === '' || path === '/' || path === basePath;
+}
 
 export default function ViewCounter() {
   const [views, setViews] = useState<number | null>(null);
   const [showTooltip, setShowTooltip] = useState(false);
-  const hasCountedRef = useRef(false);
 
   useEffect(() => {
-    // Increment on page load/refresh
-    if (!hasCountedRef.current) {
-      hasCountedRef.current = true;
+    let isMounted = true;
+
+    // A visit is counted (+1) ONLY when:
+    // 1. The document load was a direct homepage visit or page refresh (isDocumentRootLoad())
+    // 2. It has not already been counted within this browser document lifecycle (!hasCountedThisDocument)
+    //
+    // For internal Next.js client-side navigation (Home -> Projects -> Home),
+    // hasCountedThisDocument remains true, so it only retrieves the current count without incrementing.
+    if (!hasCountedThisDocument && isDocumentRootLoad()) {
+      hasCountedThisDocument = true;
       fetchGlobalViews(true).then((count) => {
-        if (count !== null) {
+        if (isMounted && count !== null) {
+          setViews(count);
+        }
+      });
+    } else {
+      fetchGlobalViews(false).then((count) => {
+        if (isMounted && count !== null) {
           setViews(count);
         }
       });
     }
 
-    // Increment when returning to the page (bfcache back-forward navigation)
-    const handlePageShow = (e: PageTransitionEvent) => {
-      if (e.persisted) {
-        fetchGlobalViews(true).then((count) => {
-          if (count !== null) {
-            setViews(count);
-          }
-        });
-      }
-    };
-
-    window.addEventListener('pageshow', handlePageShow);
     return () => {
-      window.removeEventListener('pageshow', handlePageShow);
+      isMounted = false;
     };
   }, []);
 

@@ -137,17 +137,26 @@ function parseCalendarData(rawCalendar: unknown): {
   return { submissionsMap, normalizedSubmissions, allTimeTotal };
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(request?: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const requestedUsername =
-      searchParams.get('username') ||
-      process.env.LEETCODE_USERNAME ||
-      DEFAULT_LEETCODE_USERNAME;
+    let requestedUsername = DEFAULT_LEETCODE_USERNAME;
+    if (request && request.url) {
+      try {
+        const { searchParams } = new URL(request.url);
+        const qUsername = searchParams.get('username');
+        if (qUsername) requestedUsername = qUsername;
+      } catch {
+        // Fallback to default
+      }
+    }
+
+    if (!requestedUsername) {
+      requestedUsername = process.env.LEETCODE_USERNAME || DEFAULT_LEETCODE_USERNAME;
+    }
 
     let rawCalendar: unknown = null;
 
-    // 1. Primary: Official LeetCode GraphQL
+    // 1. Primary: Official LeetCode GraphQL with valid origin/referer
     try {
       const res = await fetch(LEETCODE_GRAPHQL_ENDPOINT, {
         method: 'POST',
@@ -155,6 +164,8 @@ export async function GET(request: NextRequest) {
           'Content-Type': 'application/json',
           'User-Agent':
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          Referer: 'https://leetcode.com/',
+          Origin: 'https://leetcode.com',
         },
         body: JSON.stringify({
           query: LEETCODE_CALENDAR_QUERY,
@@ -171,7 +182,26 @@ export async function GET(request: NextRequest) {
       // Proceed to fallback
     }
 
-    // 2. Fallback: Public fast API proxy if GraphQL timed out or blocked
+    // 2. Secondary Fallback: Alfa LeetCode API (high availability & CORS-enabled)
+    if (!rawCalendar) {
+      try {
+        const alfaRes = await fetch(
+          `https://alfa-leetcode-api.onrender.com/${encodeURIComponent(requestedUsername)}/calendar`,
+          {
+            headers: { 'User-Agent': 'workfolio-portfolio' },
+            next: { revalidate: 60 },
+          }
+        );
+        if (alfaRes.ok) {
+          const alfaData = await alfaRes.json();
+          rawCalendar = alfaData?.submissionCalendar;
+        }
+      } catch {
+        // Proceed
+      }
+    }
+
+    // 3. Tertiary Fallback: Public FaisalShohag proxy
     if (!rawCalendar) {
       try {
         const fallbackRes = await fetch(

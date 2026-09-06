@@ -3,6 +3,9 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { getAssetPath } from '@/lib/assetPath';
 import type { GitHubContributionsApiResponse, GitHubContributionCalendar, ContributionDay } from '@/types/github';
+import repoCommitsData from '@/data/repoCommits.json';
+
+const REPO_COMMITS: Record<string, number> = repoCommitsData as Record<string, number>;
 
 interface GitHubContributionsProps {
   username?: string;
@@ -57,7 +60,7 @@ function getIntensityClass(level?: number): string {
 }
 
 export default function GitHubContributions({
-  username = 'DIVYANSHU-TIWARI-281',
+  username = 'papocun',
   className = '',
 }: GitHubContributionsProps) {
   const [calendar, setCalendar] = useState<GitHubContributionCalendar | null>(null);
@@ -135,15 +138,17 @@ export default function GitHubContributions({
               const item = trailing[i];
               const dObj = new Date(item.date + 'T00:00:00Z');
               const wDay = dObj.getUTCDay();
+              const repoCount = REPO_COMMITS[item.date] || 0;
+              const effectiveCount = Math.max(item.count, repoCount);
               let lvl: 0 | 1 | 2 | 3 | 4 = 0;
-              if (item.count > 0 && item.count <= 2) lvl = 1;
-              else if (item.count > 2 && item.count <= 5) lvl = 2;
-              else if (item.count > 5 && item.count <= 9) lvl = 3;
-              else if (item.count > 9) lvl = 4;
+              if (effectiveCount > 0 && effectiveCount <= 2) lvl = 1;
+              else if (effectiveCount > 2 && effectiveCount <= 5) lvl = 2;
+              else if (effectiveCount > 5 && effectiveCount <= 9) lvl = 3;
+              else if (effectiveCount > 9) lvl = 4;
 
               curDays.push({
                 date: item.date,
-                contributionCount: item.count,
+                contributionCount: effectiveCount,
                 weekday: wDay,
                 intensityLevel: lvl,
               });

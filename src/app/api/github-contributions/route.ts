@@ -7,11 +7,14 @@ import type {
   ContributionMonth,
 } from '@/types/github';
 
+import repoCommitsData from '@/data/repoCommits.json';
+
 export const revalidate = 14400; // Cache for 4 hours (14400s)
 
 const GITHUB_GRAPHQL_ENDPOINT = 'https://api.github.com/graphql';
-const DEFAULT_PRIMARY_USERNAME = 'DIVYANSHU-TIWARI-281';
+const DEFAULT_PRIMARY_USERNAME = 'papocun';
 const FALLBACK_USERNAME = 'papocun';
+const REPO_COMMITS: Record<string, number> = repoCommitsData as Record<string, number>;
 
 const CONTRIBUTION_QUERY = `
   query getContributionCalendar($login: String!) {
@@ -247,6 +250,29 @@ export async function GET(request: NextRequest) {
       };
       return NextResponse.json(errorResponse, { status: 502 });
     }
+
+    // Merge genuine local repository commits into calendar data
+    let extraContributions = 0;
+    const mergedWeeks = calendar.weeks.map((week) => ({
+      contributionDays: week.contributionDays.map((day) => {
+        const repoCount = REPO_COMMITS[day.date] || 0;
+        if (repoCount > 0 && day.contributionCount < repoCount) {
+          extraContributions += repoCount - day.contributionCount;
+          return {
+            ...day,
+            contributionCount: repoCount,
+            intensityLevel: calculateIntensity(repoCount),
+          };
+        }
+        return day;
+      }),
+    }));
+
+    calendar = {
+      ...calendar,
+      totalContributions: calendar.totalContributions + extraContributions,
+      weeks: mergedWeeks,
+    };
 
     const successResponse: GitHubContributionsApiResponse = {
       success: true,

@@ -129,7 +129,7 @@ export default function HomePage() {
         </h2>
 
         {/* GitHub Contribution Calendar */}
-        <GitHubContributions username="DIVYANSHU-TIWARI-281" />
+        <GitHubContributions username="papocun" />
 
         {/* LeetCode Contribution Calendar */}
         <div className="mt-3.5 sm:mt-4">

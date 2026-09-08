@@ -129,7 +129,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${urbanist.variable} dark h-full antialiased`}
+      className={`${urbanist.variable} h-full antialiased`}
     >
       <head>
         <meta name="theme-color" content="#000000" id="meta-theme-color" />
@@ -139,11 +139,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <style
           dangerouslySetInnerHTML={{
             __html: `
-              :root {
-                color-scheme: dark;
-              }
-              html {
-                background-color: #000000;
+              :root, html {
+                background-color: #FAF9F6;
+                color-scheme: light;
               }
               html.dark,
               html[data-theme="dark"] {
@@ -173,7 +171,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               (function() {
                 try {
                   var saved = localStorage.getItem('theme') || localStorage.getItem('workfolio-theme');
-                  var isLight = saved === 'light';
+                  var isLight = saved === 'light' || (!saved && window.matchMedia('(prefers-color-scheme: light)').matches);
                   var doc = document.documentElement;
                   doc.classList.add('no-theme-transition');
                   if (isLight) {
@@ -193,10 +191,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   }
                 } catch (e) {
                   var doc = document.documentElement;
-                  doc.classList.add('dark');
-                  doc.setAttribute('data-theme', 'dark');
-                  doc.style.colorScheme = 'dark';
-                  doc.style.backgroundColor = '#000000';
+                  var isLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                  doc.classList.toggle('dark', !isLight);
+                  doc.setAttribute('data-theme', isLight ? 'light' : 'dark');
+                  doc.style.colorScheme = isLight ? 'light' : 'dark';
+                  doc.style.backgroundColor = isLight ? '#FAF9F6' : '#000000';
                 }
               })();
             `,

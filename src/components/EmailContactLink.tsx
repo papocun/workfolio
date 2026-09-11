@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { trackEmailClicked, trackContactClicked } from '@/lib/posthog';
 import { useSound } from '@/components/SoundProvider';
 import { Copy, Check } from '@phosphor-icons/react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 interface EmailContactLinkProps {
   email: string;
@@ -13,6 +13,7 @@ interface EmailContactLinkProps {
 
 export default function EmailContactLink({ email, className = '' }: EmailContactLinkProps) {
   const [copied, setCopied] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
   const { playClickSound } = useSound();
   const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
 
@@ -58,19 +59,19 @@ export default function EmailContactLink({ email, className = '' }: EmailContact
         onClick={handleCopy}
         aria-label={copied ? 'Email copied to clipboard' : 'Copy email to clipboard'}
         title={copied ? 'Copied!' : 'Copy email'}
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.92 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+        whileHover={shouldReduceMotion ? undefined : { scale: 1.04 }}
+        whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
         className="relative inline-flex items-center justify-center p-1 rounded-md text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
       >
         <AnimatePresence mode="popLayout" initial={false}>
           {copied ? (
             <motion.span
               key="check"
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.5, opacity: 0 }}
-              transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { scale: 0.85, opacity: 0 }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { scale: 1, opacity: 1 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { scale: 0.85, opacity: 0 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.14, ease: [0.16, 1, 0.3, 1] }}
               className="text-emerald-600 dark:text-emerald-400"
             >
               <Check size={14} weight="bold" />
@@ -78,10 +79,10 @@ export default function EmailContactLink({ email, className = '' }: EmailContact
           ) : (
             <motion.span
               key="copy"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { scale: 0.85, opacity: 0 }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { scale: 1, opacity: 1 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { scale: 0.85, opacity: 0 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.14, ease: [0.16, 1, 0.3, 1] }}
             >
               <Copy size={14} weight="regular" />
             </motion.span>

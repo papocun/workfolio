@@ -319,7 +319,7 @@ function TooltipOverlay() {
                       ? { opacity: 0 }
                       : {
                           opacity: 0,
-                          scale: 0,
+                          scale: 0.95,
                           ...initialFromSide(rendered.data.side),
                         }
                   }
@@ -332,7 +332,7 @@ function TooltipOverlay() {
                         ? { opacity: 0 }
                         : {
                             opacity: 0,
-                            scale: 0,
+                            scale: 0.95,
                             ...initialFromSide(rendered.data.side),
                           }
                   }
@@ -341,7 +341,7 @@ function TooltipOverlay() {
                       ? { opacity: 0 }
                       : {
                           opacity: 0,
-                          scale: 0,
+                          scale: 0.95,
                           ...initialFromSide(rendered.data.side),
                         }
                   }

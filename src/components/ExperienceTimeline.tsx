@@ -86,7 +86,7 @@ export default function ExperienceTimeline({
                     <CaretDown
                       size={16}
                       weight="bold"
-                      className={`transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] ${
+                      className={`transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                         isExpanded ? 'rotate-180' : 'rotate-0'
                       }`}
                     />

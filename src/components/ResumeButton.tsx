@@ -50,8 +50,8 @@ export default function ResumeButton({
         transition={{ duration: 0.3, ease: [0.36, 0.07, 0.19, 0.97] }}
         className={`group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#16181C] px-3.5 text-[12.5px] font-medium text-slate-800 dark:text-slate-200 transition-colors duration-200 cursor-pointer shadow-2xs select-none active:scale-[0.96] ${className}`}
       >
-        {/* Default Layer (Leaves on hover: ease-in) */}
-        <span className="inline-flex items-center gap-1.5 transition-all duration-200 ease-in group-hover:-translate-y-8 group-hover:opacity-0">
+        {/* Default Layer (Leaves on hover promptly with cubic-bezier) */}
+        <span className="inline-flex items-center gap-1.5 transition-[transform,opacity] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-8 group-hover:opacity-0">
           <span>resume</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -66,9 +66,9 @@ export default function ResumeButton({
           </svg>
         </span>
 
-        {/* Hover Slide-up Layer (Enters from bottom: ease-out) */}
+        {/* Hover Slide-up Layer (Enters synchronously from bottom in 200ms) */}
         <div
-          className="absolute inset-0 z-10 flex h-full w-full items-center justify-center gap-1.5 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-950 transition-all duration-250 ease-out translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
+          className="absolute inset-0 z-10 flex h-full w-full items-center justify-center gap-1.5 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-950 transition-[transform,opacity] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
           aria-hidden="true"
         >
           <span>resume</span>

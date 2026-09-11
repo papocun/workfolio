@@ -48,7 +48,7 @@ export default function ResumeButton({
             : { x: 0 }
         }
         transition={{ duration: 0.3, ease: [0.36, 0.07, 0.19, 0.97] }}
-        className={`group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#16181C] px-3.5 text-[12.5px] font-medium text-slate-800 dark:text-slate-200 transition-colors duration-200 cursor-pointer shadow-2xs select-none active:scale-[0.96] ${className}`}
+        className={`group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#16181C] px-3.5 text-[12.5px] font-medium text-slate-800 dark:text-slate-200 transition-colors duration-200 cursor-pointer shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] select-none active:scale-[0.96] ${className}`}
       >
         {/* Default Layer (Leaves on hover promptly with cubic-bezier) */}
         <span className="inline-flex items-center gap-1.5 transition-[transform,opacity] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-8 group-hover:opacity-0">

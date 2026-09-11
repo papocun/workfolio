@@ -107,7 +107,7 @@ export default function Navbar() {
 
             <PopoverPanel
               anchor={{ to: 'bottom-end', gap: 8 }}
-              className="w-[240px] sm:w-[260px] max-w-[calc(100vw-32px)] rounded-[22px] border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md shadow-xl dark:shadow-2xl p-3.5 sm:p-4 text-slate-800 dark:text-slate-100 select-none"
+              className="w-[240px] sm:w-[260px] max-w-[calc(100vw-32px)] rounded-[22px] border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)] p-3.5 sm:p-4 text-slate-800 dark:text-slate-100 select-none"
             >
               <SettingsContent />
             </PopoverPanel>

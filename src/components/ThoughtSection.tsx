@@ -128,7 +128,7 @@ export default function ThoughtSection({ className = '' }: ThoughtSectionProps) 
       </h2>
 
       {/* Thought Card Container */}
-      <div className="relative w-full max-w-full min-w-0 overflow-hidden rounded-xl border border-slate-200/80 dark:border-[#2F3336]/60 bg-white/70 dark:bg-[#16181C]/40 p-4 min-[360px]:p-6 sm:p-8 min-h-[150px] sm:min-h-[185px] flex flex-col justify-center shadow-xs transition-colors duration-200">
+      <div className="relative w-full max-w-full min-w-0 overflow-hidden rounded-xl border border-slate-200/80 dark:border-[#2F3336]/60 bg-white/70 dark:bg-[#16181C]/40 p-4 min-[360px]:p-6 sm:p-8 min-h-[150px] sm:min-h-[185px] flex flex-col justify-center shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)] transition-colors duration-200">
         {/* Subtle Decorative Background Quotation Mark */}
         <div
           className="pointer-events-none absolute top-3 left-4 sm:top-4 sm:left-6 text-slate-200/70 dark:text-[#2F3336]/35 select-none"

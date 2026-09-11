@@ -189,7 +189,7 @@ export default function TwitterFollowAlert() {
           }
           className="fixed bottom-[max(1rem,env(safe-area-inset-bottom,0px))] left-[max(1rem,env(safe-area-inset-left,0px))] right-[max(1rem,env(safe-area-inset-right,0px))] sm:left-auto sm:right-6 z-50 max-w-[calc(100vw-2rem)] w-auto sm:w-[340px] md:w-[370px] pointer-events-auto select-none"
         >
-          <div className="relative group border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md hover:border-[#1D9BF0] dark:hover:border-[#1D9BF0] shadow-lg dark:shadow-2xl transition-colors duration-150 p-3.5 sm:p-4 pe-3 rounded-2xl flex items-start gap-3">
+          <div className="relative group border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md hover:border-[#1D9BF0] dark:hover:border-[#1D9BF0] shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)] transition-colors duration-150 p-3.5 sm:p-4 pe-3 rounded-2xl flex items-start gap-3">
             {/* Native direct external link covering card area without nested buttons or click-animation */}
             <a
               href={TWITTER_URL}

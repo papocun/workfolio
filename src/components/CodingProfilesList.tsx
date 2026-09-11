@@ -236,7 +236,7 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
   const showStatsRow = hasStreak || hasRating;
 
   return (
-    <article className="group relative flex flex-col-reverse sm:flex-row items-stretch justify-between gap-4 sm:gap-6 overflow-hidden rounded-2xl border border-slate-200/90 dark:border-[#2F3336] bg-white dark:bg-[#16181C] p-4 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-md transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-none">
+    <article className="group relative flex flex-col-reverse sm:flex-row items-stretch justify-between gap-4 sm:gap-6 overflow-hidden rounded-2xl border border-slate-200/90 dark:border-[#2F3336] bg-white dark:bg-[#16181C] p-4 sm:p-6 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)] transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-300 dark:hover:border-slate-700">
 
       {/* Geometric background pattern — dark mode only, sits beneath all content */}
       <div className="pointer-events-none absolute inset-0 hidden dark:block opacity-70" aria-hidden="true">
@@ -335,7 +335,7 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
             whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
             whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
             transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-            className="group/btn inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 dark:border-[#2F3336] bg-slate-50 dark:bg-[#000000] px-4 py-2 text-[13px] font-mono font-medium text-slate-800 dark:text-[#E7E9EA] shadow-2xs transition-[border-color,background-color] duration-200 hover:border-slate-900 dark:hover:border-slate-100 hover:bg-slate-100 dark:hover:bg-[#1E2732] whitespace-nowrap cursor-pointer"
+            className="group/btn inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 dark:border-[#2F3336] bg-slate-50 dark:bg-[#000000] px-4 py-2 text-[13px] font-mono font-medium text-slate-800 dark:text-[#E7E9EA] shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] transition-[border-color,background-color] duration-200 hover:border-slate-900 dark:hover:border-slate-100 hover:bg-slate-100 dark:hover:bg-[#1E2732] whitespace-nowrap cursor-pointer"
           >
             <span>View Profile</span>
             <svg

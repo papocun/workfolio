@@ -59,11 +59,11 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL("https://datafolio.me"),
   title: {
-    default: "Divyanshu Tiwari | Building with data, code, and AI.",
+    default: "Divyanshu Tiwari",
     template: "%s | Divyanshu Tiwari",
   },
   description:
-    "Portfolio of Divyanshu Tiwari, a Data Scientist and ML Systems Builder working across machine learning, data, AI applications, and real-world software systems.",
+    "An explorer in the making, wandering between tech, ideas, and whatever else sparks curiosity.",
   keywords: [
     "Divyanshu Tiwari",
     "Data Scientist",
@@ -102,25 +102,25 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://datafolio.me/",
     siteName: "Divyanshu Tiwari",
-    title: "Divyanshu Tiwari | Data Scientist & ML Systems Builder",
+    title: "Divyanshu Tiwari",
     description:
-      "Portfolio of Divyanshu Tiwari, a Data Scientist and ML Systems Builder working across machine learning, data, AI applications, and real-world software systems.",
+      "An explorer in the making, wandering between tech, ideas, and whatever else sparks curiosity.",
     images: [
       {
-        url: "/images/projects/NUmercaiq.gif",
-        width: 400,
-        height: 400,
-        alt: "Divyanshu Tiwari — Data Scientist & ML Systems Builder",
+        url: "/favicon.png",
+        width: 512,
+        height: 512,
+        alt: "Divyanshu Tiwari",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Divyanshu Tiwari | Data Scientist & ML Systems Builder",
+    card: "summary",
+    title: "Divyanshu Tiwari",
     description:
-      "Portfolio of Divyanshu Tiwari, a Data Scientist and ML Systems Builder working across machine learning, data, AI applications, and real-world software systems.",
+      "An explorer in the making, wandering between tech, ideas, and whatever else sparks curiosity.",
     creator: "@21dvy_t",
-    images: ["/images/projects/NUmercaiq.gif"],
+    images: ["/favicon.png"],
   },
   icons: {
     icon: "/favicon.png",

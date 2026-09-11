@@ -229,13 +229,14 @@ export default function CodingProfilesList({
 
 function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
   const [imageError, setImageError] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const hasStreak = typeof profile.streak === 'number' && profile.streak > 0;
   const hasRating = typeof profile.rating === 'number' && profile.rating > 0;
   const showStatsRow = hasStreak || hasRating;
 
   return (
-    <article className="group relative flex flex-col-reverse sm:flex-row items-stretch justify-between gap-4 sm:gap-6 overflow-hidden rounded-2xl border border-slate-200/90 dark:border-[#2F3336] bg-white dark:bg-[#16181C] p-4 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-md transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-none">
+    <article className="group relative flex flex-col-reverse sm:flex-row items-stretch justify-between gap-4 sm:gap-6 overflow-hidden rounded-2xl border border-slate-200/90 dark:border-[#2F3336] bg-white dark:bg-[#16181C] p-4 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-md transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-none">
 
       {/* Geometric background pattern — dark mode only, sits beneath all content */}
       <div className="pointer-events-none absolute inset-0 hidden dark:block opacity-70" aria-hidden="true">
@@ -283,13 +284,13 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
           {showStatsRow && (
             <div className="flex items-center gap-1.5 mb-2 flex-wrap">
               {hasStreak && (
-                <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/25 dark:border-amber-500/35 bg-amber-500/10 dark:bg-amber-500/15 px-2.5 py-0.5 font-mono text-[12px] font-semibold text-amber-800 dark:text-amber-300">
+                <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/25 dark:border-amber-500/35 bg-amber-500/10 dark:bg-amber-500/15 px-2.5 py-0.5 font-mono text-[12px] font-semibold text-amber-800 dark:text-amber-300 tabular-nums">
                   <span>{profile.streak}</span>
                   <span aria-hidden="true">🔥</span>
                 </span>
               )}
               {hasRating && (
-                <span className="inline-flex items-center gap-1 rounded-full border border-sky-500/25 dark:border-sky-500/35 bg-sky-500/10 dark:bg-sky-500/15 px-2.5 py-0.5 font-mono text-[12px] font-semibold text-sky-700 dark:text-[#1D9BF0]">
+                <span className="inline-flex items-center gap-1 rounded-full border border-sky-500/25 dark:border-sky-500/35 bg-sky-500/10 dark:bg-sky-500/15 px-2.5 py-0.5 font-mono text-[12px] font-semibold text-sky-700 dark:text-[#1D9BF0] tabular-nums">
                   <span>★ {profile.rating} • 8 Contests</span>
                 </span>
               )}
@@ -307,14 +308,14 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
           </h2>
 
           {/* Solved Problems Count */}
-          <p className="text-[14.5px] sm:text-[15px] font-medium text-slate-600 dark:text-slate-400 mt-1">
+          <p className="text-[14.5px] sm:text-[15px] font-medium text-slate-600 dark:text-slate-400 mt-1 tabular-nums">
             {profile.solvedCount}
           </p>
         </div>
 
         {/* Minimal Link CTA Button */}
         <div className="shrink-0 pt-0 sm:pt-3">
-          <a
+          <motion.a
             href={profile.url}
             target="_blank"
             rel="noopener noreferrer"
@@ -331,7 +332,10 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
                 });
               }
             }}
-            className="group/btn inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 dark:border-[#2F3336] bg-slate-50 dark:bg-[#000000] px-4 py-2 text-[13px] font-mono font-medium text-slate-800 dark:text-[#E7E9EA] shadow-2xs transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-900 dark:hover:border-slate-100 hover:bg-slate-100 dark:hover:bg-[#1E2732] active:scale-95 whitespace-nowrap"
+            whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+            whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+            className="group/btn inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 dark:border-[#2F3336] bg-slate-50 dark:bg-[#000000] px-4 py-2 text-[13px] font-mono font-medium text-slate-800 dark:text-[#E7E9EA] shadow-2xs transition-[border-color,background-color] duration-200 hover:border-slate-900 dark:hover:border-slate-100 hover:bg-slate-100 dark:hover:bg-[#1E2732] whitespace-nowrap cursor-pointer"
           >
             <span>View Profile</span>
             <svg
@@ -345,12 +349,12 @@ function CodingProfileCard({ profile }: { profile: CodingProfileItem }) {
             >
               <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z" />
             </svg>
-          </a>
+          </motion.a>
         </div>
       </div>
 
       {/* Right Column: Platform Image / Icon */}
-      <div className="relative w-full sm:w-36 md:w-44 aspect-[16/9] sm:aspect-square rounded-xl overflow-hidden border border-slate-200/70 dark:border-slate-800 bg-slate-900 dark:bg-black/60 flex items-center justify-center shrink-0 select-none">
+      <div className="relative w-full sm:w-36 md:w-44 aspect-[16/9] sm:aspect-square rounded-xl overflow-hidden outline outline-1 outline-[oklch(0_0_0/0.1)] dark:outline-[oklch(1_0_0/0.1)] -outline-offset-1 bg-slate-900 dark:bg-black/60 flex items-center justify-center shrink-0 select-none">
         {!imageError ? (
           <Image
             src={getAssetPath(profile.imageSrc)}

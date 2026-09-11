@@ -399,7 +399,7 @@ export default function LeetCodeContributions({
       {tooltip && (
         <div
           role="tooltip"
-          className="pointer-events-none absolute z-30 -translate-x-1/2 -translate-y-[calc(100%+8px)] rounded-md bg-slate-900 dark:bg-[#1E2732] px-2.5 py-1.5 text-center shadow-xl border border-slate-700/60 dark:border-[#2F3336] whitespace-nowrap transition-all duration-100"
+          className="pointer-events-none absolute z-30 -translate-x-1/2 -translate-y-[calc(100%+8px)] rounded-md bg-slate-900 dark:bg-[#1E2732] px-2.5 py-1.5 text-center shadow-xl border border-slate-700/60 dark:border-[#2F3336] whitespace-nowrap"
           style={{
             left: `${tooltip.x}px`,
             top: `${tooltip.y}px`,
@@ -408,7 +408,7 @@ export default function LeetCodeContributions({
           <div className="text-[10px] text-slate-300 dark:text-[#71767B] leading-tight">
             {tooltip.dateStr}
           </div>
-          <div className="font-semibold text-[11px] text-white dark:text-[#E7E9EA] leading-snug mt-0.5">
+          <div className="font-semibold text-[11px] text-white dark:text-[#E7E9EA] leading-snug mt-0.5 tabular-nums">
             {tooltip.submissionsStr}
           </div>
           <div className="absolute left-1/2 -bottom-[4px] -translate-x-1/2 border-x-4 border-t-4 border-x-transparent border-t-slate-900 dark:border-t-[#1E2732]" />
@@ -430,7 +430,7 @@ export default function LeetCodeContributions({
             </a>
           </div>
           <p className="text-[12px] sm:text-[12.5px] text-slate-500 dark:text-[#71767B] mt-0.5">
-            <span className="font-semibold text-slate-800 dark:text-slate-200">
+            <span className="font-semibold text-slate-800 dark:text-slate-200 tabular-nums">
               {calendar.totalSubmissions.toLocaleString()}
             </span>{' '}
             submissions in the last year
@@ -525,7 +525,7 @@ export default function LeetCodeContributions({
                         onMouseLeave={handleCellLeave}
                         onFocus={(e) => handleCellHover(e, day)}
                         onBlur={handleCellLeave}
-                        className={`w-[8.5px] h-[8.5px] rounded-[2px] cursor-pointer transition-transform duration-100 hover:scale-135 hover:z-20 focus-visible:scale-135 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#1D9BF0] ${getIntensityClass(
+                        className={`w-[8.5px] h-[8.5px] rounded-[2px] cursor-pointer transition-transform duration-100 hover:scale-110 hover:z-20 focus-visible:scale-110 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#1D9BF0] ${getIntensityClass(
                           day.intensityLevel
                         )}`}
                       />

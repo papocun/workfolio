@@ -54,7 +54,7 @@ export default function Navbar() {
                     href={item.href}
                     draggable={false}
                     onDragStart={(e) => e.preventDefault()}
-                    className={`group relative inline-flex items-center gap-0.5 sm:gap-1 py-1 px-0.5 text-slate-500 dark:text-slate-400 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] select-none ${
+                    className={`group relative inline-flex items-center gap-0.5 sm:gap-1 py-1 px-1 sm:px-1.5 text-slate-500 dark:text-slate-400 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] select-none ${
                       isActive
                         ? 'font-semibold text-slate-900 dark:text-slate-100'
                         : 'hover:text-slate-900 dark:hover:text-slate-100'
@@ -92,7 +92,7 @@ export default function Navbar() {
           <Popover className="relative inline-flex items-center shrink-0">
             <PopoverButton
               aria-label="Open settings"
-              className="group/avatar inline-flex items-center rounded-full transition-transform duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] cursor-pointer shrink-0"
+              className="group/avatar inline-flex items-center rounded-full transition-transform duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-105 active:scale-[0.96] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] cursor-pointer shrink-0"
             >
               <Avatar className="h-6 w-6 sm:h-7.5 sm:w-7.5 ring-2 ring-slate-200/90 dark:ring-slate-700 select-none cursor-pointer">
                 <AvatarImage
@@ -107,7 +107,7 @@ export default function Navbar() {
 
             <PopoverPanel
               anchor={{ to: 'bottom-end', gap: 8 }}
-              className="w-[240px] sm:w-[260px] max-w-[calc(100vw-32px)] rounded-2xl border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md shadow-xl dark:shadow-2xl p-3.5 sm:p-4 text-slate-800 dark:text-slate-100 select-none"
+              className="w-[240px] sm:w-[260px] max-w-[calc(100vw-32px)] rounded-[22px] border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md shadow-xl dark:shadow-2xl p-3.5 sm:p-4 text-slate-800 dark:text-slate-100 select-none"
             >
               <SettingsContent />
             </PopoverPanel>

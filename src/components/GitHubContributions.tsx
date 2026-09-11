@@ -80,7 +80,7 @@ export default function GitHubContributions({
       setHasError(false);
 
       try {
-        const endpoint = getAssetPath(`/api/github-contributions?username=${encodeURIComponent(username)}`);
+        const endpoint = getAssetPath(`/api/github-contributions/?username=${encodeURIComponent(username)}`);
         const res = await fetch(endpoint, { cache: 'no-cache' }).catch(() => null);
 
         if (!res || !res.ok) {
@@ -117,51 +117,71 @@ export default function GitHubContributions({
           }
 
           if (parsed && Array.isArray(parsed.contributions) && parsed.contributions.length > 0) {
-            const todayStr = new Date().toISOString().split('T')[0];
+            const contributionsMap = new Map<string, number>();
             interface RawItem {
               date: string;
               count: number;
               level: number;
             }
-            const allPast = (parsed.contributions as RawItem[])
-              .filter((d) => d.date <= todayStr)
-              .sort((a, b) => a.date.localeCompare(b.date));
-
-            const trailing = allPast.slice(-371);
-            while (trailing.length > 0 && new Date(trailing[0].date + 'T00:00:00Z').getUTCDay() !== 0) {
-              trailing.shift();
-            }
-
-            const weeks = [];
-            let curDays: ContributionDay[] = [];
-            for (let i = 0; i < trailing.length; i++) {
-              const item = trailing[i];
-              const dObj = new Date(item.date + 'T00:00:00Z');
-              const wDay = dObj.getUTCDay();
-              const repoCount = REPO_COMMITS[item.date] || 0;
-              const effectiveCount = Math.max(item.count, repoCount);
-              let lvl: 0 | 1 | 2 | 3 | 4 = 0;
-              if (effectiveCount > 0 && effectiveCount <= 2) lvl = 1;
-              else if (effectiveCount > 2 && effectiveCount <= 5) lvl = 2;
-              else if (effectiveCount > 5 && effectiveCount <= 9) lvl = 3;
-              else if (effectiveCount > 9) lvl = 4;
-
-              curDays.push({
-                date: item.date,
-                contributionCount: effectiveCount,
-                weekday: wDay,
-                intensityLevel: lvl,
-              });
-
-              if (wDay === 6 || i === trailing.length - 1) {
-                weeks.push({ contributionDays: curDays });
-                curDays = [];
+            for (const item of (parsed.contributions as RawItem[])) {
+              if (item.date && typeof item.count === 'number') {
+                contributionsMap.set(item.date, item.count);
               }
             }
 
+            for (const [date, count] of Object.entries(REPO_COMMITS)) {
+              const cur = contributionsMap.get(date) || 0;
+              if (count > cur) {
+                contributionsMap.set(date, count);
+              }
+            }
+
+            const now = new Date();
+            const localYear = now.getFullYear();
+            const localMonth = now.getMonth();
+            const localDay = now.getDate();
+            const todayDate = new Date(Date.UTC(localYear, localMonth, localDay));
+            const todayIso = todayDate.toISOString().slice(0, 10);
+
+            const endSaturday = new Date(todayDate);
+            const dayOfWeek = endSaturday.getUTCDay();
+            endSaturday.setUTCDate(endSaturday.getUTCDate() + (6 - dayOfWeek));
+
+            const startSunday = new Date(endSaturday);
+            startSunday.setUTCDate(startSunday.getUTCDate() - 370);
+
+            const weeks = [];
+            let curDays: ContributionDay[] = [];
             let total = 0;
-            for (const w of weeks) {
-              for (const d of w.contributionDays) total += d.contributionCount;
+
+            const walker = new Date(startSunday);
+            for (let i = 0; i < 371; i++) {
+              const iso = walker.toISOString().slice(0, 10);
+              const isFuture = iso > todayIso;
+              const count = isFuture ? 0 : (contributionsMap.get(iso) || 0);
+              const weekday = walker.getUTCDay();
+
+              total += count;
+
+              let lvl: 0 | 1 | 2 | 3 | 4 = 0;
+              if (count > 0 && count <= 2) lvl = 1;
+              else if (count > 2 && count <= 5) lvl = 2;
+              else if (count > 5 && count <= 9) lvl = 3;
+              else if (count > 9) lvl = 4;
+
+              curDays.push({
+                date: iso,
+                contributionCount: count,
+                weekday,
+                intensityLevel: lvl,
+              });
+
+              if (weekday === 6) {
+                weeks.push({ contributionDays: curDays });
+                curDays = [];
+              }
+
+              walker.setUTCDate(walker.getUTCDate() + 1);
             }
 
             if (!isCancelled) {
@@ -191,6 +211,13 @@ export default function GitHubContributions({
       isCancelled = true;
     };
   }, [username]);
+
+  // Scroll horizontally to the current week on mobile/smaller screens
+  useEffect(() => {
+    if (calendar && scrollRef.current) {
+      scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
+    }
+  }, [calendar]);
 
   // Compute month positions from actual week columns
   const monthLabels = useMemo(() => {
@@ -302,7 +329,7 @@ export default function GitHubContributions({
       {tooltip && (
         <div
           role="tooltip"
-          className="pointer-events-none absolute z-30 -translate-x-1/2 -translate-y-[calc(100%+8px)] rounded-md bg-slate-900 dark:bg-[#1E2732] px-2 py-1 text-[11px] font-medium tracking-tight text-white dark:text-[#E7E9EA] shadow-xl border border-slate-700/60 dark:border-[#2F3336] whitespace-nowrap transition-all duration-100"
+          className="pointer-events-none absolute z-30 -translate-x-1/2 -translate-y-[calc(100%+8px)] rounded-md bg-slate-900 dark:bg-[#1E2732] px-2 py-1 text-[11px] font-medium tracking-tight text-white dark:text-[#E7E9EA] shadow-xl border border-slate-700/60 dark:border-[#2F3336] whitespace-nowrap tabular-nums"
           style={{
             left: `${tooltip.x}px`,
             top: `${tooltip.y}px`,
@@ -330,7 +357,7 @@ export default function GitHubContributions({
             </a>
           </div>
           <p className="text-[12px] sm:text-[12.5px] text-slate-500 dark:text-[#71767B] mt-0.5">
-            <span className="font-semibold text-slate-800 dark:text-slate-200">
+            <span className="font-semibold text-slate-800 dark:text-slate-200 tabular-nums">
               {calendar.totalContributions.toLocaleString()}
             </span>{' '}
             contributions in the last year
@@ -425,7 +452,7 @@ export default function GitHubContributions({
                         onMouseLeave={handleCellLeave}
                         onFocus={(e) => handleCellHover(e, day)}
                         onBlur={handleCellLeave}
-                        className={`w-[8.5px] h-[8.5px] rounded-[2px] cursor-pointer transition-transform duration-100 hover:scale-135 hover:z-20 focus-visible:scale-135 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#1D9BF0] ${getIntensityClass(
+                        className={`w-[8.5px] h-[8.5px] rounded-[2px] cursor-pointer transition-transform duration-100 hover:scale-110 hover:z-20 focus-visible:scale-110 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#1D9BF0] ${getIntensityClass(
                           day.intensityLevel
                         )}`}
                       />

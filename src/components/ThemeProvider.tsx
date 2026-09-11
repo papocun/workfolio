@@ -62,19 +62,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
   const isTransitioningRef = useRef<boolean>(false);
 
-  // Synchronize state with early head script & localStorage on mount
+  // The blocking head script has already selected and applied the initial theme.
+  // Keep separate tabs in sync when a user changes their saved preference.
   useEffect(() => {
-    try {
-      const saved = (localStorage.getItem(STORAGE_KEY) ||
-        localStorage.getItem(LEGACY_STORAGE_KEY)) as Theme | null;
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key !== STORAGE_KEY && event.key !== LEGACY_STORAGE_KEY) return;
 
-      const nextTheme: Theme = saved === 'light' ? 'light' : 'dark';
+      const nextTheme: Theme = event.newValue === 'light' ? 'light' : 'dark';
       setThemeState(nextTheme);
       applyThemeToDOM(nextTheme);
-    } catch {
-      setThemeState('dark');
-      applyThemeToDOM('dark');
-    }
+    };
+
+    window.addEventListener('storage', handleStorage);
 
     // Safely remove initial load transition blocker after first paint
     const frameId = requestAnimationFrame(() => {
@@ -82,11 +81,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     });
 
     return () => {
+      window.removeEventListener('storage', handleStorage);
       cancelAnimationFrame(frameId);
     };
   }, []);
 
   const executeImmediateThemeChange = useCallback((nextTheme: Theme) => {
+    let styleEl: HTMLStyleElement | null = null;
+    if (typeof document !== 'undefined') {
+      styleEl = document.createElement('style');
+      styleEl.textContent = '*,*::before,*::after{transition:none !important}';
+      document.head.appendChild(styleEl);
+    }
+
     setThemeState(nextTheme);
     try {
       localStorage.setItem(STORAGE_KEY, nextTheme);
@@ -96,6 +103,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
 
     applyThemeToDOM(nextTheme);
+
+    if (styleEl && typeof window !== 'undefined') {
+      void document.body?.offsetHeight;
+      requestAnimationFrame(() => {
+        if (styleEl?.parentNode) {
+          styleEl.parentNode.removeChild(styleEl);
+        }
+      });
+    }
   }, []);
 
   const setTheme = useCallback(
@@ -149,7 +165,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
           setIsTransitioning(false);
         };
 
-        transition.finished.then(cleanup, cleanup);
+        // Browsers can leave `finished` unresolved when a tab is backgrounded.
+        // Never leave the control disabled in that case.
+        const timeoutId = window.setTimeout(cleanup, 1_000);
+        transition.finished.then(
+          () => {
+            window.clearTimeout(timeoutId);
+            cleanup();
+          },
+          () => {
+            window.clearTimeout(timeoutId);
+            cleanup();
+          }
+        );
       } catch {
         // Safe fallback if startViewTransition throws unexpectedly
         executeImmediateThemeChange(targetTheme);

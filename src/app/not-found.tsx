@@ -58,11 +58,11 @@ export default function NotFound() {
       </div>
 
       {/* Heading */}
-      <h1 className="text-[28px] sm:text-[36px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-3">
+      <h1 className="text-[28px] sm:text-[36px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-3 text-balance">
         This page could not be found.
       </h1>
 
-      <p className="text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
+      <p className="text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-300 leading-relaxed mb-8 text-pretty">
         The URL you requested does not exist or has moved. Use the links below to navigate to valid sections of the site or access agent-friendly resources.
       </p>
 
@@ -77,14 +77,24 @@ export default function NotFound() {
             <Link
               key={link.href}
               href={link.href}
-              className="group block rounded-xl border border-slate-200/90 dark:border-[#2F3336] bg-white dark:bg-[#16181C] p-3.5 sm:p-4 shadow-xs hover:border-slate-400 dark:hover:border-slate-600 transition-all duration-150"
+              className="group block rounded-xl border border-slate-200/90 dark:border-[#2F3336] bg-white dark:bg-[#16181C] p-3.5 sm:p-4 shadow-xs hover:border-slate-400 dark:hover:border-slate-600 active:scale-[0.96] transition-[border-color,background-color,transform] duration-150"
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="font-semibold text-[15px] text-slate-900 dark:text-slate-100 group-hover:text-[#1D9BF0] transition-colors">
                   {link.title} <span className="font-mono text-[13px] text-slate-400 font-normal">({link.href})</span>
                 </span>
-                <span className="text-slate-400 group-hover:translate-x-0.5 transition-transform text-[14px]">
-                  &rarr;
+                <span className="text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-100 group-hover:translate-x-0.5 transition-[transform,color] duration-150 inline-flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                    className="translate-y-[0.5px]"
+                    aria-hidden="true"
+                  >
+                    <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z" />
+                  </svg>
                 </span>
               </div>
               <p className="text-[14px] text-slate-500 dark:text-slate-400 mt-1 leading-normal">

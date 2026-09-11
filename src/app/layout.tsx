@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Urbanist } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GridBackground from "@/components/GridBackground";
@@ -12,10 +12,47 @@ import PageTransition from "@/components/PageTransition";
 import { portfolioData } from "@/data/portfolioData";
 import "./globals.css";
 
-const urbanist = Urbanist({
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FAF9F6" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
+};
+
+const geistSans = localFont({
+  src: [
+    {
+      path: "./fonts/geist-sans.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+    {
+      path: "./fonts/geist-sans-italic.woff2",
+      weight: "100 900",
+      style: "italic",
+    },
+  ],
   variable: "--font-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const geistMono = localFont({
+  src: [
+    {
+      path: "./fonts/geist-mono.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+    {
+      path: "./fonts/geist-mono-italic.woff2",
+      weight: "100 900",
+      style: "italic",
+    },
+  ],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -129,7 +166,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${urbanist.variable} dark h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
         <meta name="theme-color" content="#000000" id="meta-theme-color" />
@@ -139,11 +176,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <style
           dangerouslySetInnerHTML={{
             __html: `
-              :root {
-                color-scheme: dark;
-              }
-              html {
-                background-color: #000000;
+              :root, html {
+                background-color: #FAF9F6;
+                color-scheme: light;
               }
               html.dark,
               html[data-theme="dark"] {
@@ -173,7 +208,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               (function() {
                 try {
                   var saved = localStorage.getItem('theme') || localStorage.getItem('workfolio-theme');
-                  var isLight = saved === 'light';
+                  var isLight = saved === 'light' || (!saved && window.matchMedia('(prefers-color-scheme: light)').matches);
                   var doc = document.documentElement;
                   doc.classList.add('no-theme-transition');
                   if (isLight) {
@@ -193,10 +228,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   }
                 } catch (e) {
                   var doc = document.documentElement;
-                  doc.classList.add('dark');
-                  doc.setAttribute('data-theme', 'dark');
-                  doc.style.colorScheme = 'dark';
-                  doc.style.backgroundColor = '#000000';
+                  var isLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                  doc.classList.toggle('dark', !isLight);
+                  doc.setAttribute('data-theme', isLight ? 'light' : 'dark');
+                  doc.style.colorScheme = isLight ? 'light' : 'dark';
+                  doc.style.backgroundColor = isLight ? '#FAF9F6' : '#000000';
                 }
               })();
             `,
@@ -207,7 +243,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col font-sans bg-[#FAF9F6] dark:bg-[#000000] text-slate-800 dark:text-slate-100 selection:bg-sky-100 dark:selection:bg-[#1E2732] selection:text-sky-900 dark:selection:text-[#E7E9EA]">
+      <body className="min-h-full flex flex-col font-sans antialiased bg-[#FAF9F6] dark:bg-[#000000] text-slate-800 dark:text-slate-100 selection:bg-sky-100 dark:selection:bg-[#1E2732] selection:text-sky-900 dark:selection:text-[#E7E9EA]">
         <PostHogProvider>
           <ThemeProvider>
             <SoundProvider>

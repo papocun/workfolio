@@ -1,8 +1,6 @@
 import posthog from 'posthog-js';
 
-const POSTHOG_KEY =
-  process.env.NEXT_PUBLIC_POSTHOG_KEY ||
-  'phc_tqgZpHfSKxvbLP8Bh6JJaoV8oB7uoeZwkBVzxToerKbf';
+const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
 
 const POSTHOG_HOST =
   process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com';
@@ -15,14 +13,16 @@ let isPostHogInitialized = false;
 export function initPostHog(): void {
   if (typeof window === 'undefined') return;
 
+  if (!POSTHOG_KEY || isPostHogInitialized) return;
+
   if (!isPostHogInitialized) {
     posthog.init(POSTHOG_KEY, {
       api_host: POSTHOG_HOST,
       defaults: '2026-05-30',
       capture_pageview: false, // Handled explicitly on navigation to avoid duplicates in Next.js App Router
-      capture_pageleave: true,
-      autocapture: true,
-      disable_session_recording: false,
+      capture_pageleave: false,
+      autocapture: false,
+      disable_session_recording: true,
     });
     isPostHogInitialized = true;
   }

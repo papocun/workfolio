@@ -134,74 +134,80 @@ async function fetchFromPublicEndpoint(username: string): Promise<GitHubContribu
       level: number;
     }
 
-    const todayStr = new Date().toISOString().split('T')[0];
-
-    // Filter contributions up to today and sort chronologically
-    const allPast = (data.contributions as RawContribution[])
-      .filter((d) => d.date <= todayStr)
-      .sort((a, b) => a.date.localeCompare(b.date));
-
-    if (allPast.length === 0) {
-      return null;
+    const contributionsMap = new Map<string, number>();
+    for (const item of data.contributions as RawContribution[]) {
+      if (item.date && typeof item.count === 'number') {
+        contributionsMap.set(item.date, item.count);
+      }
     }
 
-    // GitHub's trailing 1-year window is up to 53 weeks (~371 days)
-    const trailing = allPast.slice(-371);
-    // Align start to Sunday (weekday 0)
-    while (trailing.length > 0 && new Date(trailing[0].date + 'T00:00:00Z').getUTCDay() !== 0) {
-      trailing.shift();
+    // Merge genuine local repository commits into contributions map
+    for (const [date, count] of Object.entries(REPO_COMMITS)) {
+      const current = contributionsMap.get(date) || 0;
+      if (count > current) {
+        contributionsMap.set(date, count);
+      }
     }
 
-    // Group days into weeks (Sunday to Saturday)
+    // Determine calendar window: 53 full weeks (371 days) ending on the current week's Saturday
+    const now = new Date();
+    const localYear = now.getFullYear();
+    const localMonth = now.getMonth();
+    const localDay = now.getDate();
+    const todayDate = new Date(Date.UTC(localYear, localMonth, localDay));
+    const todayIso = todayDate.toISOString().slice(0, 10);
+
+    const endSaturday = new Date(todayDate);
+    const dayOfWeek = endSaturday.getUTCDay(); // 0 = Sun, 6 = Sat
+    endSaturday.setUTCDate(endSaturday.getUTCDate() + (6 - dayOfWeek));
+
+    const startSunday = new Date(endSaturday);
+    startSunday.setUTCDate(startSunday.getUTCDate() - 370);
+
     const weeks: ContributionWeek[] = [];
-    let currentWeekDays: ContributionDay[] = [];
-
-    // Track month labels positioned at the start of their corresponding week
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const months: ContributionMonth[] = [];
+    let currentWeekDays: ContributionDay[] = [];
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     let lastMonth = -1;
+    let totalInTrailingYear = 0;
 
-    for (let i = 0; i < trailing.length; i++) {
-      const item = trailing[i];
-      const dateObj = new Date(item.date + 'T00:00:00Z');
-      const weekday = dateObj.getUTCDay();
-      const monthIdx = dateObj.getUTCMonth();
+    const walker = new Date(startSunday);
+    for (let i = 0; i < 371; i++) {
+      const isoDate = walker.toISOString().slice(0, 10);
+      const isFuture = isoDate > todayIso;
+      const count = isFuture ? 0 : (contributionsMap.get(isoDate) || 0);
+      const weekday = walker.getUTCDay();
+      const monthIdx = walker.getUTCMonth();
 
-      // Check if we entered a new month on this day
+      totalInTrailingYear += count;
+
       if (monthIdx !== lastMonth) {
         lastMonth = monthIdx;
         months.push({
           name: monthNames[monthIdx],
-          year: dateObj.getUTCFullYear(),
-          firstDay: item.date,
+          year: walker.getUTCFullYear(),
+          firstDay: isoDate,
           totalWeeks: 1,
         });
       }
 
       currentWeekDays.push({
-        date: item.date,
-        contributionCount: item.count,
+        date: isoDate,
+        contributionCount: count,
         weekday,
-        intensityLevel: calculateIntensity(item.count),
+        intensityLevel: calculateIntensity(count),
       });
 
-      // If Saturday or last item, finalize this week
-      if (weekday === 6 || i === trailing.length - 1) {
+      if (weekday === 6) {
         weeks.push({ contributionDays: currentWeekDays });
         currentWeekDays = [];
       }
-    }
 
-    // Calculate total contributions over the past year
-    let totalInLastYear = 0;
-    for (const week of weeks) {
-      for (const day of week.contributionDays) {
-        totalInLastYear += day.contributionCount;
-      }
+      walker.setUTCDate(walker.getUTCDate() + 1);
     }
 
     return {
-      totalContributions: totalInLastYear,
+      totalContributions: totalInTrailingYear,
       weeks,
       months,
     };

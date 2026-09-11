@@ -61,16 +61,15 @@ const EXPERIENCES: TimelineExperienceItem[] = [
     summary:
       'Designed end-to-end data infrastructure and ingestion pipelines for Shopify and external merchant data across AWS, Redshift, and PostgreSQL.',
     narrative: [
-      'Designed the end-to-end data infrastructure for ingesting Shopify and external merchant data, covering GraphQL Bulk Operations, Webhooks, S3, Lambda, SQS, Redshift, Aurora PostgreSQL and DynamoDB.',
-      'Designed the ingestion architecture for both historical backfills and incremental data, including webhook processing, retries, DLQs, idempotency and reconciliation for missed or duplicate events.',
-      'Defined the data pipeline architecture from raw ingestion → validation → normalization → canonical warehouse → formula-ready data → scoring.',
-      'Designed the canonical data model and data contracts to standardize data coming from Shopify, payment gateways, 3PL/courier systems and merchant-specific sources.',
-      'Defined 20+ business-health formulas with source-to-target data mappings, transformations, fallback rules, boundary conditions and unresolved-data handling.',
-      'Designed a Formula Dependency Registry to map each formula to its required canonical fields and enable dependency-aware recalculation.',
-      'Designed the formula testing strategy using synthetic merchant scenarios covering missing data, duplicate events, refunds, late-arriving data, boundary conditions and fallback cases.',
-      'Evaluated AWS infrastructure and architecture trade-offs across compute, storage, orchestration, warehouse and operational databases.',
-      'Created workload-based infrastructure cost estimates for scaling from 10 → 100 → 1K → 10K merchants rather than assuming production-scale infrastructure from day one.',
-      'Defined data-quality and observability requirements covering pipeline failures, freshness, validation failures, duplicate events and scoring correctness.',
+      'Architected end-to-end ingestion pipelines for Shopify and merchant data using GraphQL Bulk Operations, Webhooks, S3, Lambda, SQS, Redshift, and Aurora.',
+      'Built ingestion flows for historical backfills and incremental syncs with idempotency, dead-letter queues, and reconciliation for dropped events.',
+      'Mapped data stages from raw ingest through validation, normalization, and canonical warehousing to final scoring tables.',
+      'Drafted canonical schemas and data contracts to unify Shopify, payment gateway, 3PL, and warehouse feeds.',
+      'Codified 20+ business-health formulas with explicit transformation logic, boundary checks, and fallback rules.',
+      'Engineered a Formula Dependency Registry to trigger recalculation only when upstream fields change.',
+      'Stress-tested formulas against synthetic edge cases (refunds, late webhooks, duplicate events, and partial payloads).',
+      'Benchmarked AWS compute and storage costs to model operating expenses scaling from 10 to 10,000 merchants.',
+      'Set up data-quality monitors and alert thresholds for ingestion latency, validation failures, and score drift.',
     ],
     technologies: [
       'AWS (S3, Lambda, SQS, Redshift)',
@@ -93,9 +92,9 @@ const EXPERIENCES: TimelineExperienceItem[] = [
     summary:
       'Automated end-to-end Python reporting pipelines and performed SQL cohort analysis to support retention decisions.',
     narrative: [
-      'Automated the Excel reporting pipeline end-to-end in Python, reducing dashboard generation time from 3+ hours to under 5 minutes for recurring reports.',
-      'Performed SQL-based cohort analysis on transactional data, identifying a 15% decline in repeat purchases over a 90-day window and presenting findings to support retention decisions.',
-      'Maintained recurring business dashboards and reporting workflows, ensuring data accuracy and consistency for operational decision-making.',
+      'Automated weekly Excel reporting in Python, cutting report turnaround from 3+ hours to under 5 minutes.',
+      'Ran SQL cohort analyses on raw transactions, uncovering a 15% dip in 90-day repeat purchases to guide retention experiments.',
+      'Maintained core operational dashboards, keeping KPI feeds reliable for day-to-day decisions.',
     ],
     technologies: [
       'Python',
@@ -121,10 +120,10 @@ export default function ExperiencePage() {
           <span className="w-1.5 h-1.5 rounded-full bg-[#1D9BF0] animate-pulse" />
           <span>experience</span>
         </div>
-        <h1 className="text-[28px] sm:text-[34px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2 sm:mb-2.5">
+        <h1 className="text-[28px] sm:text-[34px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2 sm:mb-2.5 text-balance">
           Experience
         </h1>
-        <p className="text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-[620px]">
+        <p className="text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-[620px] text-pretty">
           A look at what I’ve built, learned, and worked on along the way.
         </p>
       </div>

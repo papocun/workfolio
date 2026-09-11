@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { WarningCircle, Info } from '@phosphor-icons/react';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 interface AlertBannerProps {
   title: string;
@@ -24,6 +24,7 @@ export default function AlertBanner({
 }: AlertBannerProps) {
   const [isVisible, setIsVisible] = useState(true);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   const handleClose = useCallback(() => {
     if (timerRef.current) {
@@ -55,12 +56,18 @@ export default function AlertBanner({
       : 'text-amber-500 dark:text-amber-400';
 
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       {isVisible && (
         <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' } }}
-          exit={{ opacity: 0, y: -8, height: 0, marginBottom: 0, transition: { duration: 0.2, ease: 'easeIn' } }}
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0, transition: { duration: shouldReduceMotion ? 0 : 0.22, ease: [0.16, 1, 0.3, 1] } }}
+          exit={{
+            opacity: 0,
+            y: -6,
+            height: 0,
+            marginBottom: 0,
+            transition: { duration: shouldReduceMotion ? 0 : 0.18, ease: [0.4, 0, 1, 1] },
+          }}
           className="w-full mb-6 overflow-hidden"
         >
           <Alert

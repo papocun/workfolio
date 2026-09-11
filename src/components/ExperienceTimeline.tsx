@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { CaretDown, CaretUp, ArrowRight } from '@phosphor-icons/react';
 
 export interface TimelineExperienceItem {
@@ -25,6 +25,7 @@ export default function ExperienceTimeline({
 }: ExperienceTimelineProps) {
   // All experiences are collapsed by default until user clicks the expand button
   const [expandedIds, setExpandedIds] = useState<Record<string, boolean>>({});
+  const shouldReduceMotion = useReducedMotion();
 
   const toggleExpand = (id: string) => {
     setExpandedIds((prev) => ({
@@ -82,17 +83,19 @@ export default function ExperienceTimeline({
                     }`}
                     aria-hidden="true"
                   >
-                    {isExpanded ? (
-                      <CaretUp size={16} weight="bold" />
-                    ) : (
-                      <CaretDown size={16} weight="bold" />
-                    )}
+                    <CaretDown
+                      size={16}
+                      weight="bold"
+                      className={`transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] ${
+                        isExpanded ? 'rotate-180' : 'rotate-0'
+                      }`}
+                    />
                   </span>
                 </div>
               </button>
 
               {/* Short One-Line Summary */}
-              <p className="text-[14.5px] sm:text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mt-1 sm:mt-1.5">
+              <p className="text-[14.5px] sm:text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mt-1 sm:mt-1.5 text-pretty">
                 {exp.summary}
               </p>
 
@@ -102,13 +105,17 @@ export default function ExperienceTimeline({
                   <motion.div
                     id={contentId}
                     key="expanded-content"
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+                    initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+                    animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, height: 'auto' }}
+                    exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+                    transition={
+                      shouldReduceMotion
+                        ? { duration: 0 }
+                        : { duration: 0.2, ease: [0.16, 1, 0.3, 1] }
+                    }
                     className="overflow-hidden"
                   >
-                    <div className="border-l border-slate-300 dark:border-[#2F3336] pl-4 sm:pl-5 ml-2.5 sm:ml-3 my-2.5 sm:my-3 space-y-2">
+                    <div className="border-s border-slate-300 dark:border-[#2F3336] ps-4 sm:ps-5 ms-2.5 sm:ms-3 my-2.5 sm:my-3 space-y-2">
                       {/* Detailed Bullet Points */}
                       {exp.narrative.map((bullet, bIdx) => (
                         <div
@@ -121,7 +128,7 @@ export default function ExperienceTimeline({
                             className="text-[#1D9BF0] shrink-0 mt-1"
                             aria-hidden="true"
                           />
-                          <span>{bullet}</span>
+                          <span className="text-pretty">{bullet}</span>
                         </div>
                       ))}
 
@@ -131,7 +138,7 @@ export default function ExperienceTimeline({
                           {exp.technologies.map((tech) => (
                             <span
                               key={tech}
-                              className="rounded bg-slate-100 dark:bg-[#16181C] border border-slate-200/80 dark:border-[#2F3336] px-2.5 py-1 text-[12px] font-mono text-slate-700 dark:text-slate-300 font-medium"
+                              className="rounded bg-slate-100 dark:bg-[#16181C] border border-slate-200/80 dark:border-[#2F3336] px-2.5 py-1 text-[12px] font-mono text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap"
                             >
                               {tech}
                             </span>

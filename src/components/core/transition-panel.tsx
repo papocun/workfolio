@@ -9,6 +9,7 @@ export interface TransitionPanelProps extends React.HTMLAttributes<HTMLDivElemen
   variants?: Variants;
   transition?: Transition;
   custom?: number;
+  mode?: 'wait' | 'sync' | 'popLayout';
   className?: string;
 }
 
@@ -18,6 +19,7 @@ export function TransitionPanel({
   variants,
   transition,
   custom = 1,
+  mode = 'popLayout',
   className = '',
   ...props
 }: TransitionPanelProps) {
@@ -43,7 +45,7 @@ export function TransitionPanel({
 
   return (
     <div className={`relative overflow-hidden ${className}`} {...props}>
-      <AnimatePresence initial={false} custom={custom} mode="wait">
+      <AnimatePresence initial={false} custom={custom} mode={mode}>
         <motion.div
           key={activeIndex}
           custom={custom}

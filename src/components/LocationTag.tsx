@@ -194,17 +194,39 @@ export default function LocationTag({
             type="button"
             onClick={toggleSound}
             aria-label="Sound"
-            className={`p-1.5 -m-1 rounded transition-colors duration-150 inline-flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] ${
+            className={`p-1.5 -m-1 rounded active:scale-[0.96] transition-[color,transform] duration-150 inline-flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] overflow-hidden relative w-7 h-7 ${
               isSoundOn
                 ? 'text-[#1D9BF0] hover:text-[#1a8cd8]'
                 : 'text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E7E9EA]'
             }`}
           >
-            {isSoundOn ? (
-              <SpeakerHigh size={16} weight="bold" className="shrink-0" />
-            ) : (
-              <SpeakerSlash size={16} weight="regular" className="shrink-0" />
-            )}
+            <AnimatePresence initial={false} mode="popLayout">
+              <motion.span
+                key={isSoundOn ? 'sound-on' : 'sound-off'}
+                initial={
+                  shouldReduceMotion
+                    ? { opacity: 1 }
+                    : { opacity: 0, scale: 0.85 }
+                }
+                animate={{ opacity: 1, scale: 1 }}
+                exit={
+                  shouldReduceMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, scale: 0.85 }
+                }
+                transition={{
+                  duration: shouldReduceMotion ? 0 : 0.14,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="inline-flex items-center justify-center shrink-0"
+              >
+                {isSoundOn ? (
+                  <SpeakerHigh size={16} weight="regular" className="shrink-0" />
+                ) : (
+                  <SpeakerSlash size={16} weight="regular" className="shrink-0" />
+                )}
+              </motion.span>
+            </AnimatePresence>
           </button>
         </IconTooltip>
 
@@ -215,27 +237,27 @@ export default function LocationTag({
             onClick={toggleTheme}
             disabled={isTransitioning}
             aria-label="Theme"
-            className={`text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E7E9EA] transition-colors duration-150 inline-flex items-center justify-center p-1.5 -m-1 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] overflow-hidden relative w-7 h-7 ${
+            className={`text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E7E9EA] active:scale-[0.96] transition-[color,transform] duration-150 inline-flex items-center justify-center p-1.5 -m-1 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] overflow-hidden relative w-7 h-7 ${
               isTransitioning ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'
             }`}
           >
-            <AnimatePresence mode="wait" initial={false}>
+            <AnimatePresence initial={false} mode="popLayout">
               <motion.span
                 key={isDark ? 'dark-sun' : 'light-moon'}
                 initial={
                   shouldReduceMotion
                     ? { opacity: 1 }
-                    : { opacity: 0, rotate: -20, scale: 0.88 }
+                    : { opacity: 0, scale: 0.85 }
                 }
-                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                animate={{ opacity: 1, scale: 1 }}
                 exit={
                   shouldReduceMotion
-                    ? { opacity: 1 }
-                    : { opacity: 0, rotate: 20, scale: 0.88 }
+                    ? { opacity: 0 }
+                    : { opacity: 0, scale: 0.85 }
                 }
                 transition={{
-                  duration: shouldReduceMotion ? 0 : 0.18,
-                  ease: [0.4, 0, 0.2, 1],
+                  duration: shouldReduceMotion ? 0 : 0.14,
+                  ease: [0.16, 1, 0.3, 1],
                 }}
                 className="inline-flex items-center justify-center shrink-0"
               >

@@ -85,7 +85,7 @@ function InitialNoticeBanner() {
   }, []);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       {isVisible && (
         <motion.div
           key="blog-initial-notice"
@@ -96,7 +96,7 @@ function InitialNoticeBanner() {
             y: -6,
             height: 0,
             marginBottom: 0,
-            transition: { duration: 0.3, ease: 'easeInOut' },
+            transition: { duration: 0.2, ease: 'easeOut' },
           }}
           className="w-full mb-6 overflow-hidden"
         >

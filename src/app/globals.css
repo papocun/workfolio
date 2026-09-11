@@ -7,11 +7,44 @@
    Tailwind CSS v4 · Premium Light & Dark Design System
    ============================================================ */
 
+/* ─── Geist Font Face Declarations ────────────────────────── */
+@font-face {
+  font-family: 'Geist Sans';
+  src: url('/fonts/geist-sans.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Sans';
+  src: url('/fonts/geist-sans-italic.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/geist-mono.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/geist-mono-italic.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* ─── Theme Token Definitions ──────────────────────────────── */
 @theme inline {
-  /* ── Font Family (Strictly Urbanist Only) ── */
-  --font-sans: var(--font-sans), "Urbanist", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-sans), "Urbanist", ui-sans-serif, system-ui, sans-serif;
+  /* ── Font Family (Geist Sans & Geist Mono) ── */
+  --font-sans: var(--font-sans), "Geist Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-mono), "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* ── Layout Constraints ── */
   --container: 680px;
@@ -97,6 +130,13 @@ button {
   -webkit-touch-callout: none;
 }
 
+input,
+button,
+textarea,
+select {
+  font-family: inherit;
+}
+
 html {
   background-color: var(--c-bg);
   color: var(--c-text-primary);
@@ -129,6 +169,34 @@ body {
   font-size: 16px;
   line-height: 1.65;
   overflow-x: clip;
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono);
+}
+
+/* ─── Global Typography Defaults ───────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+}
+
+a {
+  text-underline-position: from-font;
+  text-decoration-skip-ink: auto;
+}
+
+.tabular-nums,
+time,
+data {
+  font-variant-numeric: tabular-nums;
 }
 
 /* ─── Prevent Browser Link-Drag Previews for Locked Navigation UI ──── */

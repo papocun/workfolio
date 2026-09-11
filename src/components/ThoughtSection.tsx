@@ -119,7 +119,7 @@ export default function ThoughtSection({ className = '' }: ThoughtSectionProps) 
 
   return (
     <section
-      className={`w-full max-w-full min-w-0 mt-6 sm:mt-7 ${className}`}
+      className={`w-full max-w-full min-w-0 ${className}`}
       aria-label="Thought"
     >
       {/* Section Heading with Theme-Aware Typography */}
@@ -128,7 +128,7 @@ export default function ThoughtSection({ className = '' }: ThoughtSectionProps) 
       </h2>
 
       {/* Thought Card Container */}
-      <div className="relative w-full max-w-full min-w-0 overflow-hidden rounded-2xl border border-slate-200/80 dark:border-[#2F3336]/60 bg-white/70 dark:bg-[#16181C]/40 p-4 min-[360px]:p-6 sm:p-8 min-h-[150px] sm:min-h-[185px] flex flex-col justify-center shadow-xs transition-colors duration-200">
+      <div className="relative w-full max-w-full min-w-0 overflow-hidden rounded-xl border border-slate-200/80 dark:border-[#2F3336]/60 bg-white/70 dark:bg-[#16181C]/40 p-4 min-[360px]:p-6 sm:p-8 min-h-[150px] sm:min-h-[185px] flex flex-col justify-center shadow-xs transition-colors duration-200">
         {/* Subtle Decorative Background Quotation Mark */}
         <div
           className="pointer-events-none absolute top-3 left-4 sm:top-4 sm:left-6 text-slate-200/70 dark:text-[#2F3336]/35 select-none"
@@ -155,7 +155,7 @@ export default function ThoughtSection({ className = '' }: ThoughtSectionProps) 
           ) : currentQuote ? (
             /* Quote and Author */
             <div className="transition-opacity duration-300 ease-in-out opacity-100">
-              <blockquote className="text-[15px] sm:text-[16.5px] md:text-[17px] font-normal leading-[1.7] text-slate-800 dark:text-slate-200 tracking-normal">
+              <blockquote className="text-[15px] sm:text-[16.5px] md:text-[17px] font-normal leading-[1.7] text-slate-800 dark:text-slate-200 tracking-normal text-pretty max-w-[560px] mx-auto">
                 “{currentQuote.quote}”
               </blockquote>
 

@@ -27,7 +27,7 @@ export const portfolioData: PersonalProfile = {
     badge: "Open to ML / Data Science Roles",
     title: "I build machine learning systems that run in production.",
     bio: [
-      "Data Scientist transitioning from data analytics into applied machine learning\u2014building and deploying production-grade ML systems (fraud scoring, forecasting, segmentation) end-to-end from model design to cloud deployment.",
+      "Data Scientist transitioning from data analytics into applied machine learning, building and deploying production-grade ML systems (fraud scoring, forecasting, segmentation) end-to-end from model design to cloud deployment.",
       "Deep focus across Supervised & Unsupervised Learning (XGBoost, CatBoost), statistical validation (A/B testing), ETL pipelines, and containerized API serving using FastAPI, Docker, and AWS EC2.",
       "Co-inventor on an autonomous IoT hardware patent, 1st place champion in a 500+ participant inter-college SQL query competition, and active problem solver with 300+ challenges solved across LeetCode, StrataScratch, and DailySQL.",
     ],
@@ -42,16 +42,15 @@ export const portfolioData: PersonalProfile = {
       summary:
         "Designed end-to-end data infrastructure and ingestion pipelines for Shopify and external merchant data across AWS, Redshift, and PostgreSQL.",
       highlights: [
-        "Designed the end-to-end data infrastructure for ingesting Shopify and external merchant data, covering GraphQL Bulk Operations, Webhooks, S3, Lambda, SQS, Redshift, Aurora PostgreSQL and DynamoDB.",
-        "Designed the ingestion architecture for both historical backfills and incremental data, including webhook processing, retries, DLQs, idempotency and reconciliation for missed or duplicate events.",
-        "Defined the data pipeline architecture from raw ingestion → validation → normalization → canonical warehouse → formula-ready data → scoring.",
-        "Designed the canonical data model and data contracts to standardize data coming from Shopify, payment gateways, 3PL/courier systems and merchant-specific sources.",
-        "Defined 20+ business-health formulas with source-to-target data mappings, transformations, fallback rules, boundary conditions and unresolved-data handling.",
-        "Designed a Formula Dependency Registry to map each formula to its required canonical fields and enable dependency-aware recalculation.",
-        "Designed the formula testing strategy using synthetic merchant scenarios covering missing data, duplicate events, refunds, late-arriving data, boundary conditions and fallback cases.",
-        "Evaluated AWS infrastructure and architecture trade-offs across compute, storage, orchestration, warehouse and operational databases.",
-        "Created workload-based infrastructure cost estimates for scaling from 10 → 100 → 1K → 10K merchants rather than assuming production-scale infrastructure from day one.",
-        "Defined data-quality and observability requirements covering pipeline failures, freshness, validation failures, duplicate events and scoring correctness.",
+        "Architected end-to-end ingestion pipelines for Shopify and merchant data using GraphQL Bulk Operations, Webhooks, S3, Lambda, SQS, Redshift, and Aurora.",
+        "Built ingestion flows for historical backfills and incremental syncs with idempotency, dead-letter queues, and reconciliation for dropped events.",
+        "Mapped data stages from raw ingest through validation, normalization, and canonical warehousing to final scoring tables.",
+        "Drafted canonical schemas and data contracts to unify Shopify, payment gateway, 3PL, and warehouse feeds.",
+        "Codified 20+ business-health formulas with explicit transformation logic, boundary checks, and fallback rules.",
+        "Engineered a Formula Dependency Registry to trigger recalculation only when upstream fields change.",
+        "Stress-tested formulas against synthetic edge cases (refunds, late webhooks, duplicate events, and partial payloads).",
+        "Benchmarked AWS compute and storage costs to model operating expenses scaling from 10 to 10,000 merchants.",
+        "Set up data-quality monitors and alert thresholds for ingestion latency, validation failures, and score drift.",
       ],
       technologies: [
         "AWS (S3, Lambda, SQS, Redshift)",
@@ -72,9 +71,9 @@ export const portfolioData: PersonalProfile = {
       summary:
         "Automated end-to-end Python reporting pipelines and performed SQL cohort analysis to support retention decisions.",
       highlights: [
-        "Automated the Excel reporting pipeline end-to-end in Python, reducing dashboard generation time from 3+ hours to under 5 minutes for recurring reports.",
-        "Performed SQL-based cohort analysis on transactional data, identifying a 15% decline in repeat purchases over a 90-day window and presenting the findings to support retention decisions.",
-        "Maintained recurring business dashboards and reporting workflows, ensuring data accuracy and consistency for operational decision-making.",
+        "Automated weekly Excel reporting in Python, cutting report turnaround from 3+ hours to under 5 minutes.",
+        "Ran SQL cohort analyses on raw transactions, uncovering a 15% dip in 90-day repeat purchases to guide retention experiments.",
+        "Maintained core operational dashboards, keeping KPI feeds reliable for day-to-day decisions.",
       ],
       technologies: [
         "Python",
@@ -94,8 +93,8 @@ export const portfolioData: PersonalProfile = {
       description:
         "Built a KMeans-based customer segmentation system classifying customers into actionable personas with cloud API deployment.",
       impactMetrics: [
-        "Built a KMeans-based customer segmentation system that classifies customers into High-Value and Budget personas using seven behavioural features.",
-        "Validated segmentation using the Elbow Method and Silhouette Score to determine meaningful customer clusters.",
+        "Segments users into High-Value and Budget personas using seven behavioral features.",
+        "Evaluated cluster stability and separation with the Elbow Method and Silhouette scoring.",
         "Containerized the application with Docker Compose and deployed it on AWS EC2, exposing the model through a real-time API.",
       ],
       techStack: [
@@ -118,8 +117,8 @@ export const portfolioData: PersonalProfile = {
       description:
         "Production-grade bike demand forecasting pipeline with temporal validation and sub-second real-time inference.",
       impactMetrics: [
-        "Built a production-grade bike demand forecasting pipeline using CatBoost to model demand patterns.",
-        "Used time-based train/test splitting and hyperparameter tuning to validate forecasting performance without temporal leakage.",
+        "Modeled hourly demand curves using CatBoost with rolling time-series splits to prevent lookahead bias.",
+        "Validated forecasting performance with temporal validation and hyperparameter tuning across seasons.",
         "Containerized and deployed the complete system on AWS, serving real-time predictions through a live dashboard.",
       ],
       techStack: ["Python", "CatBoost", "FastAPI", "Docker", "AWS"],
@@ -134,9 +133,9 @@ export const portfolioData: PersonalProfile = {
       description:
         "SQL-based ABC/Pareto inventory classification engine optimizing revenue-driving SKUs and resolving join amplification.",
       impactMetrics: [
-        "Built a SQL-based ABC/Pareto classification engine identifying 93 Class A SKUs responsible for 79.7% of revenue.",
-        "Used the analysis to turn raw inventory data into actionable product and revenue classifications.",
-        "Debugged duplicate ingestion and JOIN amplification issues, restoring data accuracy across 9,001 records.",
+        "Isolated 93 Class A SKUs driving 79.7% of total revenue using SQL-based ABC/Pareto analysis.",
+        "Turned messy supplier inventory logs into clean revenue and reorder classifications.",
+        "Fixed join amplification and duplicate ingestion across 9,001 transaction rows, restoring data integrity.",
       ],
       techStack: [
         "Python",

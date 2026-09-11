@@ -1,35 +1,35 @@
 # Projects — Divyanshu Tiwari
 
-A curated selection of machine learning systems, predictive pipelines, and production services built by Divyanshu Tiwari.
+Production ML systems, forecasting pipelines, and data tools I've built and deployed.
 
 ## Featured Projects
 
 ### 1. Customer Intelligence Engine
 - **Category**: Unsupervised ML & Cloud API
-- **Summary**: Built a KMeans-based customer segmentation system classifying customers into actionable personas with cloud API deployment.
+- **Summary**: Customer segmentation system grouping user behavior into high-value and budget personas, served via cloud API.
 - **Key Details**:
-  - Classifies customers into High-Value and Budget personas using seven behavioral features.
-  - Validated segmentation using the Elbow Method and Silhouette Score.
-  - Containerized with Docker Compose and deployed on AWS EC2 with FastAPI.
+  - Segments users into High-Value and Budget tiers using seven behavioral features.
+  - Evaluated cluster stability and separation with the Elbow Method and Silhouette scoring.
+  - Containerized with Docker Compose and deployed on AWS EC2 via FastAPI.
 - **Technologies**: Python, Scikit-learn, KMeans, FastAPI, Docker, AWS EC2
 - **GitHub**: https://github.com/papocun/Customer-Segmentation-Project
 - **Live Demo**: http://16.171.71.103/
 
 ### 2. DemandCast
 - **Category**: Time-Series & Production ML
-- **Summary**: Production-grade bike demand forecasting pipeline with temporal validation and sub-second real-time inference.
+- **Summary**: Bike demand forecasting pipeline with strict temporal validation and sub-second inference.
 - **Key Details**:
-  - Modeled demand patterns using CatBoost with temporal train/test split.
+  - Modeled hourly demand curves using CatBoost with rolling time-series splits to prevent lookahead bias.
   - Containerized and deployed on AWS with FastAPI.
 - **Technologies**: Python, CatBoost, FastAPI, Docker, AWS
 - **GitHub**: https://github.com/papocun/DemandCast
 
 ### 3. Inventory Intelligence Engine
 - **Category**: Analytics & SQL Optimization
-- **Summary**: SQL-based ABC/Pareto inventory classification engine optimizing revenue-driving SKUs and resolving join amplification.
+- **Summary**: SQL-driven ABC/Pareto inventory engine prioritizing revenue-critical SKUs and fixing join duplication.
 - **Key Details**:
-  - Identified 93 Class A SKUs responsible for 79.7% of revenue.
-  - Resolved join amplification and duplicate ingestion issues across 9,001 records.
+  - Isolated 93 Class A SKUs driving 79.7% of total revenue.
+  - Fixed join amplification and duplicate ingestion across 9,001 transaction rows, restoring data integrity.
 - **Technologies**: Python, Pandas, MySQL, Plotly, Streamlit, Railway
 - **GitHub**: https://github.com/papocun/Inventory-supply-chain-optimization
 

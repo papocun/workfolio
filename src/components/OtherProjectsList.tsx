@@ -55,10 +55,10 @@ export default function OtherProjectsList() {
           <span className="w-1.5 h-1.5 rounded-full bg-[#1D9BF0] animate-pulse" />
           <span>more projects</span>
         </div>
-        <h2 className="text-[24px] sm:text-[28px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2">
+        <h2 className="text-[24px] sm:text-[28px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2 text-balance">
           Other things I&apos;ve built
         </h2>
-        <p className="text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-[620px]">
+        <p className="text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-[620px] text-pretty">
           A few more things I’ve explored along the way.
         </p>
       </div>
@@ -83,7 +83,7 @@ export default function OtherProjectsList() {
             <div className="flex items-start justify-between gap-3 sm:gap-4">
               {/* Left Column: Number + Name + Description */}
               <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
-                <span className="font-mono text-[13px] text-slate-400 dark:text-slate-400 pt-0.5 select-none shrink-0">
+                <span className="font-mono text-[13px] text-slate-400 dark:text-slate-400 pt-0.5 select-none shrink-0 tabular-nums">
                   {project.index}
                 </span>
 
@@ -94,7 +94,7 @@ export default function OtherProjectsList() {
                     </h3>
                   </div>
 
-                  <p className="text-[14px] sm:text-[14.5px] text-slate-500 dark:text-slate-400 leading-[1.6] line-clamp-2 sm:line-clamp-none">
+                  <p className="text-[14px] sm:text-[14.5px] text-slate-500 dark:text-slate-400 leading-[1.6] line-clamp-2 sm:line-clamp-none text-pretty">
                     {project.description}
                   </p>
 
@@ -104,7 +104,7 @@ export default function OtherProjectsList() {
                       {project.techStack.map((tech) => (
                         <span
                           key={tech}
-                          className="rounded bg-slate-100 dark:bg-slate-800/90 px-2 py-0.5 text-[12px] font-mono text-slate-600 dark:text-slate-300"
+                          className="rounded bg-slate-100 dark:bg-slate-800/90 px-2 py-0.5 text-[12px] font-mono text-slate-600 dark:text-slate-300 whitespace-nowrap"
                         >
                           {tech}
                         </span>
@@ -116,11 +116,21 @@ export default function OtherProjectsList() {
 
               {/* Right Column: Year + Subtle Animated Arrow */}
               <div className="flex items-center gap-2 sm:gap-3 shrink-0 pt-0.5">
-                <span className="font-mono text-[13px] text-slate-400 dark:text-slate-400">
+                <span className="font-mono text-[13px] text-slate-400 dark:text-slate-400 tabular-nums">
                   {project.year}
                 </span>
-                <span className="text-slate-400 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-100 group-hover:translate-x-1 transition-all duration-150 ease-out inline-flex items-center text-[15px]">
-                  →
+                <span className="text-slate-400 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-100 group-hover:translate-x-1 transition-[transform,color] duration-150 ease-out inline-flex items-center text-[15px]">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                    className="translate-y-[0.5px]"
+                    aria-hidden="true"
+                  >
+                    <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z" />
+                  </svg>
                 </span>
               </div>
             </div>

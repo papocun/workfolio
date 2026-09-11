@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ArrowRight, CaretDown, CaretUp } from '@phosphor-icons/react';
 import { getAssetPath } from '@/lib/assetPath';
 import { trackProjectViewed, trackGithubClicked, trackProjectDemoClicked } from '@/lib/posthog';
@@ -21,6 +21,7 @@ export default function ProjectCard({
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   const cardRef = useRef<HTMLElement>(null);
   const hasTrackedViewRef = useRef(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const contentId = `project-details-${project.id}`;
 
@@ -54,11 +55,11 @@ export default function ProjectCard({
   return (
     <article
       ref={cardRef}
-      className="group rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#16181C] p-4 sm:p-7 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-md transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-none"
+      className="group rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#16181C] p-4 sm:p-7 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-md transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-none"
     >
       {/* 1. Wide Project Image/Banner (Always Visible in Card) */}
       {project.imageSrc && (
-        <div className="relative aspect-[16/6] sm:aspect-[4/1] w-full mb-4 sm:mb-5 overflow-hidden rounded-xl border border-slate-200/70 dark:border-slate-800/80 bg-slate-950 flex items-center justify-center select-none">
+        <div className="relative aspect-[16/6] sm:aspect-[4/1] w-full mb-4 sm:mb-5 overflow-hidden rounded-xl outline outline-1 outline-[oklch(0_0_0/0.1)] dark:outline-[oklch(1_0_0/0.1)] -outline-offset-1 bg-slate-950 flex items-center justify-center select-none">
           <Image
             src={getAssetPath(project.imageSrc)}
             alt={project.title}
@@ -72,11 +73,11 @@ export default function ProjectCard({
       {/* 2. Project Header Row: Title, Description & Expand Chevron */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
-          <h2 className="text-[20px] sm:text-[24px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-snug">
+          <h2 className="text-[20px] sm:text-[24px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-snug text-balance">
             {project.title}
           </h2>
           {project.description && (
-            <p className="text-[14.5px] sm:text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mt-1">
+            <p className="text-[14.5px] sm:text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mt-1 text-pretty">
               {project.description}
             </p>
           )}
@@ -93,17 +94,19 @@ export default function ProjectCard({
               ? `Collapse ${project.title}`
               : `Expand ${project.title}`
           }
-          className={`shrink-0 p-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-700/80 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] transition-colors cursor-pointer mt-0.5 ${
+          className={`shrink-0 p-2 rounded-lg border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-700/80 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] transition-[border-color,background-color,color,transform] duration-150 cursor-pointer mt-0.5 ${
             isExpanded
               ? 'text-[#1D9BF0] dark:text-[#1D9BF0] border-[#1D9BF0]/40 dark:border-[#1D9BF0]/40'
               : ''
           }`}
         >
-          {isExpanded ? (
-            <CaretUp size={16} weight="bold" />
-          ) : (
-            <CaretDown size={16} weight="bold" />
-          )}
+          <CaretDown
+            size={16}
+            weight="bold"
+            className={`transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] ${
+              isExpanded ? 'rotate-180' : 'rotate-0'
+            }`}
+          />
         </button>
       </div>
 
@@ -113,10 +116,14 @@ export default function ProjectCard({
           <motion.div
             id={contentId}
             key="expanded-details"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, height: 'auto' }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+            transition={
+              shouldReduceMotion
+                ? { duration: 0 }
+                : { duration: 0.2, ease: [0.16, 1, 0.3, 1] }
+            }
             className="overflow-hidden"
           >
             <div className="pt-4 sm:pt-5 mt-3 sm:mt-4 border-t border-slate-100 dark:border-slate-800/80">
@@ -129,7 +136,7 @@ export default function ProjectCard({
                   {project.techStack.map((tech: string) => (
                     <span
                       key={tech}
-                      className="rounded-md bg-slate-100/90 dark:bg-[#16181C] border border-slate-200/90 dark:border-[#2F3336] px-3 py-1 text-[12px] font-mono font-medium text-slate-700 dark:text-slate-300 transition-colors hover:border-slate-300 dark:hover:border-slate-500 shadow-2xs"
+                      className="rounded-md bg-slate-100/90 dark:bg-[#16181C] border border-slate-200/90 dark:border-[#2F3336] px-3 py-1 text-[12px] font-mono font-medium text-slate-700 dark:text-slate-300 transition-colors hover:border-slate-300 dark:hover:border-slate-500 shadow-2xs whitespace-nowrap"
                     >
                       {tech}
                     </span>
@@ -151,7 +158,7 @@ export default function ProjectCard({
                         className="text-[#1D9BF0] shrink-0 mt-1"
                         aria-hidden="true"
                       />
-                      <span>{point}</span>
+                      <span className="text-pretty">{point}</span>
                     </li>
                   ))}
                 </ul>
@@ -159,7 +166,7 @@ export default function ProjectCard({
 
               {/* GitHub / Live Demo Buttons */}
               <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-100 dark:border-slate-800/80 font-mono text-[13px]">
-                <a
+                <motion.a
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -170,7 +177,10 @@ export default function ProjectCard({
                       url: project.githubUrl,
                     })
                   }
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#16181C] hover:bg-slate-50 dark:hover:bg-[#1E2732] text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white transition-all duration-150 shadow-2xs hover:border-slate-300 dark:hover:border-slate-500 font-medium group/btn cursor-pointer"
+                  whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+                  whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#16181C] hover:bg-slate-50 dark:hover:bg-[#1E2732] text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white transition-[border-color,background-color,color] duration-150 shadow-2xs hover:border-slate-300 dark:hover:border-slate-500 font-medium group/btn cursor-pointer"
                 >
                   <span>GitHub</span>
                   <svg
@@ -184,15 +194,18 @@ export default function ProjectCard({
                   >
                     <path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z" />
                   </svg>
-                </a>
+                </motion.a>
 
                 {project.liveUrl && (
-                  <a
+                  <motion.a
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackProjectDemoClicked(project.title, project.liveUrl)}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-[#1D9BF0]/30 hover:border-[#1D9BF0] bg-[#1D9BF0]/10 hover:bg-[#1D9BF0]/20 text-[#1D9BF0] font-medium transition-all duration-150 shadow-2xs group/btn cursor-pointer"
+                    whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+                    whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-[#1D9BF0]/30 hover:border-[#1D9BF0] bg-[#1D9BF0]/10 hover:bg-[#1D9BF0]/20 text-[#1D9BF0] font-medium transition-[border-color,background-color,color] duration-150 shadow-2xs group/btn cursor-pointer"
                   >
                     <span>Live Demo</span>
                     <svg
@@ -206,7 +219,7 @@ export default function ProjectCard({
                     >
                       <path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z" />
                     </svg>
-                  </a>
+                  </motion.a>
                 )}
               </div>
             </div>

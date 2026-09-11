@@ -187,22 +187,28 @@ export function PopoverPanel({
   // Anchor style calculation relative to trigger
   let anchorClasses = '';
   let initialOffset = { x: 0, y: 0 };
+  let transformOrigin = 'top right';
 
   if (to === 'left') {
     anchorClasses = 'right-full top-1/2 -translate-y-1/2';
     initialOffset = { x: 8, y: 0 };
+    transformOrigin = 'right center';
   } else if (to === 'right') {
     anchorClasses = 'left-full top-1/2 -translate-y-1/2';
     initialOffset = { x: -8, y: 0 };
+    transformOrigin = 'left center';
   } else if (to === 'bottom-end' || to === 'bottom') {
     anchorClasses = 'top-full right-0';
     initialOffset = { x: 0, y: -6 };
+    transformOrigin = 'top right';
   } else if (to === 'bottom-start') {
     anchorClasses = 'top-full left-0';
     initialOffset = { x: 0, y: -6 };
+    transformOrigin = 'top left';
   } else if (to === 'top') {
     anchorClasses = 'bottom-full right-0';
     initialOffset = { x: 0, y: 6 };
+    transformOrigin = 'bottom right';
   }
 
   return (
@@ -214,6 +220,7 @@ export function PopoverPanel({
           aria-modal="false"
           tabIndex={-1}
           style={{
+            transformOrigin,
             marginRight: to === 'left' ? `${gap}px` : undefined,
             marginLeft: to === 'right' ? `${gap}px` : undefined,
             marginTop: to.startsWith('bottom') ? `${gap}px` : undefined,
@@ -232,9 +239,13 @@ export function PopoverPanel({
           exit={
             shouldReduceMotion
               ? { opacity: 0 }
-              : { opacity: 0, scale: 0.95, ...initialOffset }
+              : { opacity: 0, scale: 0.96, ...initialOffset }
           }
-          transition={{ duration: 0.18, ease: [0.4, 0, 0.2, 1] }}
+          transition={
+            shouldReduceMotion
+              ? { duration: 0 }
+              : { duration: 0.16, ease: [0.16, 1, 0.3, 1] }
+          }
           className={`absolute z-50 ${anchorClasses} ${className}`}
           {...(props as any)}
         >

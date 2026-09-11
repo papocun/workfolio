@@ -93,9 +93,9 @@ export function Cursor({
       exit="exit"
       variants={
         variants || {
-          initial: { scale: 0, opacity: 0 },
+          initial: { scale: 0.7, opacity: 0 },
           animate: { scale: 1, opacity: 1 },
-          exit: { scale: 0, opacity: 0 },
+          exit: { scale: 0.7, opacity: 0 },
         }
       }
       transition={transition}

@@ -11,7 +11,7 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
 export function Avatar({ className = '', children, ...props }: AvatarProps) {
   return (
     <div
-      className={`relative flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 overflow-hidden rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 ${className}`}
+      className={`relative flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 overflow-hidden rounded-full outline outline-1 outline-[oklch(0_0_0/0.1)] dark:outline-[oklch(1_0_0/0.1)] -outline-offset-1 bg-slate-100 dark:bg-slate-800 ${className}`}
       {...props}
     >
       {children}

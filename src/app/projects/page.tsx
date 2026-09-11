@@ -64,11 +64,11 @@ export default function ProjectsPage() {
           <span className="w-1.5 h-1.5 rounded-full bg-[#1D9BF0] animate-pulse" />
           <span>the work</span>
         </div>
-        <h1 className="text-[28px] sm:text-[34px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2 sm:mb-2.5">
+        <h1 className="text-[28px] sm:text-[34px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2 sm:mb-2.5 text-balance">
           Projects
         </h1>
-        <p className="text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-[620px]">
-          A few things I’ve built, explored, and brought to life.
+        <p className="text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-[620px] text-pretty">
+          A collection of machine learning systems, time-series forecasting pipelines, and production services I&apos;ve built and deployed.
         </p>
       </div>
 

@@ -63,7 +63,7 @@ export default function HomePage() {
       />
 
       {/* Main Heading with Animated Scramble only on the Name */}
-      <h1 className="text-[25px] min-[360px]:text-[28px] sm:text-[34px] font-bold text-slate-900 dark:text-slate-100 leading-[1.2] tracking-tight mb-4 sm:mb-5 break-words">
+      <h1 className="text-[25px] min-[360px]:text-[28px] sm:text-[34px] font-bold text-slate-900 dark:text-slate-100 leading-[1.2] tracking-tight mb-4 sm:mb-5 break-words text-balance">
         Hi, I&apos;m{" "}
         <TextScramble
           text="Divyanshu Tiwari"
@@ -73,11 +73,11 @@ export default function HomePage() {
 
       {/* Narrative Bio Story */}
       <div className="space-y-3.5 sm:space-y-4.5 text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-300 leading-[1.7]">
-        <p>
+        <p className="text-pretty">
           22, working in{" "}
           <Link
             href="/experience"
-            className="font-bold text-slate-900 dark:text-slate-100 hover:text-[#1D9BF0] dark:hover:text-[#1D9BF0] transition-colors"
+            className="font-bold text-slate-900 dark:text-slate-100 hover:text-sky-500 dark:hover:text-[#1D9BF0] transition-colors"
           >
             Data &amp; AI
           </Link>
@@ -87,20 +87,20 @@ export default function HomePage() {
           work, and where people are just forcing AI into things that don&apos;t
           need it.
         </p>
-        <p>
+        <p className="text-pretty">
           Outside of that:{" "}
           <a
             href="https://www.chess.com/member/papocun"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-bold text-slate-900 dark:text-slate-100 hover:text-[#1D9BF0] dark:hover:text-[#1D9BF0] transition-colors"
+            className="font-bold text-slate-900 dark:text-slate-100 hover:text-sky-500 dark:hover:text-[#1D9BF0] transition-colors"
           >
             chess
           </a>
           , coffee, and{" "}
           <Link
             href="/blog"
-            className="font-bold text-slate-900 dark:text-slate-100 hover:text-[#1D9BF0] dark:hover:text-[#1D9BF0] transition-colors"
+            className="font-bold text-slate-900 dark:text-slate-100 hover:text-sky-500 dark:hover:text-[#1D9BF0] transition-colors"
           >
             writing
           </Link>
@@ -137,8 +137,14 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Top Divider for Skills Section */}
+      <hr className="border-t border-slate-200/80 dark:border-[#2F3336]/60 my-6 sm:my-7" />
+
       {/* Skills Section */}
       <SkillsSection />
+
+      {/* Top Divider for Thought Section */}
+      <hr className="border-t border-slate-200/80 dark:border-[#2F3336]/60 my-6 sm:my-7" />
 
       {/* Thought Section */}
       <ThoughtSection />

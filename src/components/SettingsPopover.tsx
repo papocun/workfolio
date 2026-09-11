@@ -79,7 +79,7 @@ export function SettingsContent() {
           type="button"
           onClick={close}
           aria-label="Close settings"
-          className="p-1 rounded-md text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#1E2732] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] cursor-pointer"
+          className="p-1 rounded-md text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#1E2732] active:scale-[0.96] transition-[transform,colors] duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] cursor-pointer"
         >
           <X size={13} weight="bold" aria-hidden="true" />
         </button>
@@ -139,7 +139,7 @@ export function SettingsContent() {
                 url: portfolioData.socials.twitter,
               })
             }
-            className="group flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200/80 dark:border-[#2F3336]/70 bg-slate-50/60 dark:bg-[#121417]/60 hover:bg-slate-100/90 dark:hover:bg-[#1E2732] hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-150 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] select-none"
+            className="group flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200/80 dark:border-[#2F3336]/70 bg-slate-50/60 dark:bg-[#121417]/60 hover:bg-slate-100/90 dark:hover:bg-[#1E2732] hover:border-slate-300 dark:hover:border-slate-600 active:scale-[0.96] transition-[border-color,background-color,color,transform] duration-150 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] select-none"
           >
             <XLogoIcon className="w-3.5 h-3.5 text-slate-600 dark:text-slate-300 group-hover:text-[#1D9BF0] transition-colors shrink-0" />
             <span className="text-[12px] font-medium truncate">Twitter/X</span>
@@ -159,11 +159,11 @@ export function SettingsContent() {
                 url: portfolioData.socials.linkedin,
               })
             }
-            className="group flex items-center justify-center gap-2 px-2.5 py-1.5 rounded-lg border border-slate-200/80 dark:border-[#2F3336]/70 bg-slate-50/60 dark:bg-[#121417]/60 hover:bg-slate-100/90 dark:hover:bg-[#1E2732] hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-150 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] select-none"
+            className="group flex items-center justify-center gap-2 px-2.5 py-1.5 rounded-lg border border-slate-200/80 dark:border-[#2F3336]/70 bg-slate-50/60 dark:bg-[#121417]/60 hover:bg-slate-100/90 dark:hover:bg-[#1E2732] hover:border-slate-300 dark:hover:border-slate-600 active:scale-[0.96] transition-[border-color,background-color,color,transform] duration-150 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] select-none"
           >
             <LinkedinLogo
               size={14}
-              weight="bold"
+              weight="regular"
               className="text-slate-600 dark:text-slate-300 group-hover:text-[#0A66C2] dark:group-hover:text-[#0A66C2] transition-colors shrink-0"
               aria-hidden="true"
             />
@@ -177,11 +177,11 @@ export function SettingsContent() {
           onClick={close}
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
-          className="group flex items-center justify-center gap-2 w-full px-2.5 py-1.5 rounded-lg border border-slate-200/80 dark:border-[#2F3336]/70 bg-slate-50/60 dark:bg-[#121417]/60 hover:bg-slate-100/90 dark:hover:bg-[#1E2732] hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-150 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] select-none"
+          className="group flex items-center justify-center gap-2 w-full px-2.5 py-1.5 rounded-lg border border-slate-200/80 dark:border-[#2F3336]/70 bg-slate-50/60 dark:bg-[#121417]/60 hover:bg-slate-100/90 dark:hover:bg-[#1E2732] hover:border-slate-300 dark:hover:border-slate-600 active:scale-[0.96] transition-[border-color,background-color,color,transform] duration-150 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] select-none"
         >
           <House
             size={14}
-            weight="bold"
+            weight="regular"
             className="text-slate-600 dark:text-slate-300 group-hover:text-[#1D9BF0] transition-colors shrink-0"
             aria-hidden="true"
           />

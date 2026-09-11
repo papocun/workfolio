@@ -139,16 +139,18 @@ export default function TwitterFollowAlert() {
         handleClose();
       }, AUTO_CLOSE_DELAY_MS);
 
-      // Start 2-second subheading rotation timer
-      rotateIntervalRef.current = setInterval(() => {
-        setSubheadingIndex((prev) => (prev + 1) % SUBHEADINGS.length);
-      }, ROTATE_INTERVAL_MS);
+      // Start 2-second subheading rotation timer only if motion is enabled
+      if (!shouldReduceMotion) {
+        rotateIntervalRef.current = setInterval(() => {
+          setSubheadingIndex((prev) => (prev + 1) % SUBHEADINGS.length);
+        }, ROTATE_INTERVAL_MS);
+      }
     }, SHOW_DELAY_MS);
 
     return () => {
       clearAllTimers();
     };
-  }, [pathname, clearAllTimers, handleClose]);
+  }, [pathname, clearAllTimers, handleClose, shouldReduceMotion]);
 
   const handleDismiss = useCallback(
     (e: React.MouseEvent) => {
@@ -165,16 +167,29 @@ export default function TwitterFollowAlert() {
   };
 
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       {isVisible && (
         <motion.div
-          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.96 }}
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.96 }}
           animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-          exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 15, scale: 0.96 }}
-          transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-          className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 z-50 max-w-[calc(100vw-2rem)] w-auto sm:w-[340px] md:w-[370px] pointer-events-auto select-none"
+          exit={
+            shouldReduceMotion
+              ? { opacity: 0 }
+              : {
+                  opacity: 0,
+                  y: 12,
+                  scale: 0.96,
+                  transition: { duration: 0.14, ease: [0.4, 0, 1, 1] },
+                }
+          }
+          transition={
+            shouldReduceMotion
+              ? { duration: 0 }
+              : { duration: 0.22, ease: [0.16, 1, 0.3, 1] }
+          }
+          className="fixed bottom-[max(1rem,env(safe-area-inset-bottom,0px))] left-[max(1rem,env(safe-area-inset-left,0px))] right-[max(1rem,env(safe-area-inset-right,0px))] sm:left-auto sm:right-6 z-50 max-w-[calc(100vw-2rem)] w-auto sm:w-[340px] md:w-[370px] pointer-events-auto select-none"
         >
-          <div className="relative group border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md hover:border-[#1D9BF0] dark:hover:border-[#1D9BF0] shadow-lg dark:shadow-2xl transition-colors duration-150 p-3.5 sm:p-4 pr-3 rounded-2xl flex items-start gap-3">
+          <div className="relative group border border-slate-200/90 dark:border-[#2F3336] bg-white/95 dark:bg-[#16181C]/95 backdrop-blur-md hover:border-[#1D9BF0] dark:hover:border-[#1D9BF0] shadow-lg dark:shadow-2xl transition-colors duration-150 p-3.5 sm:p-4 pe-3 rounded-2xl flex items-start gap-3">
             {/* Native direct external link covering card area without nested buttons or click-animation */}
             <a
               href={TWITTER_URL}
@@ -209,10 +224,21 @@ export default function TwitterFollowAlert() {
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={subheadingIndex}
-                    initial={{ opacity: 0, y: 4 }}
+                    initial={
+                      shouldReduceMotion
+                        ? { opacity: 0 }
+                        : { opacity: 0, y: 4 }
+                    }
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.22, ease: 'easeOut' }}
+                    exit={
+                      shouldReduceMotion
+                        ? { opacity: 0 }
+                        : { opacity: 0, y: -4 }
+                    }
+                    transition={{
+                      duration: shouldReduceMotion ? 0 : 0.18,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
                     className="text-[12px] sm:text-[12.5px] text-slate-600 dark:text-slate-400 leading-snug line-clamp-2"
                   >
                     {SUBHEADINGS[subheadingIndex]}
@@ -226,7 +252,7 @@ export default function TwitterFollowAlert() {
               type="button"
               onClick={handleDismiss}
               aria-label="Dismiss alert"
-              className="relative z-20 shrink-0 p-1.5 sm:p-1 -mr-1 -mt-1 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors duration-150 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
+              className="relative z-20 shrink-0 p-1.5 sm:p-1 -mr-1 -mt-1 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800 active:scale-[0.96] transition-[transform,colors] duration-150 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
             >
               <X size={15} weight="bold" />
             </button>

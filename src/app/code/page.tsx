@@ -62,10 +62,10 @@ export default function CodePage() {
           <span className="w-1.5 h-1.5 rounded-full bg-[#1D9BF0] animate-pulse" />
           <span>the code</span>
         </div>
-        <h1 className="text-[28px] sm:text-[34px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2 sm:mb-2.5">
+        <h1 className="text-[28px] sm:text-[34px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2 sm:mb-2.5 text-balance">
           Code
         </h1>
-        <p className="text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-[620px]">
+        <p className="text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-[620px] text-pretty">
           I work on coding problems, SQL questions, and practice my problem-solving skills.
         </p>
       </div>

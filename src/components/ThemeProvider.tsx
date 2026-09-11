@@ -87,11 +87,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const executeImmediateThemeChange = useCallback((nextTheme: Theme) => {
-    let styleEl: HTMLStyleElement | null = null;
     if (typeof document !== 'undefined') {
-      styleEl = document.createElement('style');
-      styleEl.textContent = '*,*::before,*::after{transition:none !important}';
-      document.head.appendChild(styleEl);
+      document.documentElement.classList.add('no-theme-transition');
     }
 
     setThemeState(nextTheme);
@@ -104,12 +101,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
     applyThemeToDOM(nextTheme);
 
-    if (styleEl && typeof window !== 'undefined') {
-      void document.body?.offsetHeight;
+    if (typeof window !== 'undefined') {
       requestAnimationFrame(() => {
-        if (styleEl?.parentNode) {
-          styleEl.parentNode.removeChild(styleEl);
-        }
+        document.documentElement.classList.remove('no-theme-transition');
       });
     }
   }, []);

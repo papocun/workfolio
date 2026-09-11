@@ -441,4 +441,20 @@ html.theme-transitioning *::after {
   transition: none !important;
 }
 
+/* ─── Pinned Header View Transition Isolation ────────────────
+   Isolate the sticky header from the root snapshot crossfade so
+   the navigation bar stays rock-solid and never blinks or disappears
+   when switching themes on mobile or desktop. ─── */
+header {
+  view-transition-name: main-navigation;
+}
 
+::view-transition-group(main-navigation) {
+  animation: none !important;
+  z-index: 100;
+}
+
+::view-transition-old(main-navigation),
+::view-transition-new(main-navigation) {
+  animation: none !important;
+}

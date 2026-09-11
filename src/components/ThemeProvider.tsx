@@ -130,6 +130,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         return;
       }
 
+      // Skip View Transition entirely on mobile — the snapshot capture cycle
+      // briefly replaces the real DOM with pseudo-elements, which causes the
+      // sticky navbar to blink/move even when animation: none is set in CSS.
+      // On mobile we always do an instant class-swap with no snapshot at all.
+      const isMobile =
+        typeof window !== 'undefined' && window.innerWidth < 640;
+      if (isMobile) {
+        executeImmediateThemeChange(targetTheme);
+        return;
+      }
+
       isTransitioningRef.current = true;
       setIsTransitioning(true);
 

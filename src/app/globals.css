@@ -437,3 +437,22 @@ html.theme-transitioning *::after {
   transition: none !important;
 }
 
+/* ─── Navbar: pinned out of root view-transition snapshot ────
+   Giving the header its own view-transition-name pulls it out
+   of the root bitmap capture entirely. With animation: none on
+   both old and new pseudo-elements the header never fades,
+   blinks, or disappears — it stays solid and exactly in position
+   throughout the entire theme transition on every device. ──── */
+header {
+  view-transition-name: site-header;
+}
+
+::view-transition-group(site-header) {
+  animation-duration: 0s !important;
+}
+
+::view-transition-old(site-header),
+::view-transition-new(site-header) {
+  animation: none !important;
+  mix-blend-mode: normal;
+}

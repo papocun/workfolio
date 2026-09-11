@@ -30,7 +30,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#FAF9F6]/85 dark:bg-[#000000]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/60 transform-gpu">
+    <header className="sticky top-0 z-50 w-full bg-[#FAF9F6]/85 dark:bg-[#000000]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/60">
       <div className="max-w-[680px] w-full min-w-0 mx-auto px-2.5 min-[360px]:px-4 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between gap-1 min-[360px]:gap-2">
         {/* Left Branding */}
         <Link

@@ -43,3 +43,16 @@ next-env.d.ts
 # local sqlite data
 .data/
 *.sqlite*
+
+# AI agent tooling (internal — not for GitHub)
+.agents/
+plans/
+scripts/
+AUDIT_REPORT.md
+CLAUDE.md
+AGENTS.md
+
+# Unused Next.js boilerplate SVGs
+public/next.svg
+public/vercel.svg
+public/window.svg

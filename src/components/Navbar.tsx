@@ -34,7 +34,7 @@ export default function Navbar() {
       <div className="max-w-[680px] w-full min-w-0 mx-auto px-2.5 min-[360px]:px-4 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between gap-1 min-[360px]:gap-2">
         {/* Left Branding */}
         <Link
-          className="text-[13px] min-[360px]:text-[14px] sm:text-[15.5px] font-semibold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-75 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] shrink-0 select-none"
+          className="text-[13px] min-[360px]:text-[14px] sm:text-[15.5px] font-semibold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-75 active:scale-[0.98] transition-[opacity,transform] duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] shrink-0 select-none"
           href="/"
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
@@ -54,7 +54,7 @@ export default function Navbar() {
                     href={item.href}
                     draggable={false}
                     onDragStart={(e) => e.preventDefault()}
-                    className={`group relative inline-flex items-center gap-0.5 sm:gap-1 py-1 px-1 sm:px-1.5 text-slate-500 dark:text-slate-400 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] select-none ${
+                    className={`group relative inline-flex items-center gap-0.5 sm:gap-1 py-1 px-1 sm:px-1.5 text-slate-500 dark:text-slate-400 active:scale-[0.96] transition-[color,transform] duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] select-none ${
                       isActive
                         ? 'font-semibold text-slate-900 dark:text-slate-100'
                         : 'hover:text-slate-900 dark:hover:text-slate-100'
@@ -63,15 +63,15 @@ export default function Navbar() {
                     <span>{item.label}</span>
                     {item.isUnderConstruction && (
                       <span
-                        className="inline-block w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600 group-hover:bg-amber-500 dark:group-hover:bg-amber-400 -translate-y-1 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                        className="inline-block w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600 group-hover:bg-amber-500 dark:group-hover:bg-amber-400 -translate-y-1 transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)]"
                         title="Under construction"
                       />
                     )}
                     <span
-                      className={`absolute -bottom-0.5 left-0 h-[1.5px] w-full bg-slate-900 dark:bg-slate-100 origin-left transition-transform duration-200 ease-out ${
+                      className={`absolute -bottom-0.5 left-0 h-[1.5px] w-full bg-slate-900 dark:bg-slate-100 origin-center transition-[transform,opacity] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                         isActive
-                          ? 'scale-x-100'
-                          : 'scale-x-0 group-hover:scale-x-100'
+                          ? 'scale-x-100 opacity-100'
+                          : 'scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100'
                       }`}
                     />
                   </Link>
@@ -92,9 +92,9 @@ export default function Navbar() {
           <Popover className="relative inline-flex items-center shrink-0">
             <PopoverButton
               aria-label="Open settings"
-              className="group/avatar inline-flex items-center rounded-full transition-transform duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-105 active:scale-[0.96] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] cursor-pointer shrink-0"
+              className="group/avatar inline-flex items-center rounded-full transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105 active:scale-[0.96] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] cursor-pointer shrink-0"
             >
-              <Avatar className="h-6 w-6 sm:h-7.5 sm:w-7.5 ring-2 ring-slate-200/90 dark:ring-slate-700 select-none cursor-pointer">
+              <Avatar className="h-6 w-6 sm:h-7.5 sm:w-7.5 ring-2 ring-slate-200/90 dark:ring-slate-700 group-hover/avatar:ring-[#1D9BF0]/60 dark:group-hover/avatar:ring-[#1D9BF0]/60 transition-[box-shadow,color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] select-none cursor-pointer">
                 <AvatarImage
                   src={getAssetPath('/images/projects/NUmercaiq.gif')}
                   alt={portfolioData.name}

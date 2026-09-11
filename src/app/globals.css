@@ -437,22 +437,17 @@ html.theme-transitioning *::after {
   transition: none !important;
 }
 
-/* ─── Navbar: pinned out of root view-transition snapshot ────
-   Giving the header its own view-transition-name pulls it out
-   of the root bitmap capture entirely. With animation: none on
-   both old and new pseudo-elements the header never fades,
-   blinks, or disappears — it stays solid and exactly in position
-   throughout the entire theme transition on every device. ──── */
-header {
-  view-transition-name: site-header;
-}
-
-::view-transition-group(site-header) {
-  animation-duration: 0s !important;
-}
-
-::view-transition-old(site-header),
-::view-transition-new(site-header) {
-  animation: none !important;
-  mix-blend-mode: normal;
+/* ─── Mobile: disable view transitions to prevent navbar movement ───
+   On mobile the sticky header's viewport coordinates shift between
+   old/new snapshots during a scrolled theme-change, making any
+   animated view-transition layer "push" the navbar out of place.
+   The simplest, most reliable fix: skip the animation entirely on
+   small screens so the theme switches instantly — no snapshot, no
+   animated layer, no movement, no blink. Desktop keeps the crossfade. */
+@media (max-width: 639px) {
+  html.theme-transitioning::view-transition-group(root),
+  html.theme-transitioning::view-transition-old(root),
+  html.theme-transitioning::view-transition-new(root) {
+    animation: none !important;
+  }
 }

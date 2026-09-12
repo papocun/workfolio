@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { CaretDown, CaretUp, ArrowRight } from '@phosphor-icons/react';
+import { CaretDown, ArrowRight } from '@phosphor-icons/react';
 
 export interface TimelineExperienceItem {
   id: string;
@@ -44,7 +44,7 @@ export default function ExperienceTimeline({
           return (
             <article
               key={exp.id}
-              className={index === 0 ? '' : 'pt-4 sm:pt-5'}
+              className={`pb-3 sm:pb-3.5 ${index === 0 ? '' : 'pt-4 sm:pt-5'}`}
             >
               {/* Top Row: Clickable Header Button */}
               <button
@@ -76,11 +76,7 @@ export default function ExperienceTimeline({
                     {exp.period}
                   </span>
                   <span
-                    className={`inline-flex items-center justify-center transition-colors ${
-                      isExpanded
-                        ? 'text-[#1D9BF0]'
-                        : 'text-slate-400 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200'
-                    }`}
+                    className="inline-flex items-center justify-center text-[#1D9BF0] transition-colors"
                     aria-hidden="true"
                   >
                     <CaretDown

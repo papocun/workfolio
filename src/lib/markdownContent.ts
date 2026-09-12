@@ -117,9 +117,9 @@ Outside of work, I build side projects, play chess, read, and follow whatever ha
 
 export const PROJECTS_MARKDOWN = `# Projects — Divyanshu Tiwari
 
-A curated selection of machine learning systems, predictive pipelines, and production services built by Divyanshu Tiwari.
+A curated selection of machine learning systems, predictive pipelines, analytics engines, and desktop tools built by Divyanshu Tiwari.
 
-## Featured Projects
+## ML-Based Projects
 
 ### 1. Customer Intelligence Engine
 - **Category**: Unsupervised ML & Cloud API
@@ -141,7 +141,13 @@ A curated selection of machine learning systems, predictive pipelines, and produ
 - **Technologies**: Python, CatBoost, FastAPI, Docker, AWS
 - **GitHub**: https://github.com/papocun/DemandCast
 
-### 3. Inventory Intelligence Engine
+## Data Engineering Projects
+
+*Projects coming soon.*
+
+## Data Analytics Projects
+
+### 1. Inventory Intelligence Engine
 - **Category**: Analytics & SQL Optimization
 - **Summary**: SQL-based ABC/Pareto inventory classification engine optimizing revenue-driving SKUs and resolving join amplification.
 - **Key Details**:
@@ -149,6 +155,26 @@ A curated selection of machine learning systems, predictive pipelines, and produ
   - Resolved join amplification and duplicate ingestion issues across 9,001 records.
 - **Technologies**: Python, Pandas, MySQL, Plotly, Streamlit, Railway
 - **GitHub**: https://github.com/papocun/Inventory-supply-chain-optimization
+
+### 2. Digital Wallet Analytics
+- **Category**: Product Analytics & Decision Making
+- **Summary**: End-to-end product analytics project for a B2C digital wallet, exploring user behaviour, engagement, and business decisions through data.
+- **Technologies**: Python, SQL, Product Analytics, Decision Making
+- **GitHub**: https://github.com/papocun/digital-wallet-analytics
+
+### 3. Taxi Fare Analysis
+- **Category**: Dashboard & Business Visualization
+- **Summary**: An end-to-end Power BI analysis exploring taxi data through interactive dashboards and business-focused visualisation.
+- **Technologies**: Power BI
+- **GitHub**: https://github.com/papocun/taxi-fair-analysis
+
+## Python Projects
+
+### 1. My Desk Kitty
+- **Category**: Desktop Tool & Interaction
+- **Summary**: A small interactive Python desktop experiment that reacts to keyboard activity and brings a playful virtual cat to life.
+- **Technologies**: Python, PyInput, PySide6
+- **GitHub**: https://github.com/papocun/My-Desk-Kitty
 
 ## Navigation
 

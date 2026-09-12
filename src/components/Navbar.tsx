@@ -44,43 +44,37 @@ export default function Navbar() {
 
         {/* Right Navigation & Profile Avatar */}
         <div className="flex items-center gap-1.5 min-[360px]:gap-2 sm:gap-4 shrink-0">
-          <nav aria-label="Main navigation" className="flex items-center gap-1 min-[360px]:gap-1.5 sm:gap-2.5 text-[11.5px] min-[360px]:text-[13px] sm:text-[14px] select-none">
-            {NAV_ITEMS.map((item, index) => {
+          <nav aria-label="Main navigation" className="flex items-center gap-2 min-[360px]:gap-2.5 sm:gap-3.5 text-[11.5px] min-[360px]:text-[13px] sm:text-[14px] select-none">
+            {NAV_ITEMS.map((item) => {
               const isActive = pathname === item.href;
 
               return (
-                <div key={item.href} className="flex items-center gap-1 min-[360px]:gap-1.5 sm:gap-2.5">
-                  <Link
-                    href={item.href}
-                    draggable={false}
-                    onDragStart={(e) => e.preventDefault()}
-                    className={`group relative inline-flex items-center gap-0.5 sm:gap-1 py-1 px-0.5 text-slate-500 dark:text-slate-400 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] select-none ${
-                      isActive
-                        ? 'font-semibold text-slate-900 dark:text-slate-100'
-                        : 'hover:text-slate-900 dark:hover:text-slate-100'
-                    }`}
-                  >
-                    <span>{item.label}</span>
-                    {item.isUnderConstruction && (
-                      <span
-                        className="inline-block w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600 group-hover:bg-amber-500 dark:group-hover:bg-amber-400 -translate-y-1 transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                        title="Under construction"
-                      />
-                    )}
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  draggable={false}
+                  onDragStart={(e) => e.preventDefault()}
+                  className={`group relative inline-flex items-center gap-0.5 sm:gap-1 py-1 px-0.5 text-slate-500 dark:text-slate-400 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] select-none ${
+                    isActive
+                      ? 'font-semibold text-slate-900 dark:text-slate-100'
+                      : 'hover:text-slate-900 dark:hover:text-slate-100'
+                  }`}
+                >
+                  <span>{item.label}</span>
+                  {item.isUnderConstruction && (
                     <span
-                      className={`absolute -bottom-0.5 left-0 h-[1.5px] w-full bg-slate-900 dark:bg-slate-100 origin-left transition-transform duration-200 ease-out ${
-                        isActive
-                          ? 'scale-x-100'
-                          : 'scale-x-0 group-hover:scale-x-100'
-                      }`}
+                      className="inline-block w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600 group-hover:bg-amber-500 dark:group-hover:bg-amber-400 -translate-y-1 transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                      title="Under construction"
                     />
-                  </Link>
-                  {index < NAV_ITEMS.length - 1 && (
-                    <span className="text-slate-300 dark:text-slate-700 select-none text-[10px] sm:text-[11px]" aria-hidden="true">
-                      ·
-                    </span>
                   )}
-                </div>
+                  <span
+                    className={`absolute -bottom-0.5 left-0 h-[1.5px] w-full bg-slate-900 dark:bg-slate-100 origin-left transition-transform duration-200 ease-out ${
+                      isActive
+                        ? 'scale-x-100'
+                        : 'scale-x-0 group-hover:scale-x-100'
+                    }`}
+                  />
+                </Link>
               );
             })}
           </nav>

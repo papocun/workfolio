@@ -90,6 +90,8 @@ export const portfolioData: PersonalProfile = {
       id: "customer-intelligence-engine",
       title: "Customer Intelligence Engine",
       category: "Unsupervised ML & Cloud API",
+      projectGroup: "ml",
+      icon: "brain",
       description:
         "Built a KMeans-based customer segmentation system classifying customers into actionable personas with cloud API deployment.",
       impactMetrics: [
@@ -114,6 +116,8 @@ export const portfolioData: PersonalProfile = {
       id: "demandcast",
       title: "DemandCast",
       category: "Time-Series & Production ML",
+      projectGroup: "ml",
+      icon: "chart-line-up",
       description:
         "Production-grade bike demand forecasting pipeline with temporal validation and sub-second real-time inference.",
       impactMetrics: [
@@ -130,6 +134,8 @@ export const portfolioData: PersonalProfile = {
       id: "inventory-intelligence-engine",
       title: "Inventory Intelligence Engine",
       category: "Analytics & SQL Optimization",
+      projectGroup: "data-analytics",
+      icon: "chart-pie-slice",
       description:
         "SQL-based ABC/Pareto inventory classification engine optimizing revenue-driving SKUs and resolving join amplification.",
       impactMetrics: [
@@ -148,6 +154,42 @@ export const portfolioData: PersonalProfile = {
       githubUrl: "https://github.com/papocun/Inventory-supply-chain-optimization",
       isFeatured: true,
       imageSrc: "/images/projects/inventory-intelligence-engine.png",
+    },
+    {
+      id: "digital-wallet-analytics",
+      title: "Digital Wallet Analytics",
+      category: "Product Analytics & Decision Making",
+      projectGroup: "data-analytics",
+      icon: "wallet",
+      description:
+        "End-to-end product analytics project for a B2C digital wallet, exploring user behaviour, engagement, and business decisions through data.",
+      techStack: ["Python", "SQL", "Product Analytics", "Decision Making"],
+      githubUrl: "https://github.com/papocun/digital-wallet-analytics",
+      isFeatured: false,
+    },
+    {
+      id: "taxi-fare-analysis",
+      title: "Taxi Fare Analysis",
+      category: "Dashboard & Business Visualization",
+      projectGroup: "data-analytics",
+      icon: "taxi",
+      description:
+        "An end-to-end Power BI analysis exploring taxi data through interactive dashboards and business-focused visualisation.",
+      techStack: ["Power BI"],
+      githubUrl: "https://github.com/papocun/taxi-fair-analysis",
+      isFeatured: false,
+    },
+    {
+      id: "my-desk-kitty",
+      title: "My Desk Kitty",
+      category: "Desktop Tool & Interaction",
+      projectGroup: "python",
+      icon: "cat",
+      description:
+        "A small interactive Python desktop experiment that reacts to keyboard activity and brings a playful virtual cat to life.",
+      techStack: ["Python", "PyInput", "PySide6"],
+      githubUrl: "https://github.com/papocun/My-Desk-Kitty",
+      isFeatured: false,
     },
   ],
 
@@ -210,3 +252,32 @@ export const portfolioData: PersonalProfile = {
     ],
   },
 };
+
+export interface ProjectCategoryConfig {
+  id: 'ml' | 'data-engineering' | 'data-analytics' | 'python';
+  title: string;
+  description?: string;
+}
+
+export const PROJECT_CATEGORIES: ProjectCategoryConfig[] = [
+  {
+    id: 'ml',
+    title: 'ML-Based Projects',
+    description: 'Production ML systems, clustering models, and time-series forecasting pipelines.',
+  },
+  {
+    id: 'data-engineering',
+    title: 'Data Engineering Projects',
+    description: 'Pipeline architectures, streaming ingestion, and cloud data warehouses.',
+  },
+  {
+    id: 'data-analytics',
+    title: 'Data Analytics Projects',
+    description: 'SQL analytics, customer behavioral insights, and business dashboards.',
+  },
+  {
+    id: 'python',
+    title: 'Python Projects',
+    description: 'Desktop tools, automation scripts, and interactive Python utilities.',
+  },
+];

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { portfolioData } from '@/data/portfolioData';
 import AnimatedProjectsList from '@/components/AnimatedProjectsList';
-import OtherProjectsList from '@/components/OtherProjectsList';
 
 export const metadata: Metadata = {
   title: 'Projects',
@@ -72,11 +71,8 @@ export default function ProjectsPage() {
         </p>
       </div>
 
-      {/* Featured Projects with Scroll Reveal & Stagger Animation */}
+      {/* Categorized Projects with Scroll Reveal & Stagger Animation */}
       <AnimatedProjectsList projects={portfolioData.projects} />
-
-      {/* Secondary Other Projects List */}
-      <OtherProjectsList />
     </main>
   );
 }

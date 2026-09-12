@@ -37,13 +37,15 @@ export interface Project {
   id: string;
   title: string;
   category: string;
+  projectGroup?: 'ml' | 'data-engineering' | 'data-analytics' | 'python';
   description: string;
-  impactMetrics: string[];
+  impactMetrics?: string[];
   techStack: string[];
   githubUrl: string;
   liveUrl?: string;
-  isFeatured: boolean;
+  isFeatured?: boolean;
   imageSrc?: string;
+  icon?: string;
 }
 
 /** Educational qualification. */

@@ -193,14 +193,10 @@ export default function Footer() {
         <div className="border-t border-slate-100 dark:border-slate-800/80 pt-6 mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-between gap-3 text-[12.5px] sm:text-[13px] font-mono text-slate-400 dark:text-slate-500 text-center sm:text-left">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
             <span>&copy; 2026 {portfolioData.name}</span>
-            <span>·</span>
-            <span>All rights reserved</span>
           </div>
 
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
             <LiveTimeDisplay />
-            <span>·</span>
-            <span>{portfolioData.location}</span>
           </div>
         </div>
       </div>

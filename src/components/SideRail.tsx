@@ -1,6 +1,8 @@
 'use client';
 
+import type React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, useScroll, useSpring, useReducedMotion } from 'framer-motion';
 import { Moon, Sun, SpeakerHigh, SpeakerSlash } from '@phosphor-icons/react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/base-ui/avatar';
@@ -24,12 +26,24 @@ function Divider() {
 }
 
 
+/** On the home page, "Home" scrolls back to the top instead of re-navigating. */
+function useScrollTopOnHome() {
+  const pathname = usePathname();
+  return (e: React.MouseEvent) => {
+    if (pathname !== '/') return;
+    e.preventDefault();
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  };
+}
+
 const RING = 48;
 const STROKE = 2;
 const R = (RING - STROKE) / 2;
 
 /** Round page-progress indicator that runs around the profile picture. */
 function ProgressAvatar() {
+  const scrollTop = useScrollTopOnHome();
   const { scrollYProgress } = useScroll();
   const reduce = useReducedMotion();
   const smooth = useSpring(scrollYProgress, { stiffness: 140, damping: 24, mass: 0.4 });
@@ -38,6 +52,7 @@ function ProgressAvatar() {
   return (
     <Link
       href="/"
+      onClick={scrollTop}
       aria-label="Home"
       draggable={false}
       className="relative inline-flex rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0]"
@@ -84,18 +99,19 @@ export default function SideRail() {
   const { isDark, toggleTheme, isTransitioning } = useTheme();
   const { isSoundOn, toggleSound } = useSound();
   const { socials, name } = portfolioData;
+  const scrollTop = useScrollTopOnHome();
 
   return (
     <nav
       aria-label="Primary"
-      className="hidden lg:flex fixed left-6 xl:left-10 top-20 z-40 w-[96px] flex-col items-center select-none"
+      className="hidden lg:flex fixed left-0 top-1/2 -translate-y-1/2 z-40 w-[calc((100vw-680px)/2)] flex-col items-center select-none"
     >
       <ProgressAvatar />
 
       <Divider />
 
-      <ul className="flex w-full flex-col items-stretch">
-        <li><Link href="/" className={linkCls}>Home</Link></li>
+      <ul className="flex w-[96px] flex-col items-stretch">
+        <li><Link href="/" onClick={scrollTop} className={linkCls}>Home</Link></li>
         <li>
           <a
             href={socials.linkedin}

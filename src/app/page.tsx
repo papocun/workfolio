@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import TextScramble from "@/components/TextScramble";
+import { HoverPreviewLink } from "@/components/ui/hover-preview-link";
+import ChessPreviewThumb from "@/components/ChessPreviewThumb";
 import ResumeButton from "@/components/ResumeButton";
 import EmailContactLink from "@/components/EmailContactLink";
 import LocationTag from "@/components/LocationTag";
@@ -73,14 +75,15 @@ export default function HomePage() {
         </p>
         <p className="text-pretty max-w-[65ch]">
           Outside of that:{" "}
-          <a
+          <HoverPreviewLink
             href="https://www.chess.com/member/papocun"
-            target="_blank"
-            rel="noopener noreferrer"
+            title="papocun on Chess.com"
+            domain="chess.com"
+            image={<ChessPreviewThumb />}
             className="font-bold text-slate-900 dark:text-slate-100 hover:text-sky-500 dark:hover:text-[#1D9BF0] transition-colors"
           >
             chess
-          </a>
+          </HoverPreviewLink>
           , coffee, and{" "}
           <span className="font-bold text-slate-900 dark:text-slate-100">writing</span>
           . Thanks for stopping by :)

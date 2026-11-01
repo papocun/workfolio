@@ -22,6 +22,8 @@ const nextConfig: NextConfig = {
   assetPrefix: basePath,
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath || "",
+    // Used by the footer's "Last updated" relative time; fixed when the site is built.
+    NEXT_PUBLIC_BUILD_TIME: new Date().toISOString(),
   },
   images: {
     unoptimized: true,

@@ -80,14 +80,14 @@ function LiveTimeDisplay() {
 
   return (
     <span className="tabular-nums select-none" suppressHydrationWarning>
-      {formattedTime || 'Loading time...'}
+      {formattedTime || ' '}
     </span>
   );
 }
 
 export default function Footer() {
   return (
-    <footer className="w-full max-w-full min-w-0 border-t border-slate-200/80 dark:border-slate-800/80 bg-[#FAF9F6] dark:bg-[#000000] text-slate-600 dark:text-slate-400 mt-16 sm:mt-20 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]">
+    <footer className="w-full max-w-full min-w-0 border-t border-slate-200/80 dark:border-slate-800/80 bg-[#FAF9F6] dark:bg-[#000000] text-slate-600 dark:text-slate-400 mt-4 sm:mt-6 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]">
       <div className="max-w-[680px] w-full min-w-0 mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-8 sm:pb-12">
         {/* Main Footer Multi-Column Structure */}
         <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 sm:gap-6">
@@ -98,7 +98,7 @@ export default function Footer() {
                 href="/"
                 draggable={false}
                 onDragStart={(e) => e.preventDefault()}
-                className="text-[16px] sm:text-[17px] font-bold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-85 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] select-none"
+                className="inline-block py-1 -my-1 text-[16px] sm:text-[17px] font-bold text-slate-900 dark:text-slate-100 tracking-tight hover:opacity-85 transition-opacity duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] select-none"
               >
                 {portfolioData.name.toLowerCase()}
               </Link>
@@ -190,12 +190,12 @@ export default function Footer() {
         </div>
 
         {/* Subtle Bottom Row with Real-Time Clock */}
-        <div className="border-t border-slate-100 dark:border-slate-800/80 pt-6 mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-between gap-3 text-[12.5px] sm:text-[13px] font-mono text-slate-400 dark:text-slate-500 text-center sm:text-left">
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
+        <div className="border-t border-slate-100 dark:border-slate-800/80 pt-6 mt-10 sm:mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 text-[12.5px] sm:text-[13px] font-mono text-slate-400 dark:text-slate-500 text-left">
+          <div className="flex flex-wrap items-center justify-start gap-1.5 sm:gap-2">
             <span>&copy; 2026 {portfolioData.name}</span>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
+          <div className="flex flex-wrap items-center justify-start gap-1.5 sm:gap-2">
             <LiveTimeDisplay />
           </div>
         </div>

@@ -62,7 +62,7 @@ export default function EmailContactLink({ email, className = '' }: EmailContact
         whileHover={shouldReduceMotion ? undefined : { scale: 1.04 }}
         whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
         transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-        className="relative inline-flex items-center justify-center p-1 rounded-md text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
+        className="relative inline-flex items-center justify-center p-1.5 -m-0.5 rounded-md text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0]"
       >
         <AnimatePresence mode="popLayout" initial={false}>
           {copied ? (
@@ -92,4 +92,3 @@ export default function EmailContactLink({ email, className = '' }: EmailContact
     </div>
   );
 }
-

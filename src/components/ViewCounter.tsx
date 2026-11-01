@@ -98,7 +98,7 @@ export default function ViewCounter({ showTooltip = false }: ViewCounterProps) {
         eyeIcon
       )}
 
-      <span className="text-slate-700 dark:text-[#E7E9EA] font-medium min-w-[2ch]">
+      <span className="text-slate-700 dark:text-[#E7E9EA] font-medium tabular-nums min-w-[2ch]">
         {formattedViews !== null ? (
           formattedViews
         ) : (

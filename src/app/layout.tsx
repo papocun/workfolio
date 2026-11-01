@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import Navbar from "@/components/Navbar";
+import SideRail from "@/components/SideRail";
 import Footer from "@/components/Footer";
 import GridBackground from "@/components/GridBackground";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SoundProvider } from "@/components/SoundProvider";
 import CustomCursor from "@/components/CustomCursor";
-import TwitterFollowAlert from "@/components/TwitterFollowAlert";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import PageTransition from "@/components/PageTransition";
 import { portfolioData } from "@/data/portfolioData";
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     template: "%s | Divyanshu Tiwari",
   },
   description:
-    "An explorer in the making, wandering between tech, ideas, and whatever else sparks curiosity.",
+    "Portfolio of Divyanshu Tiwari, a Data Scientist building ML systems, data pipelines, and AI applications.",
   keywords: [
     "Divyanshu Tiwari",
     "Data Scientist",
@@ -104,7 +104,7 @@ export const metadata: Metadata = {
     siteName: "Divyanshu Tiwari",
     title: "Divyanshu Tiwari",
     description:
-      "An explorer in the making, wandering between tech, ideas, and whatever else sparks curiosity.",
+      "Portfolio of Divyanshu Tiwari, a Data Scientist building ML systems, data pipelines, and AI applications.",
     images: [
       {
         url: "/favicon.png",
@@ -118,7 +118,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Divyanshu Tiwari",
     description:
-      "An explorer in the making, wandering between tech, ideas, and whatever else sparks curiosity.",
+      "Portfolio of Divyanshu Tiwari, a Data Scientist building ML systems, data pipelines, and AI applications.",
     creator: "@21dvy_t",
     images: ["/favicon.png"],
   },
@@ -136,7 +136,7 @@ const personJsonLd = {
   url: "https://datafolio.me/",
   jobTitle: "Data Scientist & ML Systems Builder",
   description:
-    "Portfolio of Divyanshu Tiwari, a Data Scientist and ML Systems Builder working across machine learning, data, AI applications, and real-world software systems.",
+    "Portfolio of Divyanshu Tiwari, a Data Scientist and ML Systems Builder working across machine learning, data, and AI applications.",
   sameAs: [
     portfolioData.socials.github,
     portfolioData.socials.linkedin,
@@ -243,17 +243,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col font-sans antialiased bg-[#FAF9F6] dark:bg-[#000000] text-slate-800 dark:text-slate-100 selection:bg-sky-100 dark:selection:bg-[#1E2732] selection:text-sky-900 dark:selection:text-[#E7E9EA]">
+      <body className="min-h-full flex flex-col font-sans bg-[#FAF9F6] dark:bg-[#000000] text-slate-800 dark:text-slate-100 selection:bg-sky-100 dark:selection:bg-[#1E2732] selection:text-sky-900 dark:selection:text-[#E7E9EA]">
         <PostHogProvider>
           <ThemeProvider>
             <SoundProvider>
               <GridBackground />
               <CustomCursor />
               <Navbar />
+              <SideRail />
               <div className="flex-1 w-full max-w-full min-w-0 relative z-10 flex flex-col" role="none">
                 <PageTransition>{children}</PageTransition>
               </div>
-              <TwitterFollowAlert />
               <Footer />
             </SoundProvider>
           </ThemeProvider>

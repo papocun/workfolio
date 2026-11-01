@@ -27,39 +27,30 @@ export const portfolioData: PersonalProfile = {
     badge: "Open to ML / Data Science Roles",
     title: "I build machine learning systems that run in production.",
     bio: [
-      "Data Scientist transitioning from data analytics into applied machine learning, building and deploying production-grade ML systems (fraud scoring, forecasting, segmentation) end-to-end from model design to cloud deployment.",
-      "Deep focus across Supervised & Unsupervised Learning (XGBoost, CatBoost), statistical validation (A/B testing), ETL pipelines, and containerized API serving using FastAPI, Docker, and AWS EC2.",
-      "Co-inventor on an autonomous IoT hardware patent, 1st place champion in a 500+ participant inter-college SQL query competition, and active problem solver with 300+ challenges solved across LeetCode, StrataScratch, and DailySQL.",
+      "Data Scientist moving from data analytics into applied machine learning. Builds and deploys ML systems (fraud scoring, forecasting, segmentation) from model design to cloud deployment.",
+      "Works with supervised and unsupervised learning (XGBoost, CatBoost), A/B testing, ETL pipelines, and containerized API serving with FastAPI, Docker, and AWS EC2.",
+      "Co-inventor on an autonomous IoT hardware patent, 1st place champion in a 500+ participant inter-college SQL query competition, and 300+ problems solved across LeetCode, StrataScratch, and DailySQL.",
     ],
   },
 
   experiences: [
     {
-      role: "AI Data Engineer Intern",
+      role: "Data Engineering & AI Intern",
       company: "Zeitster",
       period: "Aug 2026 – Present",
       location: "Remote",
       summary:
-        "Designed end-to-end data infrastructure and ingestion pipelines for Shopify and external merchant data across AWS, Redshift, and PostgreSQL.",
+        "Designed end-to-end data infrastructure and ingestion pipelines for Shopify and external merchant data on AWS using Python.",
       highlights: [
-        "Architected end-to-end ingestion pipelines for Shopify and merchant data using GraphQL Bulk Operations, Webhooks, S3, Lambda, SQS, Redshift, and Aurora.",
-        "Built ingestion flows for historical backfills and incremental syncs with idempotency, dead-letter queues, and reconciliation for dropped events.",
-        "Mapped data stages from raw ingest through validation, normalization, and canonical warehousing to final scoring tables.",
-        "Drafted canonical schemas and data contracts to unify Shopify, payment gateway, 3PL, and warehouse feeds.",
-        "Codified 20+ business-health formulas with explicit transformation logic, boundary checks, and fallback rules.",
-        "Engineered a Formula Dependency Registry to trigger recalculation only when upstream fields change.",
-        "Stress-tested formulas against synthetic edge cases (refunds, late webhooks, duplicate events, and partial payloads).",
-        "Benchmarked AWS compute and storage costs to model operating expenses scaling from 10 to 10,000 merchants.",
-        "Set up data-quality monitors and alert thresholds for ingestion latency, validation failures, and score drift.",
+        "Automated merchant data processing: built 23+ Python data pipelines that move fragmented Shopify merchant data through staging and Silver-layer workflows to automate downstream scoring.",
+        "Reduced scoring execution time from 7 seconds to 3 seconds (~57%) by optimizing Python scoring logic and data processing.",
+        "Built business scoring logic: implemented 23+ scoring KPIs covering promotional, margin, payment and shipping leakages, COGS, risk and fraud as reusable Python logic.",
+        "Improved data processing reliability: built ingestion and transformation workflows on Shopify GraphQL Bulk Operations and Webhooks, enabling incremental retrieval and less unnecessary fetching across merchant stores.",
+        "Improved scoring auditability: developed reconciliation logic with standardized business rules, data mapping and audit checks, improving score traceability and surfacing discrepancies across merchant-level calculations.",
       ],
       technologies: [
-        "AWS (S3, Lambda, SQS, Redshift)",
-        "Aurora PostgreSQL",
-        "DynamoDB",
         "Python",
-        "SQL",
-        "Shopify GraphQL",
-        "Data Modeling",
+        "AWS",
         "Data Pipelines",
       ],
     },
@@ -69,7 +60,7 @@ export const portfolioData: PersonalProfile = {
       period: "Mar 2026 – May 2026",
       location: "Remote",
       summary:
-        "Automated end-to-end Python reporting pipelines and performed SQL cohort analysis to support retention decisions.",
+        "Automated Python reporting pipelines and ran SQL cohort analysis to support retention decisions.",
       highlights: [
         "Automated weekly Excel reporting in Python, cutting report turnaround from 3+ hours to under 5 minutes.",
         "Ran SQL cohort analyses on raw transactions, uncovering a 15% dip in 90-day repeat purchases to guide retention experiments.",
@@ -93,7 +84,7 @@ export const portfolioData: PersonalProfile = {
       projectGroup: "ml",
       icon: "brain",
       description:
-        "Built a KMeans-based customer segmentation system classifying customers into actionable personas with cloud API deployment.",
+        "Built a KMeans-based customer segmentation system that classifies customers into personas, deployed as a cloud API.",
       impactMetrics: [
         "Segments users into High-Value and Budget personas using seven behavioral features.",
         "Evaluated cluster stability and separation with the Elbow Method and Silhouette scoring.",
@@ -119,10 +110,10 @@ export const portfolioData: PersonalProfile = {
       projectGroup: "ml",
       icon: "chart-line-up",
       description:
-        "Production-grade bike demand forecasting pipeline with temporal validation and sub-second real-time inference.",
+        "Bike demand forecasting pipeline with temporal validation and sub-second real-time inference.",
       impactMetrics: [
         "Modeled hourly demand curves using CatBoost with rolling time-series splits to prevent lookahead bias.",
-        "Validated forecasting performance with temporal validation and hyperparameter tuning across seasons.",
+        "Tuned hyperparameters and checked performance with temporal validation across seasons.",
         "Containerized and deployed the complete system on AWS, serving real-time predictions through a live dashboard.",
       ],
       techStack: ["Python", "CatBoost", "FastAPI", "Docker", "AWS"],
@@ -137,10 +128,10 @@ export const portfolioData: PersonalProfile = {
       projectGroup: "data-analytics",
       icon: "chart-pie-slice",
       description:
-        "SQL-based ABC/Pareto inventory classification engine optimizing revenue-driving SKUs and resolving join amplification.",
+        "SQL-based ABC/Pareto inventory classification engine that identifies revenue-driving SKUs and fixes join amplification.",
       impactMetrics: [
         "Isolated 93 Class A SKUs driving 79.7% of total revenue using SQL-based ABC/Pareto analysis.",
-        "Turned messy supplier inventory logs into clean revenue and reorder classifications.",
+        "Converted supplier inventory logs into revenue and reorder classifications.",
         "Fixed join amplification and duplicate ingestion across 9,001 transaction rows, restoring data integrity.",
       ],
       techStack: [
@@ -162,7 +153,7 @@ export const portfolioData: PersonalProfile = {
       projectGroup: "data-analytics",
       icon: "wallet",
       description:
-        "End-to-end product analytics project for a B2C digital wallet, exploring user behaviour, engagement, and business decisions through data.",
+        "Product analytics project for a B2C digital wallet, covering user behavior, engagement, and business decisions.",
       techStack: ["Python", "SQL", "Product Analytics", "Decision Making"],
       githubUrl: "https://github.com/papocun/digital-wallet-analytics",
       isFeatured: false,
@@ -174,7 +165,7 @@ export const portfolioData: PersonalProfile = {
       projectGroup: "data-analytics",
       icon: "taxi",
       description:
-        "An end-to-end Power BI analysis exploring taxi data through interactive dashboards and business-focused visualisation.",
+        "A Power BI analysis of taxi fare data using interactive dashboards.",
       techStack: ["Power BI"],
       githubUrl: "https://github.com/papocun/taxi-fair-analysis",
       isFeatured: false,
@@ -186,7 +177,7 @@ export const portfolioData: PersonalProfile = {
       projectGroup: "python",
       icon: "cat",
       description:
-        "A small interactive Python desktop experiment that reacts to keyboard activity and brings a playful virtual cat to life.",
+        "A small interactive Python desktop experiment: a virtual cat that reacts to keyboard activity.",
       techStack: ["Python", "PyInput", "PySide6"],
       githubUrl: "https://github.com/papocun/My-Desk-Kitty",
       isFeatured: false,

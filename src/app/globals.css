@@ -358,6 +358,7 @@ nav a,
    ============================================================ */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -451,3 +452,4 @@ html.theme-transitioning *::after {
     animation: none !important;
   }
 }
+

@@ -1,21 +1,20 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import TextScramble from "@/components/TextScramble";
 import ResumeButton from "@/components/ResumeButton";
-import AlertBanner from "@/components/ui/AlertBanner";
 import EmailContactLink from "@/components/EmailContactLink";
 import LocationTag from "@/components/LocationTag";
-import GitHubContributions from "@/components/GitHubContributions";
-import LeetCodeContributions from "@/components/LeetCodeContributions";
+import ActivityTabs from "@/components/ActivityTabs";
+import FeaturedProjects from "@/components/FeaturedProjects";
 import SkillsSection from "@/components/SkillsSection";
-import ThoughtSection from "@/components/ThoughtSection";
+import ExperienceTimeline from "@/components/ExperienceTimeline";
+import { EXPERIENCES } from "@/data/experiences";
 import { portfolioData } from "@/data/portfolioData";
 import { CODING_PROFILE_CONFIGS } from "@/data/codingProfiles";
 
 export const metadata: Metadata = {
   title: "Divyanshu Tiwari",
   description:
-    "An explorer in the making, wandering between tech, ideas, and whatever else sparks curiosity.",
+    "Portfolio of Divyanshu Tiwari, a Data Scientist building ML systems, data pipelines, and AI applications.",
   alternates: {
     canonical: "https://datafolio.me/",
     types: {
@@ -25,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Divyanshu Tiwari",
     description:
-      "An explorer in the making, wandering between tech, ideas, and whatever else sparks curiosity.",
+      "Portfolio of Divyanshu Tiwari, a Data Scientist building ML systems, data pipelines, and AI applications.",
     url: "https://datafolio.me/",
     siteName: "Divyanshu Tiwari",
     locale: "en_US",
@@ -43,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Divyanshu Tiwari",
     description:
-      "An explorer in the making, wandering between tech, ideas, and whatever else sparks curiosity.",
+      "Portfolio of Divyanshu Tiwari, a Data Scientist building ML systems, data pipelines, and AI applications.",
     creator: "@21dvy_t",
     images: ["/favicon.png"],
   },
@@ -52,19 +51,9 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <main className="w-full max-w-[680px] mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 sm:pb-20 min-w-0">
-      {/* Main Notice Banner */}
-      <AlertBanner
-        title="Notice: Some pages are still being built"
-        description="A few sections of my portfolio are still under construction. I’m updating them and will have them ready soon."
-        variant="warning"
-        dismissible={true}
-        autoClose={true}
-        autoCloseDuration={5000}
-      />
-
       {/* Main Heading with Animated Scramble only on the Name */}
       <h1 className="text-[25px] min-[360px]:text-[28px] sm:text-[34px] font-bold text-slate-900 dark:text-slate-100 leading-[1.2] tracking-tight mb-4 sm:mb-5 break-words text-balance">
-        Hi, I&apos;m{" "}
+        Hi, I&rsquo;m{" "}
         <TextScramble
           text="Divyanshu Tiwari"
           className="text-slate-900 dark:text-slate-100 font-bold tracking-tight"
@@ -72,22 +61,17 @@ export default function HomePage() {
       </h1>
 
       {/* Narrative Bio Story */}
-      <div className="space-y-3.5 sm:space-y-4.5 text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-300 leading-[1.7]">
-        <p className="text-pretty">
+      <div id="about" className="scroll-mt-24 space-y-3.5 sm:space-y-4.5 text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-300 leading-[1.7]">
+        <p className="text-pretty max-w-[65ch]">
           22, working in{" "}
-          <Link
-            href="/experience"
-            className="font-bold text-slate-900 dark:text-slate-100 hover:text-sky-500 dark:hover:text-[#1D9BF0] transition-colors"
-          >
-            Data &amp; AI
-          </Link>
-          . Most days I&apos;m building data pipelines and trying to make them
-          actually reliable not just working once and breaking later. Lately
-          I&apos;ve been figuring out where LLMs and RAG genuinely help with data
-          work, and where people are just forcing AI into things that don&apos;t
+          <span className="font-bold text-slate-900 dark:text-slate-100">Data &amp; AI</span>
+          . Most days I&rsquo;m building data pipelines and trying to make them
+          actually reliable, not just working once and breaking later. Lately
+          I&rsquo;ve been figuring out where LLMs and RAG genuinely help with data
+          work, and where people are just forcing AI into things that don&rsquo;t
           need it.
         </p>
-        <p className="text-pretty">
+        <p className="text-pretty max-w-[65ch]">
           Outside of that:{" "}
           <a
             href="https://www.chess.com/member/papocun"
@@ -98,12 +82,7 @@ export default function HomePage() {
             chess
           </a>
           , coffee, and{" "}
-          <Link
-            href="/blog"
-            className="font-bold text-slate-900 dark:text-slate-100 hover:text-sky-500 dark:hover:text-[#1D9BF0] transition-colors"
-          >
-            writing
-          </Link>
+          <span className="font-bold text-slate-900 dark:text-slate-100">writing</span>
           . Thanks for stopping by :)
         </p>
 
@@ -128,14 +107,14 @@ export default function HomePage() {
           Activity
         </h2>
 
-        {/* GitHub Contribution Calendar */}
-        <GitHubContributions username="papocun" />
-
-        {/* LeetCode Contribution Calendar */}
-        <div className="mt-3.5 sm:mt-4">
-          <LeetCodeContributions username={CODING_PROFILE_CONFIGS.leetcode.username} />
-        </div>
+        <ActivityTabs githubUsername="papocun" leetcodeUsername={CODING_PROFILE_CONFIGS.leetcode.username} />
       </section>
+
+      {/* Top Divider for Projects Section */}
+      <hr className="border-t border-slate-200/80 dark:border-[#2F3336]/60 my-6 sm:my-7" />
+
+      {/* Featured Projects */}
+      <FeaturedProjects />
 
       {/* Top Divider for Skills Section */}
       <hr className="border-t border-slate-200/80 dark:border-[#2F3336]/60 my-6 sm:my-7" />
@@ -143,11 +122,16 @@ export default function HomePage() {
       {/* Skills Section */}
       <SkillsSection />
 
-      {/* Top Divider for Thought Section */}
+      {/* Top Divider for Experience Section */}
       <hr className="border-t border-slate-200/80 dark:border-[#2F3336]/60 my-6 sm:my-7" />
 
-      {/* Thought Section */}
-      <ThoughtSection />
+      {/* Work Experience */}
+      <section className="w-full max-w-full min-w-0" aria-label="Work Experience">
+        <h2 className="text-[19px] sm:text-[21px] font-bold text-slate-900 dark:text-slate-100 tracking-tight mb-2 sm:mb-3">
+          Work Experience
+        </h2>
+        <ExperienceTimeline experiences={EXPERIENCES} />
+      </section>
     </main>
   );
 }

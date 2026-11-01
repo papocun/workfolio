@@ -52,13 +52,11 @@ const applyThemeToDOM = (targetTheme: Theme) => {
 };
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Initialize to actual DOM state if available, default to 'dark' for SSR
-  const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof document !== 'undefined') {
-      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-    }
-    return 'dark';
-  });
+  // Start with the SSR default so hydration matches; the effect below syncs to the real DOM theme.
+  const [theme, setThemeState] = useState<Theme>('dark');
+  useEffect(() => {
+    setThemeState(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+  }, []);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
   const isTransitioningRef = useRef<boolean>(false);
 

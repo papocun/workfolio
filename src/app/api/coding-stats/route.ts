@@ -19,6 +19,7 @@ export interface CodingStatsResponse {
     hard?: number;
     streak?: number;
     rating?: number;
+    contests?: number;
   };
   dailysql: {
     solvedCount: number;
@@ -46,6 +47,7 @@ export async function GET() {
   let leetcodeHard = 2;
   let leetcodeStreak: number | undefined = leetcodeConfig.baselineStreak;
   let leetcodeRating: number | undefined = leetcodeConfig.baselineRating;
+  let leetcodeContests: number | undefined;
 
   let dailysqlSolved = dailysqlConfig.baselineSolvedCount;
   let dailysqlEasy = 55;
@@ -63,6 +65,7 @@ export async function GET() {
         query getUserProfile($username: String!) {
           userContestRanking(username: $username) {
             rating
+            attendedContestsCount
           }
           matchedUser(username: $username) {
             userCalendar {
@@ -114,6 +117,9 @@ export async function GET() {
       const submissionCalendar = data?.data?.matchedUser?.userCalendar?.submissionCalendar;
       const activeStreak = calculateLeetCodeActiveStreak(submissionCalendar);
       leetcodeStreak = activeStreak > 0 ? activeStreak : undefined;
+
+      const liveContests = data?.data?.userContestRanking?.attendedContestsCount;
+      if (typeof liveContests === 'number') leetcodeContests = liveContests;
 
       // Check live rating
       const liveRating = data?.data?.userContestRanking?.rating;
@@ -227,6 +233,7 @@ export async function GET() {
       hard: leetcodeHard,
       streak: leetcodeStreak,
       rating: leetcodeRating,
+      contests: leetcodeContests,
     },
     dailysql: {
       solvedCount: dailysqlSolved,

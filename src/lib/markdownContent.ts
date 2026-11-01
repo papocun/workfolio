@@ -6,7 +6,7 @@ export const LLMS_TXT_CONTENT = `# Divyanshu Tiwari
 
 ## About
  
-22, working in Data & AI. Most days I'm building data pipelines and trying to make them actually reliable not just working once and breaking later. Lately I've been figuring out where LLMs and RAG genuinely help with data work, and where people are just forcing AI into things that don't need it. Outside of that: chess, coffee, and writing. Thanks for stopping by :)
+22, working in Data & AI. Most days I'm building data pipelines and trying to make them actually reliable, not just working once and breaking later. Lately I've been figuring out where LLMs and RAG genuinely help with data work, and where people are just forcing AI into things that don't need it. Outside of that: chess, coffee, and writing. Thanks for stopping by :)
  
 - Location: India
 - Email: divyanshutiwari281@gmail.com
@@ -20,7 +20,7 @@ export const LLMS_TXT_CONTENT = `# Divyanshu Tiwari
   - GitHub: https://github.com/papocun/Customer-Segmentation-Project
   - Live Demo: http://16.171.71.103/
 
-- [DemandCast](https://datafolio.me/projects): Production-grade bike demand forecasting pipeline with CatBoost and temporal validation.
+- [DemandCast](https://datafolio.me/projects): Bike demand forecasting pipeline with CatBoost and temporal validation.
   - Category: Time-Series & Production ML
   - Stack: Python, CatBoost, FastAPI, Docker, AWS
   - GitHub: https://github.com/papocun/DemandCast
@@ -32,13 +32,12 @@ export const LLMS_TXT_CONTENT = `# Divyanshu Tiwari
 
 ## Experience
 
-- [Zeitster](https://datafolio.me/experience) (Aug 2026 – Present) — AI Data Engineer Intern
-  - Designed end-to-end data infrastructure for ingesting Shopify and external merchant data covering GraphQL Bulk Operations, Webhooks, S3, Lambda, SQS, Redshift, Aurora PostgreSQL and DynamoDB.
-  - Ingestion architecture for historical backfills and incremental data with retries, DLQs, idempotency and reconciliation.
-  - Stack: AWS (S3, Lambda, SQS, Redshift), Aurora PostgreSQL, DynamoDB, Python, SQL, Shopify GraphQL, Data Modeling, Data Pipelines.
+- [Zeitster](https://datafolio.me/experience) (Aug 2026 – Present) — Data Engineering & AI Intern
+  - Built 23+ Python data pipelines and scoring KPIs for Shopify merchant data on AWS; cut scoring time from 7s to 3s.
+  - Stack: Python, AWS, Data Pipelines
 
 - [ChatSpark](https://datafolio.me/experience) (Mar 2026 – May 2026) — Data Analyst Intern
-  - Automated Python Excel reporting pipeline end-to-end (cut generation time from 3+ hours to <5 mins).
+  - Automated Python Excel reporting pipeline (cut generation time from 3+ hours to <5 mins).
   - SQL cohort analysis uncovering 15% decline in 90-day repeat purchases.
   - Stack: Python, SQL, Excel Automation, Cohort Analysis, Dashboards.
 
@@ -83,12 +82,12 @@ Outside of work, I build side projects, play chess, read, and follow whatever ha
 ## Projects
 
 - [Customer Intelligence Engine](https://datafolio.me/projects): KMeans customer segmentation system with real-time cloud API on AWS EC2.
-- [DemandCast](https://datafolio.me/projects): Production-grade bike demand forecasting pipeline with CatBoost and temporal validation.
+- [DemandCast](https://datafolio.me/projects): Bike demand forecasting pipeline with CatBoost and temporal validation.
 - [Inventory Intelligence Engine](https://datafolio.me/projects): SQL-based ABC/Pareto inventory classification engine optimizing revenue-driving SKUs.
 
 ## Experience
 
-- [Zeitster](https://datafolio.me/experience) (AI Data Engineer Intern, Aug 2026 – Present): End-to-end data infrastructure and ingestion pipelines for Shopify and external merchant data across AWS, Redshift, and PostgreSQL.
+- [Zeitster](https://datafolio.me/experience) (Data Engineering & AI Intern, Aug 2026 – Present): End-to-end data infrastructure and ingestion pipelines for Shopify and external merchant data on AWS using Python.
 - [ChatSpark](https://datafolio.me/experience) (Data Analyst Intern, Mar 2026 – May 2026): Python Excel pipeline automation and SQL cohort analysis.
 
 ## Code
@@ -123,7 +122,7 @@ A curated selection of machine learning systems, predictive pipelines, analytics
 
 ### 1. Customer Intelligence Engine
 - **Category**: Unsupervised ML & Cloud API
-- **Summary**: Built a KMeans-based customer segmentation system classifying customers into actionable personas with cloud API deployment.
+- **Summary**: Built a KMeans-based customer segmentation system that classifies customers into personas, deployed as a cloud API.
 - **Key Details**:
   - Classifies customers into High-Value and Budget personas using seven behavioral features.
   - Validated segmentation using the Elbow Method and Silhouette Score.
@@ -134,7 +133,7 @@ A curated selection of machine learning systems, predictive pipelines, analytics
 
 ### 2. DemandCast
 - **Category**: Time-Series & Production ML
-- **Summary**: Production-grade bike demand forecasting pipeline with temporal validation and sub-second real-time inference.
+- **Summary**: Bike demand forecasting pipeline with temporal validation and sub-second real-time inference.
 - **Key Details**:
   - Modeled demand patterns using CatBoost with temporal train/test split.
   - Containerized and deployed on AWS with FastAPI.
@@ -149,7 +148,7 @@ A curated selection of machine learning systems, predictive pipelines, analytics
 
 ### 1. Inventory Intelligence Engine
 - **Category**: Analytics & SQL Optimization
-- **Summary**: SQL-based ABC/Pareto inventory classification engine optimizing revenue-driving SKUs and resolving join amplification.
+- **Summary**: SQL-based ABC/Pareto inventory classification engine that identifies revenue-driving SKUs and fixes join amplification.
 - **Key Details**:
   - Identified 93 Class A SKUs responsible for 79.7% of revenue.
   - Resolved join amplification and duplicate ingestion issues across 9,001 records.
@@ -158,13 +157,13 @@ A curated selection of machine learning systems, predictive pipelines, analytics
 
 ### 2. Digital Wallet Analytics
 - **Category**: Product Analytics & Decision Making
-- **Summary**: End-to-end product analytics project for a B2C digital wallet, exploring user behaviour, engagement, and business decisions through data.
+- **Summary**: Product analytics project for a B2C digital wallet, covering user behavior, engagement, and business decisions.
 - **Technologies**: Python, SQL, Product Analytics, Decision Making
 - **GitHub**: https://github.com/papocun/digital-wallet-analytics
 
 ### 3. Taxi Fare Analysis
 - **Category**: Dashboard & Business Visualization
-- **Summary**: An end-to-end Power BI analysis exploring taxi data through interactive dashboards and business-focused visualisation.
+- **Summary**: A Power BI analysis of taxi fare data using interactive dashboards.
 - **Technologies**: Power BI
 - **GitHub**: https://github.com/papocun/taxi-fair-analysis
 
@@ -172,7 +171,7 @@ A curated selection of machine learning systems, predictive pipelines, analytics
 
 ### 1. My Desk Kitty
 - **Category**: Desktop Tool & Interaction
-- **Summary**: A small interactive Python desktop experiment that reacts to keyboard activity and brings a playful virtual cat to life.
+- **Summary**: A small interactive Python desktop experiment: a virtual cat that reacts to keyboard activity.
 - **Technologies**: Python, PyInput, PySide6
 - **GitHub**: https://github.com/papocun/My-Desk-Kitty
 
@@ -190,26 +189,22 @@ Professional track record in machine learning engineering, predictive scoring, a
 
 ## Work History
 
-### AI Data Engineer Intern — Zeitster
+### Data Engineering & AI Intern — Zeitster
 - **Period**: Aug 2026 – Present
 - **Location**: Remote
 - **Summary**:
-  - Designed end-to-end data infrastructure for ingesting Shopify and external merchant data covering GraphQL Bulk Operations, Webhooks, S3, Lambda, SQS, Redshift, Aurora PostgreSQL and DynamoDB.
-  - Designed ingestion architecture for historical backfills and incremental data with retries, DLQs, idempotency and reconciliation.
-  - Defined data pipeline architecture from raw ingestion → validation → normalization → canonical warehouse → formula-ready data → scoring.
-  - Designed canonical data models and data contracts to standardize Shopify, payment, 3PL and merchant sources.
-  - Defined 20+ business-health formulas with source-to-target data mappings, transformations, fallback rules and boundary conditions.
-  - Designed Formula Dependency Registry for dependency-aware recalculation.
-  - Designed formula testing strategy using synthetic merchant scenarios.
-  - Evaluated AWS infrastructure trade-offs and created workload-based cost estimates scaling from 10 to 10K merchants.
-  - Defined data-quality and observability requirements covering freshness, validation failures, and scoring correctness.
-- **Technologies**: AWS (S3, Lambda, SQS, Redshift), Aurora PostgreSQL, DynamoDB, Python, SQL, Shopify GraphQL, Data Modeling, Data Pipelines
+  - Automated merchant data processing: built 23+ Python data pipelines that move fragmented Shopify merchant data through staging and Silver-layer workflows to automate downstream scoring.
+  - Reduced scoring execution time from 7 seconds to 3 seconds (~57%) by optimizing Python scoring logic and data processing.
+  - Built business scoring logic: implemented 23+ scoring KPIs covering promotional, margin, payment and shipping leakages, COGS, risk and fraud as reusable Python logic.
+  - Improved data processing reliability: built ingestion and transformation workflows on Shopify GraphQL Bulk Operations and Webhooks, enabling incremental retrieval and less unnecessary fetching across merchant stores.
+  - Improved scoring auditability: developed reconciliation logic with standardized business rules, data mapping and audit checks, improving score traceability and surfacing discrepancies across merchant-level calculations.
+- **Technologies**: Python, AWS, Data Pipelines
 
 ### Data Analyst Intern — ChatSpark
 - **Period**: Mar 2026 – May 2026
 - **Location**: Remote
 - **Summary**:
-  - Automated Python Excel reporting pipeline end-to-end, reducing report generation from 3+ hours to under 5 minutes.
+  - Automated Python Excel reporting pipeline, reducing report generation from 3+ hours to under 5 minutes.
   - Performed SQL cohort analysis on transactional data identifying a 15% decline in 90-day repeat purchases.
   - Maintained recurring business dashboards for operational decision-making.
 - **Technologies**: Python, SQL, Excel Automation, Cohort Analysis, Dashboards

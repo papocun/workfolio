@@ -4,20 +4,16 @@ Hands-on work across data engineering, cloud pipelines, and analytics.
 
 ## Work History
 
-### AI Data Engineer Intern — Zeitster
+### Data Engineering & AI Intern — Zeitster
 - **Period**: Aug 2026 – Present
 - **Location**: Remote
 - **Summary**:
-  - Architected end-to-end ingestion pipelines for Shopify and merchant data using GraphQL Bulk Operations, Webhooks, S3, Lambda, SQS, Redshift, and Aurora.
-  - Built ingestion flows for historical backfills and incremental syncs with idempotency, dead-letter queues, and reconciliation for dropped events.
-  - Mapped data stages from raw ingest through validation, normalization, and canonical warehousing to final scoring tables.
-  - Drafted canonical schemas and data contracts to unify Shopify, payment gateway, 3PL, and warehouse feeds.
-  - Codified 20+ business-health formulas with explicit transformation logic, boundary checks, and fallback rules.
-  - Engineered a Formula Dependency Registry to trigger recalculation only when upstream fields change.
-  - Stress-tested formulas against synthetic edge cases (refunds, late webhooks, duplicate events, and partial payloads).
-  - Benchmarked AWS compute and storage costs to model operating expenses scaling from 10 to 10,000 merchants.
-  - Set up data-quality monitors and alert thresholds for ingestion latency, validation failures, and score drift.
-- **Technologies**: AWS (S3, Lambda, SQS, Redshift), Aurora PostgreSQL, DynamoDB, Python, SQL, Shopify GraphQL, Data Modeling, Data Pipelines
+  - Automated merchant data processing: built 23+ Python data pipelines that move fragmented Shopify merchant data through staging and Silver-layer workflows to automate downstream scoring.
+  - Reduced scoring execution time from 7 seconds to 3 seconds (~57%) by optimizing Python scoring logic and data processing.
+  - Built business scoring logic: implemented 23+ scoring KPIs covering promotional, margin, payment and shipping leakages, COGS, risk and fraud as reusable Python logic.
+  - Improved data processing reliability: built ingestion and transformation workflows on Shopify GraphQL Bulk Operations and Webhooks, enabling incremental retrieval and less unnecessary fetching across merchant stores.
+  - Improved scoring auditability: developed reconciliation logic with standardized business rules, data mapping and audit checks, improving score traceability and surfacing discrepancies across merchant-level calculations.
+- **Technologies**: Python, AWS, Data Pipelines
 
 ### Data Analyst Intern — ChatSpark
 - **Period**: Mar 2026 – May 2026

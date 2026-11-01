@@ -1,8 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { TransitionPanel } from '@/components/core/transition-panel';
-import { useReducedMotion } from 'framer-motion';
+import React from 'react';
 
 interface SkillItem {
   name: string;
@@ -339,127 +337,59 @@ interface SkillsSectionProps {
   className?: string;
 }
 
-export default function SkillsSection({ className = '' }: SkillsSectionProps) {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
-  const [timerKey, setTimerKey] = useState<number>(0);
-  const shouldReduceMotion = useReducedMotion();
+const ALL_SKILLS: SkillItem[] = DATA_ENGINEERING_SKILLS.flatMap((c) => c.skills);
 
-  // Auto-rotate every 5 seconds; pause if reduced motion is requested
-  useEffect(() => {
-    if (isPaused || shouldReduceMotion) return;
+/** Shared rectangular chip style, used by Skills, Projects and Work Experience. */
+export const SKILL_CHIP_CLASS =
+  "inline-flex items-center gap-2 px-3 py-1.5 rounded-[6px] border border-slate-200/90 dark:border-[#2F3336]/80 bg-white/80 dark:bg-[#16181C]/70 shadow-2xs text-slate-800 dark:text-slate-200 text-[13px] sm:text-[13.5px] font-medium tracking-tight hover:border-[#1D9BF0]/60 hover:bg-slate-50 dark:hover:bg-[#1E2732]/80 transition-[border-color,background-color] duration-150 cursor-default select-none group";
 
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % DATA_ENGINEERING_SKILLS.length);
-    }, 5000);
+const SKILL_ALIASES: Record<string, string> = {
+  airflow: 'apache airflow',
+  s3: 'amazon s3',
+  redshift: 'amazon redshift',
+  'data pipelines': 'data pipelines',
+};
 
-    return () => clearInterval(interval);
-  }, [isPaused, timerKey, shouldReduceMotion]);
-
-  const handleCategorySelect = (index: number) => {
-    setActiveIndex(index);
-    // Restart the 5-second countdown from this moment
-    setTimerKey((k) => k + 1);
-  };
-
+/** Chip with the matching skill icon when one exists, text only otherwise. */
+export function SkillChip({ name, as: Tag = 'li' }: { name: string; as?: 'li' | 'span' }) {
+  const key = name.toLowerCase();
+  const icon = ALL_SKILLS.find((sk) => sk.name.toLowerCase() === (SKILL_ALIASES[key] ?? key))?.icon;
   return (
-    <section
-      className={`w-full max-w-full min-w-0 ${className}`}
-      aria-label="Skills & Technologies"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
-      {/* Section Heading with Theme-Aware Typography */}
+    <Tag className={SKILL_CHIP_CLASS}>
+      {icon && (
+        <span className="shrink-0 flex items-center justify-center transition-transform duration-150 group-hover:scale-105">
+          {icon}
+        </span>
+      )}
+      <span className="leading-none whitespace-nowrap group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-150">
+        {name}
+      </span>
+    </Tag>
+  );
+}
+
+export default function SkillsSection({ className = '' }: SkillsSectionProps) {
+  return (
+    <section className={`w-full max-w-full min-w-0 ${className}`} aria-label="Skills & Technologies">
       <h2 className="text-[19px] sm:text-[21px] font-bold text-slate-900 dark:text-slate-100 tracking-tight mb-3.5 sm:mb-4 text-balance">
         Skills
       </h2>
 
-      {/* 4 Compact Selectable Category Tabs */}
-      <div
-        role="tablist"
-        aria-label="Skills categories"
-        onKeyDown={(e) => {
-          if (e.key === 'ArrowRight') {
-            e.preventDefault();
-            handleCategorySelect((activeIndex + 1) % DATA_ENGINEERING_SKILLS.length);
-          } else if (e.key === 'ArrowLeft') {
-            e.preventDefault();
-            handleCategorySelect(
-              (activeIndex - 1 + DATA_ENGINEERING_SKILLS.length) % DATA_ENGINEERING_SKILLS.length
-            );
-          }
-        }}
-        className="flex flex-wrap items-center gap-2 sm:gap-2.5 mb-3.5 sm:mb-4"
-      >
-        {DATA_ENGINEERING_SKILLS.map((item, index) => {
-          const isActive = activeIndex === index;
-          return (
-            <button
-              key={item.category}
-              type="button"
-              role="tab"
-              aria-selected={isActive}
-              tabIndex={0}
-              onClick={() => handleCategorySelect(index)}
-              className={`inline-flex items-center px-3 sm:px-3.5 py-1.5 text-[13px] sm:text-[13.5px] font-medium rounded-md active:scale-[0.96] transition-[border-color,background-color,color,transform] duration-150 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9BF0] whitespace-nowrap ${
-                isActive
-                  ? 'bg-slate-900 text-white dark:bg-[#1E2732] dark:text-slate-100 border border-slate-900 dark:border-[#2F3336] shadow-xs'
-                  : 'bg-slate-100/80 text-slate-600 dark:bg-[#16181C]/60 dark:text-slate-400 border border-slate-200/60 dark:border-transparent hover:bg-slate-200/70 dark:hover:bg-[#16181C] hover:text-slate-900 dark:hover:text-slate-200'
-              }`}
-            >
-              {item.category}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* TransitionPanel rendering only the active category's skill boxes */}
-      <div className="min-h-[76px] sm:min-h-[80px] flex items-center">
-        <TransitionPanel
-          activeIndex={activeIndex}
-          mode="popLayout"
-          transition={
-            shouldReduceMotion
-              ? { duration: 0 }
-              : { duration: 0.16, ease: [0.16, 1, 0.3, 1] }
-          }
-          variants={
-            shouldReduceMotion
-              ? {
-                  enter: { opacity: 1 },
-                  center: { opacity: 1 },
-                  exit: { opacity: 1 },
-                }
-              : {
-                  enter: { opacity: 0, y: 6 },
-                  center: { opacity: 1, y: 0 },
-                  exit: { opacity: 0, y: -6 },
-                }
-          }
-          className="w-full max-w-full min-w-0"
-        >
-          {DATA_ENGINEERING_SKILLS.map((item) => (
-            <div
-              key={item.category}
-              className="flex flex-wrap items-center gap-2 sm:gap-2.5 py-1"
-            >
-              {item.skills.map((skill) => (
-                <div
-                  key={skill.name}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[6px] border border-slate-200/90 dark:border-[#2F3336]/80 bg-white/80 dark:bg-[#16181C]/70 shadow-2xs text-slate-800 dark:text-slate-200 text-[13px] sm:text-[13.5px] font-medium tracking-tight hover:border-[#1D9BF0]/60 dark:hover:border-[#1D9BF0]/60 hover:bg-slate-50 dark:hover:bg-[#1E2732]/80 transition-[border-color,background-color] duration-150 cursor-default select-none group"
-                >
-                  <span className="shrink-0 flex items-center justify-center transition-transform duration-150 group-hover:scale-105">
-                    {skill.icon}
-                  </span>
-                  <span className="leading-none whitespace-nowrap group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-150">
-                    {skill.name}
-                  </span>
-                </div>
-              ))}
-            </div>
-          ))}
-        </TransitionPanel>
-      </div>
+      <ul className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+        {ALL_SKILLS.map((skill) => (
+          <li
+            key={skill.name}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[6px] border border-slate-200/90 dark:border-[#2F3336]/80 bg-white/80 dark:bg-[#16181C]/70 shadow-2xs text-slate-800 dark:text-slate-200 text-[13px] sm:text-[13.5px] font-medium tracking-tight hover:border-[#1D9BF0]/60 hover:bg-slate-50 dark:hover:bg-[#1E2732]/80 transition-[border-color,background-color] duration-150 cursor-default select-none group"
+          >
+            <span className="shrink-0 flex items-center justify-center transition-transform duration-150 group-hover:scale-105">
+              {skill.icon}
+            </span>
+            <span className="leading-none whitespace-nowrap group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-150">
+              {skill.name}
+            </span>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

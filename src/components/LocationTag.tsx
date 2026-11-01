@@ -90,7 +90,7 @@ export default function LocationTag({
 
         {/* Vertical Pipe Divider between Location and View Counter */}
         <span
-          className="text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-light"
+          className="text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-normal"
           aria-hidden="true"
         >
           |
@@ -102,7 +102,7 @@ export default function LocationTag({
 
       {/* Middle Vertical Pipe Divider (hidden when wrapped on mobile) */}
       <span
-        className="hidden min-[480px]:inline text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-light"
+        className="hidden min-[480px]:inline text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-normal"
         aria-hidden="true"
       >
         |
@@ -180,7 +180,7 @@ export default function LocationTag({
 
         {/* Vertical Pipe Divider */}
         <span
-          className="text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-light"
+          className="text-slate-300 dark:text-[#2F3336] select-none text-[12px] font-normal"
           aria-hidden="true"
         >
           |

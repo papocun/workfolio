@@ -7,7 +7,7 @@ Website: https://datafolio.me/
 
 ## About
 
-22, working in Data & AI. Most days I'm building data pipelines and trying to make them actually reliable not just working once and breaking later. Lately I've been figuring out where LLMs and RAG genuinely help with data work, and where people are just forcing AI into things that don't need it.
+22, working in Data & AI. Most days I'm building data pipelines and trying to make them actually reliable, not just working once and breaking later. Lately I've been figuring out where LLMs and RAG genuinely help with data work, and where people are just forcing AI into things that don't need it.
 
 Outside of that: chess, coffee, and writing. Thanks for stopping by :)
 

@@ -1,5 +1,6 @@
 'use client';
 
+import { SkillChip } from '@/components/SkillsSection';
 import React, { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { CaretDown, ArrowRight } from '@phosphor-icons/react';
@@ -36,7 +37,7 @@ export default function ExperienceTimeline({
 
   return (
     <section aria-label="Experience List" className="w-full">
-      <div className="divide-y divide-slate-200/80 dark:divide-[#2F3336]/40 space-y-4 sm:space-y-5">
+      <div className="divide-y divide-slate-200/80 dark:divide-[#2F3336]/60 space-y-4 sm:space-y-5">
         {experiences.map((exp, index) => {
           const isExpanded = !!expandedIds[exp.id];
           const contentId = `exp-details-${exp.id}`;
@@ -76,12 +77,12 @@ export default function ExperienceTimeline({
                     {exp.period}
                   </span>
                   <span
-                    className="inline-flex items-center justify-center text-[#1D9BF0] transition-colors"
+                    className="inline-flex items-center justify-center text-slate-500 dark:text-[#71767B] transition-colors"
                     aria-hidden="true"
                   >
                     <CaretDown
                       size={16}
-                      weight="bold"
+                      weight="regular"
                       className={`transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                         isExpanded ? 'rotate-180' : 'rotate-0'
                       }`}
@@ -91,7 +92,7 @@ export default function ExperienceTimeline({
               </button>
 
               {/* Short One-Line Summary */}
-              <p className="text-[14.5px] sm:text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mt-1 sm:mt-1.5 text-pretty">
+              <p className="text-[14px] sm:text-[15px] leading-[1.65] text-slate-600 dark:text-slate-300 mt-1 sm:mt-1.5 text-pretty">
                 {exp.summary}
               </p>
 
@@ -120,7 +121,7 @@ export default function ExperienceTimeline({
                         >
                           <ArrowRight
                             size={14}
-                            weight="bold"
+                            weight="regular"
                             className="text-[#1D9BF0] shrink-0 mt-1"
                             aria-hidden="true"
                           />
@@ -130,14 +131,9 @@ export default function ExperienceTimeline({
 
                       {/* Technologies Used */}
                       {exp.technologies.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5 pt-1.5">
+                        <div className="flex flex-wrap gap-2 pt-1.5">
                           {exp.technologies.map((tech) => (
-                            <span
-                              key={tech}
-                              className="rounded bg-slate-100 dark:bg-[#16181C] border border-slate-200/80 dark:border-[#2F3336] px-2.5 py-1 text-[12px] font-mono text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap"
-                            >
-                              {tech}
-                            </span>
+                            <SkillChip key={tech} as="span" name={tech} />
                           ))}
                         </div>
                       )}

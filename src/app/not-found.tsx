@@ -17,26 +17,6 @@ const RECOVERY_LINKS = [
     description: 'Introduction, bio, core focus, and contact information.',
   },
   {
-    title: 'Projects',
-    href: '/projects',
-    description: 'Production machine learning systems, time-series pipelines, and cloud APIs.',
-  },
-  {
-    title: 'Experience',
-    href: '/experience',
-    description: 'Professional and startup experience across data science and ML engineering.',
-  },
-  {
-    title: 'Code',
-    href: '/code',
-    description: 'Coding profiles, active streaks, and algorithm problem-solving activity.',
-  },
-  {
-    title: 'Blog',
-    href: '/blog',
-    description: 'Technical writing, notes, and research.',
-  },
-  {
     title: 'Sitemap (XML)',
     href: '/sitemap.xml',
     description: 'Complete XML sitemap listing all canonical public pages.',
@@ -63,7 +43,7 @@ export default function NotFound() {
       </h1>
 
       <p className="text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-300 leading-relaxed mb-8 text-pretty">
-        The URL you requested does not exist or has moved. Use the links below to navigate to valid sections of the site or access agent-friendly resources.
+        The URL does not exist or has moved. Try one of these links.
       </p>
 
       {/* Navigation & Recovery Links Section */}

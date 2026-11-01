@@ -19,7 +19,7 @@ const OTHER_PROJECTS: OtherProjectItem[] = [
     index: '01',
     title: 'Digital Wallet Analytics',
     description:
-      'End-to-end product analytics project for a B2C digital wallet, exploring user behaviour, engagement, and business decisions through data.',
+      'Product analytics project for a B2C digital wallet, covering user behavior, engagement, and business decisions.',
     techStack: ['Python', 'SQL', 'Product Analytics', 'Decision Making'],
     year: '2026',
     githubUrl: 'https://github.com/papocun/digital-wallet-analytics',
@@ -29,7 +29,7 @@ const OTHER_PROJECTS: OtherProjectItem[] = [
     index: '02',
     title: 'My Desk Kitty',
     description:
-      'A small interactive Python desktop experiment that reacts to keyboard activity and brings a playful virtual cat to life.',
+      'A small interactive Python desktop experiment: a virtual cat that reacts to keyboard activity.',
     techStack: ['Python', 'PyInput', 'PySide6'],
     year: '2026',
     githubUrl: 'https://github.com/papocun/My-Desk-Kitty',
@@ -39,7 +39,7 @@ const OTHER_PROJECTS: OtherProjectItem[] = [
     index: '03',
     title: 'Taxi Fare Analysis',
     description:
-      'An end-to-end Power BI analysis exploring taxi data through interactive dashboards and business-focused visualisation.',
+      'A Power BI analysis of taxi fare data using interactive dashboards.',
     techStack: ['Power BI'],
     year: '2026',
     githubUrl: 'https://github.com/papocun/taxi-fair-analysis',
@@ -56,7 +56,7 @@ export default function OtherProjectsList() {
           <span>more projects</span>
         </div>
         <h2 className="text-[24px] sm:text-[28px] font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2 text-balance">
-          Other things I&apos;ve built
+          Other things I&rsquo;ve built
         </h2>
         <p className="text-[15px] sm:text-[16px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-[620px] text-pretty">
           A few more things I’ve explored along the way.

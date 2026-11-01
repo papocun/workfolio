@@ -3,6 +3,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ContributionHeatmap, HeatmapLegend, type ContributionDay as HeatDay } from '@/components/ContributionHeatmap';
 import { getAssetPath } from '@/lib/assetPath';
+import { HoverPreviewLink } from '@/components/ui/hover-preview-link';
+import ProfilePreviewThumb from '@/components/ProfilePreviewThumb';
 import { CODING_PROFILE_CONFIGS } from '@/data/codingProfiles';
 import type {
   LeetCodeContributionsApiResponse,
@@ -296,9 +298,15 @@ export default function LeetCodeContributions({
       <p className="text-[13px] text-slate-500 dark:text-[#71767B]">
         <span className="font-semibold text-slate-900 dark:text-slate-100 tabular-nums">{calendar.totalSubmissions.toLocaleString()}</span>{' '}
         submissions in the last year on{' '}
-        <a href={`https://leetcode.com/u/${effectiveUsername}`} target="_blank" rel="noopener noreferrer" className="font-medium text-slate-900 dark:text-slate-100 underline decoration-slate-400/50 underline-offset-2 hover:decoration-current">
+        <HoverPreviewLink
+          href={`https://leetcode.com/u/${effectiveUsername}`}
+          title={`${effectiveUsername} on LeetCode`}
+          domain="leetcode.com"
+          image={<ProfilePreviewThumb src={CODING_PROFILE_CONFIGS.leetcode.imageSrc} alt="" tint="#fff3e0" />}
+          className="font-medium text-slate-900 dark:text-slate-100 underline decoration-slate-400/50 underline-offset-2 hover:decoration-current"
+        >
           LeetCode
-        </a>
+        </HoverPreviewLink>
         {typeof rating === 'number' && rating > 0 && (
           <>
             {' · '}Rating{' '}

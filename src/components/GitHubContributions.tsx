@@ -3,6 +3,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ContributionHeatmap, HeatmapLegend, type ContributionDay as HeatDay } from '@/components/ContributionHeatmap';
 import { getAssetPath } from '@/lib/assetPath';
+import { HoverPreviewLink } from '@/components/ui/hover-preview-link';
+import ProfilePreviewThumb from '@/components/ProfilePreviewThumb';
 import type { GitHubContributionsApiResponse, GitHubContributionCalendar, ContributionDay } from '@/types/github';
 import repoCommitsData from '@/data/repoCommits.json';
 
@@ -188,9 +190,15 @@ export default function GitHubContributions({
       <p className="text-[13px] text-slate-500 dark:text-[#71767B]">
         <span className="font-semibold text-slate-900 dark:text-slate-100 tabular-nums">{calendar.totalContributions.toLocaleString()}</span>{' '}
         contributions in the last year on{' '}
-        <a href={`https://github.com/${effectiveUsername}`} target="_blank" rel="noopener noreferrer" className="font-medium text-slate-900 dark:text-slate-100 underline decoration-slate-400/50 underline-offset-2 hover:decoration-current">
+        <HoverPreviewLink
+          href={`https://github.com/${effectiveUsername}`}
+          title={`${effectiveUsername} on GitHub`}
+          domain="github.com"
+          image={<ProfilePreviewThumb src={`https://github.com/${effectiveUsername}.png?size=128`} alt="" tint="#24292f" />}
+          className="font-medium text-slate-900 dark:text-slate-100 underline decoration-slate-400/50 underline-offset-2 hover:decoration-current"
+        >
           GitHub
-        </a>
+        </HoverPreviewLink>
       </p>
       <ContributionHeatmap data={days} />
       <HeatmapLegend className="self-end" />

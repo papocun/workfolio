@@ -244,7 +244,7 @@ export default function LeetCodeContributions({
     async function loadContest() {
       // 1. Local API route (dev / server builds)
       try {
-        const res = await fetch(getAssetPath('/api/coding-stats/'), { cache: 'no-cache' });
+        const res = await fetch(getAssetPath('/api/coding-stats'), { cache: 'no-cache' });
         if (res.ok) {
           const d = await res.json();
           if (typeof d?.leetcode?.contests === 'number') {

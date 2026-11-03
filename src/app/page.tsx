@@ -67,14 +67,11 @@ export default function HomePage() {
         <p className="text-pretty max-w-[65ch]">
           22, working in{" "}
           <span className="font-bold text-slate-900 dark:text-slate-100">Data &amp; AI</span>
-          . Most days I&rsquo;m building data pipelines and trying to make them
-          actually reliable, not just working once and breaking later. Lately
-          I&rsquo;ve been figuring out where LLMs and RAG genuinely help with data
-          work, and where people are just forcing AI into things that don&rsquo;t
-          need it.
-        </p>
-        <p className="text-pretty max-w-[65ch]">
-          Outside of that:{" "}
+          . I enjoy exploring how technology works, building things, solving
+          problems, and understanding what happens under the hood. Usually found
+          experimenting with code, exploring new ideas, or figuring out why
+          something broke. Curious about a lot of things and always learning.
+          Outside tech, I enjoy maths, books, and{" "}
           <HoverPreviewLink
             href="https://www.chess.com/member/papocun"
             title="papocun on Chess.com"
@@ -84,9 +81,7 @@ export default function HomePage() {
           >
             chess
           </HoverPreviewLink>
-          , coffee, and{" "}
-          <span className="font-bold text-slate-900 dark:text-slate-100">writing</span>
-          . Thanks for stopping by :)
+          .
         </p>
 
         {/* Location Row */}

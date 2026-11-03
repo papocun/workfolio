@@ -39,7 +39,7 @@ export default function DailySQLContributions({
 
   useEffect(() => {
     let cancelled = false;
-    fetch(getAssetPath('/api/dailysql-contributions/'))
+    fetch(getAssetPath('/api/dailysql-contributions'))
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
         if (cancelled) return;

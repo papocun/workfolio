@@ -6,18 +6,16 @@ import { ArrowSquareOut, CaretDown, GithubLogo } from '@phosphor-icons/react';
 
 interface Repo {
   name: string;
-  langs: string;
   description: string;
   tags: string[];
   url: string;
   liveUrl?: string;
 }
 
-// Two latest repos, shown as an expandable list.
+// Featured repos, shown as an expandable list.
 const FEATURED_REPOS: Repo[] = [
   {
     name: 'Self_healing_data_pipeline',
-    langs: 'Python, Airflow',
     description:
       'Self-healing ETL for large-scale review sentiment. Streams Yelp reviews in batches, classifies them with a local LLM, checkpoints every batch, retries with backoff and quarantines bad records.',
     tags: ['Python', 'Airflow', 'Ollama', 'FastAPI', 'Parquet', 'Next.js'],
@@ -25,12 +23,33 @@ const FEATURED_REPOS: Repo[] = [
   },
   {
     name: 'Realtime_analytics_pipeline',
-    langs: 'Python, Kafka',
     description:
       'End-to-end realtime music analytics. Kafka events land in a MinIO lake, Airflow loads Snowflake, and dbt builds tested Bronze, Silver and Gold layers behind a live dashboard.',
     tags: ['Kafka', 'MinIO', 'Airflow', 'Snowflake', 'dbt'],
     url: 'https://github.com/papocun/Realtime_analytics_pipeline',
     liveUrl: 'https://realtime-analytics-pipeline.vercel.app/',
+  },
+  {
+    name: 'Inventory-supply-chain-optimization',
+    description:
+      'Decision-support engine for inventory teams. SQL ABC/Pareto analysis, safety stock, reorder point and EOQ turn transaction history into Healthy, Warning and Critical replenishment signals in a Streamlit dashboard.',
+    tags: ['Python', 'MySQL', 'Pandas', 'Plotly', 'Streamlit'],
+    url: 'https://github.com/papocun/Inventory-supply-chain-optimization',
+  },
+  {
+    name: 'Customer-Segmentation-Project',
+    description:
+      'End-to-end ML customer segmentation. KMeans splits customers into High-Value and Budget personas, served through a FastAPI endpoint and Streamlit dashboard, containerized with Docker and deployed on AWS EC2.',
+    tags: ['Scikit-learn', 'FastAPI', 'Streamlit', 'MongoDB', 'Docker', 'AWS'],
+    url: 'https://github.com/papocun/Customer-Segmentation-Project',
+    liveUrl: 'http://16.171.71.103/',
+  },
+  {
+    name: 'My-Desk-Kitty',
+    description:
+      'An animated pixel-art cat that lives on your desktop. It follows the cursor, reacts to clicks and keystrokes, and runs from the system tray.',
+    tags: ['Python', 'PySide6', 'PyInput'],
+    url: 'https://github.com/papocun/My-Desk-Kitty',
   },
 ];
 
@@ -39,7 +58,7 @@ const linkCls =
 
 export default function FeaturedProjects() {
   const [open, setOpen] = useState<Record<string, boolean>>(
-    () => Object.fromEntries(FEATURED_REPOS.map((r) => [r.name, true]))
+    () => Object.fromEntries(FEATURED_REPOS.map((r) => [r.name, false]))
   );
 
   return (
@@ -59,13 +78,13 @@ export default function FeaturedProjects() {
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => setOpen((o) => ({ ...o, [repo.name]: !o[repo.name] }))}
-                className="flex w-full items-center justify-between gap-3 text-left cursor-pointer"
+                className="block w-full text-left cursor-pointer"
               >
+              <div className="flex w-full items-center justify-between gap-3">
                 <span className="min-w-0 truncate text-[15px] sm:text-[16px] font-bold text-slate-900 dark:text-slate-100 tracking-tight">
                   {repo.name}
                 </span>
                 <span className="flex shrink-0 items-center gap-2.5 text-[12px] sm:text-[12.5px] font-mono text-slate-500 dark:text-[#71767B]">
-                  <span className="hidden min-[420px]:inline">{repo.langs}</span>
                   <CaretDown
                     size={16}
                     weight="regular"
@@ -73,7 +92,15 @@ export default function FeaturedProjects() {
                     className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
                   />
                 </span>
-              </button>
+              </div>
+              <p
+                className={`mt-1.5 text-[14px] sm:text-[15px] leading-[1.65] text-slate-600 dark:text-slate-300 text-pretty ${
+                  isOpen ? '' : 'line-clamp-1'
+                }`}
+              >
+                {repo.description}
+              </p>
+            </button>
 
               <div
                 id={panelId}
@@ -82,12 +109,8 @@ export default function FeaturedProjects() {
                 }`}
               >
                 <div className="overflow-hidden">
-                  <div className="pt-2.5 sm:pl-3.5">
-                    <p className="text-[14px] sm:text-[15px] leading-[1.65] text-slate-600 dark:text-slate-300 text-pretty">
-                      {repo.description}
-                    </p>
-
-                    <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                  <div className="pt-3">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                       <ul className="flex flex-wrap gap-2" aria-label="Tech">
                         {repo.tags.map((t) => (
                           <SkillChip key={t} name={t} />

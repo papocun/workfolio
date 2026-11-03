@@ -4,8 +4,7 @@ import { HoverPreviewLink } from "@/components/ui/hover-preview-link";
 import ChessPreviewThumb from "@/components/ChessPreviewThumb";
 import ResumeButton from "@/components/ResumeButton";
 import EmailContactLink from "@/components/EmailContactLink";
-import LocationTag from "@/components/LocationTag";
-import ActivityTabs from "@/components/ActivityTabs";
+import LocationTag from "@/components/LocationTag";import ActivityTabs from "@/components/ActivityTabs";
 import FeaturedProjects from "@/components/FeaturedProjects";
 import SkillsSection from "@/components/SkillsSection";
 import ExperienceTimeline from "@/components/ExperienceTimeline";
@@ -93,8 +92,7 @@ export default function HomePage() {
         <EmailContactLink email={portfolioData.email} />
 
         {/* Sliding Pill Resume Action */}
-        <ResumeButton href={portfolioData.socials.resumeUrl} />
-      </div>
+        <ResumeButton href={portfolioData.socials.resumeUrl} />      </div>
 
       {/* Top Divider for Activity Section */}
       <hr className="border-t border-slate-200/80 dark:border-[#2F3336]/60 my-6 sm:my-7" />

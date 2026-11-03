@@ -2,7 +2,6 @@
 
 import { SkillChip } from '@/components/SkillsSection';
 import React, { useState } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { CaretDown, ArrowRight } from '@phosphor-icons/react';
 
 export interface TimelineExperienceItem {
@@ -26,7 +25,6 @@ export default function ExperienceTimeline({
 }: ExperienceTimelineProps) {
   // All experiences are collapsed by default until user clicks the expand button
   const [expandedIds, setExpandedIds] = useState<Record<string, boolean>>({});
-  const shouldReduceMotion = useReducedMotion();
 
   const toggleExpand = (id: string) => {
     setExpandedIds((prev) => ({
@@ -37,110 +35,80 @@ export default function ExperienceTimeline({
 
   return (
     <section aria-label="Experience List" className="w-full">
-      <div className="divide-y divide-slate-200/80 dark:divide-[#2F3336]/60 space-y-4 sm:space-y-5">
-        {experiences.map((exp, index) => {
+      <div className="divide-y divide-slate-200/80 dark:divide-[#2F3336]/60">
+        {experiences.map((exp) => {
           const isExpanded = !!expandedIds[exp.id];
           const contentId = `exp-details-${exp.id}`;
 
           return (
-            <article
-              key={exp.id}
-              className={`pb-3 sm:pb-3.5 ${index === 0 ? '' : 'pt-4 sm:pt-5'}`}
-            >
-              {/* Top Row: Clickable Header Button */}
+            <article key={exp.id} className="py-3.5 sm:py-4">
               <button
                 type="button"
                 onClick={() => toggleExpand(exp.id)}
                 aria-expanded={isExpanded}
                 aria-controls={contentId}
-                className="w-full text-left group flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0] rounded-sm transition-colors py-1.5 cursor-pointer"
+                className="block w-full text-left cursor-pointer"
               >
-                {/* Left: Company · Role */}
-                <div className="flex items-baseline gap-2 flex-wrap">
-                  <span className="text-[16px] sm:text-[17px] font-semibold text-slate-900 dark:text-slate-100 group-hover:text-black dark:group-hover:text-white transition-colors">
+                <div className="flex w-full items-center justify-between gap-3">
+                  <span className="min-w-0 truncate text-[15px] sm:text-[16px] font-bold text-slate-900 dark:text-slate-100 tracking-tight">
                     {exp.company}
+                    <span className="mx-2 font-normal text-slate-400 dark:text-slate-500" aria-hidden="true">
+                      ·
+                    </span>
+                    <span className="font-normal text-slate-600 dark:text-slate-400">{exp.role}</span>
                   </span>
-                  <span
-                    className="text-slate-400 dark:text-slate-500 select-none text-[14px]"
-                    aria-hidden="true"
-                  >
-                    ·
-                  </span>
-                  <span className="text-[14.5px] sm:text-[15.5px] text-slate-600 dark:text-slate-400 font-normal">
-                    {exp.role}
-                  </span>
-                </div>
-
-                {/* Right: Date Range & Arrow Indicator */}
-                <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto mt-0.5 sm:mt-0">
-                  <span className="text-[13px] sm:text-[14px] font-mono text-slate-500 dark:text-slate-400 tabular-nums">
-                    {exp.period}
-                  </span>
-                  <span
-                    className="inline-flex items-center justify-center text-slate-500 dark:text-[#71767B] transition-colors"
-                    aria-hidden="true"
-                  >
+                  <span className="flex shrink-0 items-center gap-2.5 text-[12px] sm:text-[12.5px] font-mono text-slate-500 dark:text-[#71767B]">
+                    <span className="hidden min-[420px]:inline tabular-nums">{exp.period}</span>
                     <CaretDown
                       size={16}
                       weight="regular"
-                      className={`transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                        isExpanded ? 'rotate-180' : 'rotate-0'
-                      }`}
+                      aria-hidden="true"
+                      className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
                     />
                   </span>
                 </div>
+                <p
+                  className={`mt-1.5 text-[14px] sm:text-[15px] leading-[1.65] text-slate-600 dark:text-slate-300 text-pretty ${
+                    isExpanded ? '' : 'line-clamp-1'
+                  }`}
+                >
+                  {exp.summary}
+                </p>
               </button>
 
-              {/* Short One-Line Summary */}
-              <p className="text-[14px] sm:text-[15px] leading-[1.65] text-slate-600 dark:text-slate-300 mt-1 sm:mt-1.5 text-pretty">
-                {exp.summary}
-              </p>
+              <div
+                id={contentId}
+                className={`grid transition-[grid-template-rows] duration-200 ease-out ${
+                  isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <div className="pt-3 space-y-2">
+                    {exp.narrative.map((bullet, bIdx) => (
+                      <div
+                        key={bIdx}
+                        className="flex items-start gap-2.5 text-[14px] sm:text-[15px] text-slate-700 dark:text-slate-300 leading-[1.65]"
+                      >
+                        <ArrowRight
+                          size={14}
+                          weight="regular"
+                          className="text-[#1D9BF0] shrink-0 mt-1"
+                          aria-hidden="true"
+                        />
+                        <span className="text-pretty">{bullet}</span>
+                      </div>
+                    ))}
 
-              {/* Collapsible Expanded Details */}
-              <AnimatePresence initial={false}>
-                {isExpanded && (
-                  <motion.div
-                    id={contentId}
-                    key="expanded-content"
-                    initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
-                    animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, height: 'auto' }}
-                    exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
-                    transition={
-                      shouldReduceMotion
-                        ? { duration: 0 }
-                        : { duration: 0.2, ease: [0.16, 1, 0.3, 1] }
-                    }
-                    className="overflow-hidden"
-                  >
-                    <div className="border-s border-slate-300 dark:border-[#2F3336] ps-4 sm:ps-5 ms-2.5 sm:ms-3 my-2.5 sm:my-3 space-y-2">
-                      {/* Detailed Bullet Points */}
-                      {exp.narrative.map((bullet, bIdx) => (
-                        <div
-                          key={bIdx}
-                          className="flex items-start gap-2.5 text-[14px] sm:text-[15px] text-slate-700 dark:text-slate-300 leading-[1.65]"
-                        >
-                          <ArrowRight
-                            size={14}
-                            weight="regular"
-                            className="text-[#1D9BF0] shrink-0 mt-1"
-                            aria-hidden="true"
-                          />
-                          <span className="text-pretty">{bullet}</span>
-                        </div>
-                      ))}
-
-                      {/* Technologies Used */}
-                      {exp.technologies.length > 0 && (
-                        <div className="flex flex-wrap gap-2 pt-1.5">
-                          {exp.technologies.map((tech) => (
-                            <SkillChip key={tech} as="span" name={tech} />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    {exp.technologies.length > 0 && (
+                      <ul className="flex flex-wrap gap-2 pt-1.5" aria-label="Tech">
+                        {exp.technologies.map((tech) => (
+                          <SkillChip key={tech} name={tech} />
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+              </div>
             </article>
           );
         })}

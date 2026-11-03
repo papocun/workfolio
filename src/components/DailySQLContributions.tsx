@@ -3,6 +3,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ContributionHeatmap, HeatmapLegend, type ContributionDay } from '@/components/ContributionHeatmap';
 import { getAssetPath } from '@/lib/assetPath';
+import { HoverPreviewLink } from '@/components/ui/hover-preview-link';
+import ProfilePreviewThumb from '@/components/ProfilePreviewThumb';
 import { CODING_PROFILE_CONFIGS } from '@/data/codingProfiles';
 
 interface Props {
@@ -37,7 +39,7 @@ export default function DailySQLContributions({
 
   useEffect(() => {
     let cancelled = false;
-    fetch(getAssetPath('/api/dailysql-contributions/'))
+    fetch(getAssetPath('/api/dailysql-contributions'))
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
         if (cancelled) return;
@@ -68,9 +70,15 @@ export default function DailySQLContributions({
     <section className={`flex w-full max-w-full min-w-0 flex-col gap-3 ${className}`} aria-label="DailySQL Submissions Heatmap">
       <p className="text-[13px] text-slate-500 dark:text-[#71767B]">
         <span className={strong}>{yearTotal.toLocaleString()}</span> submissions in the last year on{' '}
-        <a href={CODING_PROFILE_CONFIGS.dailysql.url} target="_blank" rel="noopener noreferrer" className="font-medium text-slate-900 dark:text-slate-100 underline decoration-slate-400/50 underline-offset-2 hover:decoration-current">
+        <HoverPreviewLink
+          href={CODING_PROFILE_CONFIGS.dailysql.url}
+          title={`${username} on DailySQL`}
+          domain="dailysql.in"
+          image={<ProfilePreviewThumb src={CODING_PROFILE_CONFIGS.dailysql.imageSrc} alt="" tint="#e0f2fe" />}
+          className="font-medium text-slate-900 dark:text-slate-100 underline decoration-slate-400/50 underline-offset-2 hover:decoration-current"
+        >
           DailySQL
-        </a>
+        </HoverPreviewLink>
         {typeof totalSolved === 'number' && (
           <>
             {' · '}

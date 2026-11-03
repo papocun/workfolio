@@ -55,7 +55,7 @@ export default function Navbar() {
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
         >
-          divyanshu tiwari
+          Datafolio
         </Link>
         </div>
       </div>

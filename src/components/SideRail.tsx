@@ -18,8 +18,11 @@ import {
 const linkCls =
   'block w-full px-2.5 py-2 text-center text-[13.5px] text-slate-500 dark:text-[#9CA3AF] hover:text-slate-900 dark:hover:text-white transition-colors duration-150 focus-visible:outline-none focus-visible:text-slate-900 dark:focus-visible:text-white';
 
-const iconBtnCls =
-  'inline-flex h-8 w-8 items-center justify-center rounded-full text-slate-500 dark:text-[#9CA3AF] hover:text-slate-900 dark:hover:text-white active:scale-[0.96] transition-[color,transform] duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0]';
+const iconBtnBase =
+  'inline-flex h-8 w-8 items-center justify-center rounded-full active:scale-[0.96] transition-[color,transform] duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BF0]';
+const iconBtnIdle =
+  'text-slate-500 dark:text-[#9CA3AF] hover:text-slate-900 dark:hover:text-white';
+const iconBtnCls = `${iconBtnBase} ${iconBtnIdle}`;
 
 function Divider() {
   return <span aria-hidden="true" className="my-2.5 block h-4 w-px bg-slate-300 dark:bg-[#2F3336]" />;
@@ -37,13 +40,27 @@ function useScrollTopOnHome() {
   };
 }
 
+/** Avatar click on home: jump to bottom if in the upper half, to top if in the lower half. */
+function useToggleTopBottom() {
+  const pathname = usePathname();
+  return (e: React.MouseEvent) => {
+    if (pathname !== '/') return;
+    e.preventDefault();
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - window.innerHeight;
+    const goTop = window.scrollY > max / 2;
+    window.scrollTo({ top: goTop ? 0 : max, behavior: reduce ? 'auto' : 'smooth' });
+  };
+}
+
 const RING = 48;
 const STROKE = 2;
 const R = (RING - STROKE) / 2;
 
 /** Round page-progress indicator that runs around the profile picture. */
 function ProgressAvatar() {
-  const scrollTop = useScrollTopOnHome();
+  const scrollTop = useToggleTopBottom();
   const { scrollYProgress } = useScroll();
   const reduce = useReducedMotion();
   const smooth = useSpring(scrollYProgress, { stiffness: 140, damping: 24, mass: 0.4 });
@@ -163,7 +180,11 @@ export default function SideRail() {
         onClick={toggleSound}
         aria-label={isSoundOn ? 'Mute sound effects' : 'Enable sound effects'}
         aria-pressed={isSoundOn}
-        className={`${iconBtnCls} mt-1 ${isSoundOn ? 'text-[#1D9BF0] hover:text-[#1a8cd8] dark:text-[#1D9BF0] dark:hover:text-[#1a8cd8]' : ''}`}
+        className={`${iconBtnBase} mt-1 ${
+          isSoundOn
+            ? 'text-[#1D9BF0] hover:text-[#1a8cd8] dark:text-[#1D9BF0] dark:hover:text-[#1a8cd8]'
+            : iconBtnIdle
+        }`}
       >
         {isSoundOn ? <SpeakerHigh size={16} weight="regular" /> : <SpeakerSlash size={16} weight="regular" />}
       </button>

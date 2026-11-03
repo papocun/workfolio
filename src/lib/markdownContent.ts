@@ -32,7 +32,7 @@ export const LLMS_TXT_CONTENT = `# Divyanshu Tiwari
 
 ## Experience
 
-- [Zeitster](https://datafolio.me/experience) (Aug 2026 – Present) — Data Engineering & AI Intern
+- [Zeitstone AI](https://datafolio.me/experience) (Jun 2026 – Present) — Data Engineering & AI Intern
   - Built 23+ Python data pipelines and scoring KPIs for Shopify merchant data on AWS; cut scoring time from 7s to 3s.
   - Stack: Python, AWS, Data Pipelines
 
@@ -87,7 +87,7 @@ Outside of work, I build side projects, play chess, read, and follow whatever ha
 
 ## Experience
 
-- [Zeitster](https://datafolio.me/experience) (Data Engineering & AI Intern, Aug 2026 – Present): End-to-end data infrastructure and ingestion pipelines for Shopify and external merchant data on AWS using Python.
+- [Zeitstone AI](https://datafolio.me/experience) (Data Engineering & AI Intern, Jun 2026 – Present): End-to-end data infrastructure and ingestion pipelines for Shopify and external merchant data on AWS using Python.
 - [ChatSpark](https://datafolio.me/experience) (Data Analyst Intern, Mar 2026 – May 2026): Python Excel pipeline automation and SQL cohort analysis.
 
 ## Code
@@ -189,8 +189,8 @@ Professional track record in machine learning engineering, predictive scoring, a
 
 ## Work History
 
-### Data Engineering & AI Intern — Zeitster
-- **Period**: Aug 2026 – Present
+### Data Engineering & AI Intern — Zeitstone AI
+- **Period**: Jun 2026 – Present
 - **Location**: Remote
 - **Summary**:
   - Automated merchant data processing: built 23+ Python data pipelines that move fragmented Shopify merchant data through staging and Silver-layer workflows to automate downstream scoring.

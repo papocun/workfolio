@@ -4,9 +4,9 @@ import type { TimelineExperienceItem } from '@/components/ExperienceTimeline';
 export const EXPERIENCES: TimelineExperienceItem[] = [
   {
     id: 'zeitster',
-    company: 'Zeitster',
+    company: 'Zeitstone AI',
     role: 'Data Engineering & AI Intern',
-    period: 'Aug 2026 – Present',
+    period: 'Jun 2026 – Present',
     location: 'Remote',
     isCurrent: true,
     summary:

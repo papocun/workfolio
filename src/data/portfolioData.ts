@@ -36,8 +36,8 @@ export const portfolioData: PersonalProfile = {
   experiences: [
     {
       role: "Data Engineering & AI Intern",
-      company: "Zeitster",
-      period: "Aug 2026 – Present",
+      company: "Zeitstone AI",
+      period: "Jun 2026 – Present",
       location: "Remote",
       summary:
         "Designed end-to-end data infrastructure and ingestion pipelines for Shopify and external merchant data on AWS using Python.",

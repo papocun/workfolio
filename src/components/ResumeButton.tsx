@@ -8,14 +8,15 @@ interface ResumeButtonProps {
 }
 
 export default function ResumeButton({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   href,
   className = '',
 }: ResumeButtonProps) {
   return (
-    <button
-      type="button"
-      aria-label="Resume (currently unavailable)"
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Resume"
       className={`group relative inline-flex h-8 items-center justify-center overflow-hidden rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#16181C] px-3.5 text-[12.5px] font-medium text-slate-800 dark:text-slate-200 transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-slate-900 dark:hover:border-slate-100 shadow-2xs select-none cursor-pointer ${className}`}
     >
       {/* Default Layer (Leaves on hover: ease-in) */}
@@ -51,6 +52,6 @@ export default function ResumeButton({
           <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z" />
         </svg>
       </div>
-    </button>
+    </a>
   );
 }

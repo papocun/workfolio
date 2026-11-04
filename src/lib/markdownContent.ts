@@ -59,7 +59,7 @@ export const LLMS_TXT_CONTENT = `# Divyanshu Tiwari
 - GitHub: https://github.com/papocun
 - LinkedIn: https://www.linkedin.com/in/divyansh21/
 - Twitter / X: https://x.com/21dvy_t
-- Resume: https://drive.google.com/file/d/14YWbiCTzkLcnwULHuuDESMvNvYIEjLbn/view?usp=sharing
+- Resume: https://drive.google.com/file/d/1fCisWglo58yyOrg-YUc2WyPyj2GJRQiC/view?usp=sharing
 `;
 
 export const HOMEPAGE_MARKDOWN = `# Divyanshu Tiwari
@@ -111,7 +111,7 @@ Outside of work, I build side projects, play chess, read, and follow whatever ha
 - GitHub: https://github.com/papocun
 - LinkedIn: https://www.linkedin.com/in/divyansh21/
 - Twitter / X: https://x.com/21dvy_t
-- Resume: https://drive.google.com/file/d/14YWbiCTzkLcnwULHuuDESMvNvYIEjLbn/view?usp=sharing
+- Resume: https://drive.google.com/file/d/1fCisWglo58yyOrg-YUc2WyPyj2GJRQiC/view?usp=sharing
 `;
 
 export const PROJECTS_MARKDOWN = `# Projects — Divyanshu Tiwari

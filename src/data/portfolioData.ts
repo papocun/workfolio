@@ -20,7 +20,7 @@ export const portfolioData: PersonalProfile = {
     dailysql: "https://dailysql.in/u/divyanshutiwari281",
     stratascratch: "https://platform.stratascratch.com/user/papocun",
     resumeUrl:
-      "https://drive.google.com/file/d/14YWbiCTzkLcnwULHuuDESMvNvYIEjLbn/view?usp=sharing",
+      "https://drive.google.com/file/d/1fCisWglo58yyOrg-YUc2WyPyj2GJRQiC/view?usp=sharing",
   },
 
   hero: {
